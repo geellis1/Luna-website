@@ -1,0 +1,48 @@
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import Footer from './components/Footer'
+import Nav from './components/Nav'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Home from './pages/Home'
+import Services from './pages/Services'
+
+const titles: Record<string, string> = {
+  '/': 'Luna Civic Strategies',
+  '/about': 'About | Luna Civic Strategies',
+  '/services': 'Services | Luna Civic Strategies',
+  '/contact': 'Contact | Luna Civic Strategies',
+}
+
+// Scroll to top (or to #anchor) and set the tab title on each page change
+function RouteEffects() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    document.title = titles[pathname] ?? titles['/']
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView()
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash])
+  return null
+}
+
+export default function App() {
+  return (
+    <>
+      <RouteEffects />
+      <Nav />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  )
+}
