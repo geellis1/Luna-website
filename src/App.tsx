@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
+import OptionsBar from './components/OptionsBar'
 import Nav from './components/Nav'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 import Services from './pages/Services'
 
 const titles: Record<string, string> = {
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <>
       <RouteEffects />
+      <OptionsBar />
       <Nav />
       <main>
         <Routes>

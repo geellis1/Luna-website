@@ -39,3 +39,11 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 3. In Vercel → Settings → Environment Variables, add the values from `.env.example`:
    `RESEND_API_KEY`, `CONTACT_TO_EMAIL` (Kelli's inbox), `CONTACT_FROM_EMAIL`.
 4. Add the custom domain `lunacivicstrategies.com` in Vercel → Settings → Domains.
+
+## Design options (review mode)
+
+A chartreuse bar above the nav lets reviewers switch between home page options.
+Each option has a shareable link, e.g. `/?home=bold`, and the bar's **Copy link** button copies it.
+
+- Options are listed in `src/options.ts`; each one is a component in `src/pages/home/`.
+- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel (or delete the unused options) to hide the bar.
