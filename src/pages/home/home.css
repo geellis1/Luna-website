@@ -1,18 +1,71 @@
 /* ---------- Option B: Bold type ---------- */
 .bold-hero {
-  padding: clamp(56px, 8vw, 120px) 0 clamp(56px, 7vw, 104px);
   overflow: hidden;
 }
+/* Headline + mics fill the first screen below the switcher bar and nav */
+.bold-hero__stage {
+  display: flex;
+  flex-direction: column;
+  height: calc(100svh - var(--nav-h) - var(--options-h, 0px));
+  min-height: 460px;
+  max-height: 1000px;
+  padding-top: clamp(28px, 5vh, 72px);
+}
 .bold-hero__title {
-  font-size: clamp(2.75rem, 8vw, 7rem);
-  line-height: 0.98;
-  max-width: 14ch;
-  margin: 0 auto clamp(24px, 3vw, 40px);
+  flex: none;
+  font-size: clamp(2.1rem, min(7vw, 8.5vh), 6.5rem);
+  line-height: 1;
+  max-width: 16ch;
+  margin: 0 auto clamp(12px, 2.5vh, 32px);
   text-align: center;
 }
 .bold-hero__title em {
   font-style: italic;
   color: var(--chartreuse);
+}
+.bold-hero__mics {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.bold-hero__mics img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  opacity: 0;
+  transform: translateY(40%);
+}
+.bold-hero__mics.is-in img {
+  opacity: 1;
+  transform: none;
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.05),
+    opacity 0.4s ease;
+}
+
+/* Phones: size to content and let the mics run wider than the screen */
+@media (max-width: 760px) {
+  .bold-hero__stage {
+    height: auto;
+    min-height: 0;
+  }
+  .bold-hero__mics {
+    flex: none;
+  }
+  .bold-hero__mics img {
+    width: 150%;
+    max-width: none;
+    height: auto;
+    margin: 0 -25%;
+  }
+}
+
+.bold-intro {
+  padding: clamp(40px, 5vw, 72px) 0 clamp(56px, 7vw, 104px);
 }
 .bold-hero__foot {
   display: flex;
@@ -60,74 +113,11 @@
   }
 }
 
-/* Microphones */
-.mics {
-  position: relative;
-  height: clamp(220px, 34vw, 440px);
-  overflow: hidden;
-}
-.mic {
-  position: absolute;
-  bottom: 0;
-  aspect-ratio: 80 / 384;
-  translate: -50% 0;
-  rotate: var(--tilt);
-  transform-origin: 50% 100%;
-}
-.mic__rise {
-  height: 100%;
-  animation: mic-rise 0.75s cubic-bezier(0.2, 0.9, 0.25, 1.15) var(--delay) both;
-}
-.mic svg {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-.mic--back svg {
-  filter: brightness(0.82);
-}
-@media (max-width: 600px) {
-  .mic--back {
-    display: none;
-  }
-}
-@keyframes mic-rise {
-  from {
-    transform: translateY(105%);
-  }
-  to {
-    transform: none;
-  }
-}
-.mic__waves path {
-  opacity: 0;
-}
-.is-speaking .mic__waves path {
-  animation: mic-wave 0.9s ease-out infinite;
-  animation-delay: var(--wave-delay);
-}
-.is-speaking .mic__waves path:nth-child(2) {
-  animation-delay: calc(var(--wave-delay) + 0.15s);
-}
-.is-speaking .mic__waves path:nth-child(3) {
-  animation-delay: calc(var(--wave-delay) + 0.3s);
-}
-@keyframes mic-wave {
-  0% {
-    opacity: 0;
-  }
-  30% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .mic__rise,
-  .is-speaking .mic__waves path {
-    animation: none;
+  .bold-hero__mics img {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   .bold-hero__foot .lede,
   .bold-hero__foot .button {

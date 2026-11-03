@@ -8,6 +8,7 @@ const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)'
 // (unrevealed ones are invisible), so the lines never reflow while typing.
 export default function TypedHeadline({
   segments,
+  active = true,
   startDelay = 0,
   speed = 38,
   className,
@@ -15,6 +16,7 @@ export default function TypedHeadline({
   onDone,
 }: {
   segments: Segment[]
+  active?: boolean // typing begins (after startDelay) once this is true
   startDelay?: number
   speed?: number
   className?: string
@@ -25,6 +27,7 @@ export default function TypedHeadline({
   const [shown, setShown] = useState(() => (reducedMotion() ? total : 0))
 
   useEffect(() => {
+    if (!active) return
     if (reducedMotion()) {
       onDone?.()
       return
@@ -46,9 +49,9 @@ export default function TypedHeadline({
       window.clearTimeout(start)
       window.clearInterval(timer)
     }
-    // Runs once per mount; replays when the page is revisited
+    // Runs once when activated; replays when the page is revisited
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [active])
 
   let i = 0
   const typing = shown < total
