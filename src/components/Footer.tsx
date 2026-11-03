@@ -7,8 +7,8 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container footer__inner">
-        <Link to="/" className="logo">
-          LUNA
+        <Link to="/" className="logo logo--footer">
+          <img src="/logo-white.png" alt="Luna Civic Strategies" width="900" height="300" />
         </Link>
         <ul className="footer__links">
           {navLinks.map((l) => (

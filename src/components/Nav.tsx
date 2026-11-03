@@ -9,9 +9,8 @@ export default function Nav() {
   return (
     <header className="nav">
       <div className="container nav__inner">
-        {/* Placeholder wordmark: replace with the logo SVG */}
-        <Link to="/" className="logo" aria-label="Luna Civic Strategies home" onClick={close}>
-          LUNA
+        <Link to="/" className="logo" onClick={close}>
+          <img src="/logo-white.png" alt="Luna Civic Strategies" width="900" height="300" />
         </Link>
         <button
           className="nav__toggle"

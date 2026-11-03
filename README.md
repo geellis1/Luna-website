@@ -27,7 +27,7 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 
 - **Copy:** any text in `src/content.ts` wrapped in `[square brackets]` is a placeholder and shows
   highlighted in chartreuse on the site. Replace it with the final copy.
-- **Logo:** replace the `LUNA` text in `src/components/Nav.tsx` and `Footer.tsx` with the SVG.
+- **Logo:** `public/logo-white.png` (white, used on the dark nav and footer). Replace that file to update it everywhere.
 - **Hero illustration:** replace `src/components/MoonPlaceholder.tsx` with the Luna line-art SVG.
 - **Kelli's photo:** replace the `photo-placeholder` div in `src/pages/About.tsx`.
 - **Fonts:** change `--font-serif` and `--font-sans` in `src/index.css`.
