@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import CtaBand from '../../components/CtaBand'
-import MoonPlaceholder from '../../components/MoonPlaceholder'
-import Pillars from '../../components/Pillars'
-import { tiers } from '../../content'
+import CtaBand from '../components/CtaBand'
+import MoonPlaceholder from '../components/MoonPlaceholder'
+import Pillars from '../components/Pillars'
+import { tiers } from '../content'
 
-export default function HomeEditorial() {
+export default function Home() {
   return (
     <>
       <section className="section--crimson hero">
