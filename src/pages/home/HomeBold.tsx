@@ -1,21 +1,36 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
-import MoonPlaceholder from '../../components/MoonPlaceholder'
+import Microphones from '../../components/Microphones'
+import TypedHeadline from '../../components/TypedHeadline'
 import { pillars, tiers } from '../../content'
 
-// Option B: oversized type, a moon cropped off the edge, solid color tiles.
+// Option B: a press-conference hero. Mics rise in one by one, then the
+// headline types out as if they're speaking it. Solid color tiles below.
 const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--bordeaux']
 
+const headline = [
+  { text: 'Equity-centered advocacy strategy for ' },
+  { text: 'audacious', em: true },
+  { text: ' change.' },
+]
+
 export default function HomeBold() {
+  const [phase, setPhase] = useState<'mics' | 'speaking' | 'done'>('mics')
+
   return (
     <>
       <section className="section--crimson bold-hero">
-        <MoonPlaceholder className="bold-hero__moon" />
         <div className="container bold-hero__inner">
-          <h1 className="bold-hero__title">
-            Equity-centered advocacy strategy for <em>audacious</em> change.
-          </h1>
-          <div className="bold-hero__foot">
+          <TypedHeadline
+            className="bold-hero__title"
+            segments={headline}
+            startDelay={1500}
+            onStart={() => setPhase('speaking')}
+            onDone={() => setPhase('done')}
+          />
+          <Microphones speaking={phase === 'speaking'} />
+          <div className={`bold-hero__foot${phase === 'done' ? ' is-in' : ''}`}>
             <p className="lede">
               Working alongside nonprofits and coalitions ready to move from mission to movement:
               building advocacy programs that are strategic, values-driven, and built for the

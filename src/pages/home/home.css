@@ -1,26 +1,14 @@
 /* ---------- Option B: Bold type ---------- */
 .bold-hero {
-  position: relative;
+  padding: clamp(56px, 8vw, 120px) 0 clamp(56px, 7vw, 104px);
   overflow: hidden;
-  padding: clamp(72px, 10vw, 152px) 0 clamp(56px, 7vw, 104px);
-}
-.bold-hero__moon {
-  position: absolute;
-  right: -12%;
-  top: 50%;
-  width: min(70vw, 760px);
-  transform: translateY(-50%);
-  opacity: 0.35;
-  pointer-events: none;
-}
-.bold-hero__inner {
-  position: relative;
 }
 .bold-hero__title {
-  font-size: clamp(3rem, 9vw, 8rem);
+  font-size: clamp(2.75rem, 8vw, 7rem);
   line-height: 0.98;
-  max-width: 13ch;
-  margin-bottom: clamp(40px, 6vw, 88px);
+  max-width: 14ch;
+  margin: 0 auto clamp(24px, 3vw, 40px);
+  text-align: center;
 }
 .bold-hero__title em {
   font-style: italic;
@@ -35,8 +23,118 @@
   border-top: 2px solid var(--cream);
   padding-top: 32px;
 }
-.bold-hero__foot .lede {
+.bold-hero__foot .lede,
+.bold-hero__foot .button {
   margin: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.bold-hero__foot.is-in .lede,
+.bold-hero__foot.is-in .button {
+  opacity: 1;
+  transform: none;
+}
+.bold-hero__foot.is-in .button {
+  transition-delay: 0.15s;
+}
+
+/* Typing headline */
+.typed--hidden {
+  visibility: hidden;
+}
+.typed__caret {
+  display: inline-block;
+  width: 0;
+  height: 0.85em;
+  margin-right: -0.08em;
+  border-right: 0.08em solid var(--chartreuse);
+  vertical-align: -0.08em;
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Microphones */
+.mics {
+  position: relative;
+  height: clamp(220px, 34vw, 440px);
+  overflow: hidden;
+}
+.mic {
+  position: absolute;
+  bottom: 0;
+  aspect-ratio: 80 / 384;
+  translate: -50% 0;
+  rotate: var(--tilt);
+  transform-origin: 50% 100%;
+}
+.mic__rise {
+  height: 100%;
+  animation: mic-rise 0.75s cubic-bezier(0.2, 0.9, 0.25, 1.15) var(--delay) both;
+}
+.mic svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.mic--back svg {
+  filter: brightness(0.82);
+}
+@media (max-width: 600px) {
+  .mic--back {
+    display: none;
+  }
+}
+@keyframes mic-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+.mic__waves path {
+  opacity: 0;
+}
+.is-speaking .mic__waves path {
+  animation: mic-wave 0.9s ease-out infinite;
+  animation-delay: var(--wave-delay);
+}
+.is-speaking .mic__waves path:nth-child(2) {
+  animation-delay: calc(var(--wave-delay) + 0.15s);
+}
+.is-speaking .mic__waves path:nth-child(3) {
+  animation-delay: calc(var(--wave-delay) + 0.3s);
+}
+@keyframes mic-wave {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic__rise,
+  .is-speaking .mic__waves path {
+    animation: none;
+  }
+  .bold-hero__foot .lede,
+  .bold-hero__foot .button {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .bold-statement {

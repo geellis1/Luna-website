@@ -5,7 +5,7 @@ import { createContext, useContext } from 'react'
 // and in the `homes` map in src/pages/home/Home.tsx.
 export const homeOptions = [
   { id: 'editorial', label: 'A · Editorial', note: 'Split hero, color-blocked sections' },
-  { id: 'bold', label: 'B · Bold type', note: 'Oversized headline, color tiles' },
+  { id: 'bold', label: 'B · Bold type', note: 'Press-conference mics, typed headline' },
   { id: 'moonrise', label: 'C · Moonrise', note: 'Cream hero, centered moon' },
 ] as const
 
