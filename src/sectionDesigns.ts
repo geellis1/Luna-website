@@ -29,8 +29,9 @@ export const sectionDesigns = {
     param: 'intro',
     anchor: 'intro-statement',
     choices: [
-      { id: 'poster', label: 'A — Editorial Poster Collage', note: 'Layered paper poster on a powder-blue canvas' },
-      { id: 'notebook', label: 'B — Notebook Page', note: 'The current torn page beside monochrome text' },
+      { id: 'a1', label: 'Poster Collage A1 — Cream / Deep Crimson', note: 'A crimson poster with layered paper on cream' },
+      { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
+      { id: 'notebook', label: 'Advocacy Notebook — Refined', note: 'A large notebook page beside the headline' },
     ],
   },
   whyLuna: {

@@ -1,100 +1,113 @@
-/* ---------- Intro Section A: Editorial Poster Collage ----------
-   One poster, built from overlapping pieces on a powder-blue canvas, after a
-   Good Call Studio poster but widened to a landscape stage on desktop. Every
-   piece is placed and sized in % of the stage (type in cqi), so the whole
-   composition scales as one. Pieces assemble in order on first view:
-   canvas → headline panel → note → sheet → bottom line → small type. */
+/* ---------- Intro Section: Editorial Poster Collage ----------
+   One poster, built from overlapping pieces, after a Good Call Studio poster
+   but widened to a landscape stage on desktop. Every piece is placed and sized
+   in % of the stage (type in cqi), so the composition scales as one.
+   Brand colors only; each treatment just sets the variables below. */
 .poster {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --peach: #f3d2c1;
-  --pale-chartreuse: #eef2c4;
   overflow: hidden;
   color: var(--bordeaux);
-  background: var(--cream);
+  background: var(--section-bg);
+}
+/* A1: cream section, Deep Crimson poster, powder-blue panel */
+.poster--a1 {
+  --section-bg: var(--cream);
+  --base: var(--crimson);
+  --base-ink: var(--cream);
+  --panel: var(--powder);
+  --panel-ink: var(--bordeaux);
+  --note: #fff;
+  --sheet: var(--chartreuse);
+}
+/* A2: Night Bordeaux section, powder-blue poster, Deep Crimson panel */
+.poster--a2 {
+  --section-bg: var(--bordeaux);
+  --base: var(--powder);
+  --base-ink: var(--bordeaux);
+  --panel: var(--crimson);
+  --panel-ink: var(--cream);
+  --note: var(--cream);
+  --sheet: var(--chartreuse);
 }
 .section.poster {
-  padding-block: clamp(48px, 5vw, 84px);
+  padding-block: clamp(56px, 6vw, 96px);
 }
 .poster__stage {
   container-type: inline-size;
   position: relative;
-  width: min(100% - 2 * var(--gutter), 1240px);
-  aspect-ratio: 1240 / 760;
+  width: min(100% - 2 * var(--gutter), 1280px);
+  aspect-ratio: 1280 / 760;
   margin-inline: auto;
 }
 .poster__frame {
   display: contents;
 }
-.poster__stage p {
+.poster__stage p,
+.poster__stage h2 {
   margin: 0;
 }
 .poster__canvas,
-.poster__brand,
-.poster__aside,
+.poster__main,
 .poster__panel,
 .poster__note,
-.poster__sheet,
-.poster__big {
+.poster__sheet {
   position: absolute;
 }
 
-/* The canvas */
+/* The base poster */
 .poster__canvas {
-  top: 7%;
-  left: 5%;
-  width: 72%;
+  top: 6%;
+  left: 4%;
+  width: 66%;
   height: 90%;
-  background: var(--powder);
+  background: var(--base);
 }
 
-/* Small type: the studio line and a parenthetical aside */
-.poster__brand {
-  top: 13%;
-  left: 33%;
-  font-size: max(11px, 0.95cqi);
-  font-weight: 700;
-  letter-spacing: 0.04em;
+/* The main statement, filling the base poster */
+.poster__main {
+  top: 25%;
+  left: 8%;
+  width: 56%;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 9.6cqi;
+  line-height: 0.86;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
+  color: var(--base-ink);
 }
-.poster__aside {
-  top: 46%;
-  left: 43%;
-  display: flex;
-  align-items: center;
-  gap: 0.35em;
-  max-width: 21%;
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  font-size: max(11px, 1cqi);
-  line-height: 1.35;
-  text-align: center;
+.poster__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
 }
-.poster__aside > span:first-child,
-.poster__aside > span:last-child {
-  font-family: var(--font-sans);
-  font-size: 2.6em;
-  font-weight: 300;
-  line-height: 1;
+.poster__mask > span {
+  display: block;
+  translate: 0 105%;
+  transition: translate 1.1s var(--ease-out);
+}
+.poster.is-in .poster__mask > span {
+  translate: none;
 }
 
-/* The headline panel: tall, crimson, tilted over the canvas's top-right
-   edge, its type broken into short lines like a poster */
+/* The statement panel: tall, tilted over the poster's top-right corner, its
+   type broken into short lines like a poster */
 .poster__panel {
   container-type: inline-size;
   top: 0;
-  left: 64%;
-  width: 27%;
-  height: 84%;
+  left: 63%;
+  width: 31%;
+  height: 86%;
   /* (cqi here is the stage's; the headline's cqi is the panel's) */
-  padding: 2.4cqi 2.2cqi 0;
-  color: var(--cream);
-  background: var(--crimson);
+  padding: 2.6cqi 2.4cqi 0;
+  color: var(--panel-ink);
+  background: var(--panel);
   rotate: -4deg;
 }
 .poster__headline {
-  margin: 0;
   font-family: var(--font-sans);
   font-weight: 500;
-  font-size: 24cqi;
+  font-size: 21cqi;
   line-height: 0.92;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -112,47 +125,37 @@
   height: 0.7em;
 }
 
-/* The handwritten note: a peach slip upper left, over the canvas edge */
+/* The handwritten note: a white (A1) or cream (A2) slip over the top-left
+   edge of the poster */
 .poster__note {
-  top: 19%;
-  left: 2.5%;
-  width: 20%;
-  padding: 1.6cqi 2cqi 1.8cqi;
+  top: 5%;
+  left: 1%;
+  width: 19%;
+  padding: 1.6cqi 1.8cqi 1.8cqi;
   font-family: var(--font-hand);
-  font-size: 2cqi;
+  font-size: 1.85cqi;
   line-height: 1.25;
-  background: var(--peach);
-  rotate: -9deg;
+  color: var(--bordeaux);
+  background: var(--note);
+  rotate: -7deg;
 }
 
-/* The paragraph, set small on a pale chartreuse sheet, lower left */
+/* The paragraph on a chartreuse sheet, over the poster's bottom edge */
 .poster__sheet {
-  top: 47%;
-  left: 1.5%;
-  width: 36%;
-  padding: 2cqi 2.4cqi 2.2cqi;
-  background: var(--pale-chartreuse);
-  rotate: 6deg;
+  top: 71%;
+  left: 27%;
+  width: 34%;
+  padding: 1.8cqi 2.2cqi 2cqi;
+  color: var(--bordeaux);
+  background: var(--sheet);
+  rotate: -2.5deg;
 }
 .poster__sheet p {
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  font-size: max(12px, 1.08cqi);
-  line-height: 1.55;
+  font-size: max(14px, 1.15cqi);
+  line-height: 1.5;
 }
 
-/* The bottom line, huge, across the foot of the canvas */
-.poster__big {
-  top: 84.5%;
-  left: 7.5%;
-  width: 68%;
-  font-family: var(--font-display);
-  font-size: 6.15cqi;
-  line-height: 0.9;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-
-/* ---------- Assembly ---------- */
+/* ---------- Assembly: base → panel → notes → main type ---------- */
 .poster__canvas {
   opacity: 0;
   scale: 0.97;
@@ -170,25 +173,16 @@
     translate 0.35s var(--ease-out);
 }
 .poster__panel {
-  --delay: 0.25s;
+  --delay: 0.3s;
   transform: translateY(-110px) rotate(-5deg);
 }
 .poster__note {
-  --delay: 0.6s;
-  transform: translateX(-120px) rotate(-12deg);
+  --delay: 0.7s;
+  transform: translateX(-100px) rotate(-10deg);
 }
 .poster__sheet {
   --delay: 0.85s;
-  transform: translateY(90px);
-}
-.poster__big {
-  clip-path: inset(-10% 100% -10% 0);
-  transition: clip-path 1.1s var(--ease-out) 1.15s;
-}
-.poster__brand,
-.poster__aside {
-  opacity: 0;
-  transition: opacity 0.8s ease 1.5s;
+  transform: translateY(80px);
 }
 .poster.is-in .poster__canvas {
   opacity: 1;
@@ -200,13 +194,6 @@
   opacity: 1;
   transform: none;
 }
-.poster.is-in .poster__big {
-  clip-path: inset(-10% 0 -10% 0);
-}
-.poster.is-in .poster__brand,
-.poster.is-in .poster__aside {
-  opacity: 1;
-}
 /* A paper piece lifts slightly on hover */
 @media (hover: hover) {
   .poster__panel:hover,
@@ -216,7 +203,7 @@
   }
 }
 
-/* ---------- Phones: back to a portrait poster ---------- */
+/* ---------- Phones: a portrait poster ---------- */
 @media (max-width: 760px) {
   .poster__stage {
     aspect-ratio: auto;
@@ -224,59 +211,43 @@
   .poster__frame {
     display: block;
     position: relative;
-    aspect-ratio: 0.72;
+    aspect-ratio: 0.74;
   }
   .poster__canvas {
-    top: 6%;
-    left: 4%;
-    width: 82%;
-    height: 92%;
+    top: 7%;
+    left: 3%;
+    width: 84%;
+    height: 91%;
   }
-  .poster__brand {
-    top: 10%;
+  .poster__main {
+    top: auto;
+    bottom: 7%;
     left: 8%;
-    font-size: 10px;
-    letter-spacing: 0.02em;
-  }
-  .poster__aside {
-    top: 57%;
-    left: 9%;
-    max-width: 44%;
-    font-size: 11px;
-    text-align: left;
+    width: 78%;
+    font-size: 15cqi;
   }
   .poster__panel {
-    left: 54%;
-    width: 42%;
-    height: 64%;
+    left: 50%;
+    width: 46%;
+    height: 56%;
   }
   .poster__note {
-    top: 23%;
+    top: 14%;
     left: 0;
-    width: 46%;
-    font-size: 4.4cqi;
-  }
-  .poster__big {
-    top: 75%;
-    left: 9%;
-    width: auto;
-    font-size: 10.5cqi;
-    white-space: normal;
-  }
-  .poster__big span {
-    display: block;
+    width: 44%;
+    font-size: 4.2cqi;
   }
   .poster__sheet {
     position: relative;
     top: auto;
-    left: 2%;
-    width: 94%;
-    margin-top: -8%;
+    left: 3%;
+    width: 92%;
+    margin-top: -5%;
     padding: 18px 20px;
-    rotate: 3deg;
+    rotate: 2deg;
   }
   .poster__sheet p {
-    font-size: 12.5px;
+    font-size: 15px;
   }
 }
 

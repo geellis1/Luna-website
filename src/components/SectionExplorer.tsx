@@ -80,23 +80,31 @@ function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
-  return id === 'poster' ? (
+  if (id === 'notebook') {
+    return (
+      <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+        <rect width="120" height="64" fill={C.crimson} />
+        <rect x="10" y="8" width="38" height="48" fill={C.cream} transform="rotate(-3 29 32)" />
+        <rect x="16" y="26" width="24" height="3" fill={C.crimson} />
+        <rect x="16" y="32" width="18" height="3" fill={C.crimson} />
+        <rect x="58" y="14" width="52" height="8" fill={C.cream} />
+        <rect x="58" y="25" width="46" height="8" fill={C.cream} />
+        <rect x="58" y="36" width="50" height="8" fill={C.cream} />
+        <rect x="58" y="49" width="36" height="2" fill={C.cream} opacity="0.6" />
+      </svg>
+    )
+  }
+  const a1 = id === 'a1'
+  return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <rect x="10" y="7" width="72" height="52" fill={C.powder} />
-      <rect x="74" y="3" width="26" height="46" fill={C.crimson} transform="rotate(-4 87 26)" />
-      <rect x="8" y="16" width="24" height="12" fill="#F3D2C1" transform="rotate(-9 20 22)" />
-      <rect x="8" y="34" width="36" height="16" fill="#EEF2C4" transform="rotate(6 26 42)" />
-      <rect x="14" y="52" width="58" height="5" fill={C.bordeaux} />
-    </svg>
-  ) : (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.powder} />
-      <rect x="12" y="10" width="34" height="44" fill="#ece8e1" transform="rotate(-3 29 32)" />
-      <rect x="56" y="18" width="50" height="6" fill="#1f3a57" />
-      <rect x="56" y="27" width="40" height="6" fill="#1f3a57" />
-      <rect x="56" y="38" width="46" height="2" fill="#1f3a57" opacity="0.6" />
-      <rect x="56" y="43" width="40" height="2" fill="#1f3a57" opacity="0.6" />
+      <rect width="120" height="64" fill={a1 ? C.cream : C.bordeaux} />
+      <rect x="8" y="7" width="74" height="52" fill={a1 ? C.crimson : C.powder} />
+      <rect x="14" y="22" width="50" height="8" fill={a1 ? C.cream : C.bordeaux} />
+      <rect x="14" y="32" width="38" height="8" fill={a1 ? C.cream : C.bordeaux} />
+      <rect x="14" y="42" width="46" height="8" fill={a1 ? C.cream : C.bordeaux} />
+      <rect x="76" y="3" width="30" height="46" fill={a1 ? C.powder : C.crimson} transform="rotate(-4 91 26)" />
+      <rect x="6" y="9" width="20" height="9" fill={a1 ? '#fff' : C.cream} transform="rotate(-8 16 13)" />
+      <rect x="40" y="50" width="30" height="11" fill={C.chartreuse} transform="rotate(-3 55 55)" />
     </svg>
   )
 }
