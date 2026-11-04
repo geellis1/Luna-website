@@ -1,24 +1,32 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { navLinks } from '../content'
 import { useOptions } from '../options'
 
+// Pages whose first section is light, so a see-through nav needs dark text
+const lightTopPages = ['/contact']
+
 // Nav bar in the style picked in the options bar:
 // classic: full-width Night Bordeaux bar with the white logo
-// pill: rounded cream bar floating over the page, logo recolored to Night
-//   Bordeaux, links centered, outlined CTA on the right
+// pill: rounded bar floating over the page, logo recolored through a mask,
+//   links centered, outlined CTA on the right
+// circled: no bar, just logo and links on the page; a hovered link turns
+//   italic serif inside a drawn circle
 export default function Nav() {
   const { nav } = useOptions()
+  const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
   const pill = nav === 'pill'
+  const masked = pill || nav === 'circled'
+  const light = nav === 'circled' && lightTopPages.includes(pathname)
 
   return (
-    <header className={`nav nav--${nav}`}>
+    <header className={`nav nav--${nav}${light ? ' nav--on-light' : ''}`}>
       <div className="container nav__inner">
         <Link to="/" className="logo" onClick={close}>
-          {pill ? (
-            // Same white logo file, painted Night Bordeaux through a CSS mask
+          {masked ? (
+            // Same white logo file, painted in the nav's text color through a CSS mask
             <span className="logo__mark" role="img" aria-label="Luna Civic Strategies" />
           ) : (
             <img src="/logo-white.png" alt="Luna Civic Strategies" width="900" height="300" />
