@@ -1,20 +1,20 @@
 import { useId, useRef, type CSSProperties } from 'react'
 import { litPath, useMoonPhase } from './phase'
 
-// Style 5 · Collage: a grid of cut-out moons with rough, hand-drawn outlines.
-// Pieces drop into place one by one; a chartreuse outline then tracks the
-// current phase across the grid. The moon surface is generated (fractal noise),
-// not a photo.
+// Style 5 · Collage: a row of cut-out moons with rough, hand-drawn outlines,
+// shown under a centered headline. Pieces drop into place left to right; a
+// chartreuse outline then tracks the current phase along the row. The moon
+// surface is generated (fractal noise), not a photo.
 
-const R = 66 // tile moon radius
-const GAP = 172 // spacing between tile centers
+const R = 60 // tile moon radius
+const GAP = 150 // spacing between tile centers
 
-// Reading order, like a phase chart; the last tile is the (empty) new moon
-const tiles = [0.07, 0.16, 0.25, 0.38, 0.5, 0.62, 0.75, 0.86, 0].map((p, i) => ({
+// Left to right: the (empty) new moon, then waxing through full and waning
+const tiles = [0, 0.07, 0.16, 0.25, 0.38, 0.5, 0.62, 0.75, 0.86].map((p, i) => ({
   p,
-  x: ((i % 3) - 1) * GAP,
-  y: (Math.floor(i / 3) - 1) * GAP,
-  tilt: [-4, 3, -2, 2, -3, 4, -1, 3, -3][i],
+  x: (i - 4) * GAP,
+  y: 0,
+  tilt: [-3, 4, -2, 2, -3, 1, -2, 3, -4][i],
 }))
 
 // Which tile is nearest the current phase (wrapping around new moon)
@@ -43,7 +43,7 @@ export default function MoonCollage({ className }: { className?: string }) {
   })
 
   return (
-    <svg className={className} viewBox="-260 -260 520 520" aria-hidden="true">
+    <svg className={className} viewBox="-690 -84 1380 168" aria-hidden="true">
       <defs>
         {/* Moon surface: fine grain plus darker "maria" patches, warm grey */}
         <filter id={`surface${uid}`} x="0" y="0" width="100%" height="100%">

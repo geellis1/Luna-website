@@ -11,21 +11,22 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: calc(100svh - var(--nav-h) - var(--options-h, 0px));
   min-height: 520px;
   max-height: 1000px;
-  padding-top: clamp(32px, 7vh, 96px);
+  padding-top: clamp(24px, 4vh, 56px);
   padding-bottom: clamp(32px, 6vh, 72px);
 }
 
-/* The moon sits behind the headline, upper right, partly off the edge */
+/* The moon sits to the right of the headline, vertically centered with it.
+   overflow: visible lets glows fade past the SVG's edges instead of being boxed in. */
 .lunar-hero__moon {
   position: absolute;
   top: 50%;
-  right: -8%;
-  width: min(78vh, 62vw, 860px);
-  translate: 0 -55%;
+  right: -2%;
+  width: min(72vh, 50vw, 820px);
+  translate: 0 -50%;
+  overflow: visible;
   pointer-events: none;
   animation: lunar-fade 2.4s ease both;
 }
@@ -62,13 +63,15 @@
 }
 
 /* Staggered editorial headline */
+/* Headline: left column, vertically centered beside the moon */
 .lunar-hero__title {
   position: relative;
-  font-size: clamp(2.6rem, min(9vw, 11vh), 8.75rem);
+  max-width: 58%;
+  font-size: clamp(2.4rem, min(5.4vw, 10vh), 4.75rem);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.035em;
-  margin: 0;
+  margin: auto 0;
 }
 .lunar-hero__title em {
   font-style: italic;
@@ -76,6 +79,7 @@
 }
 .lunar-line {
   display: block;
+  white-space: nowrap;
   animation: lunar-rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .lunar-line--1 {
@@ -146,7 +150,8 @@
     opacity: 0.75;
   }
   .lunar-hero__title {
-    margin-top: 32vw;
+    max-width: none;
+    margin: 32vw 0 0;
   }
   .lunar-line--2,
   .lunar-line--3,
@@ -388,10 +393,27 @@
   border-top: 2px solid var(--bordeaux);
 }
 
-/* Option B moon style 5: collage grid */
-.lunar-hero__moon--collage {
-  width: min(68vh, 44vw, 700px);
-  right: 1%;
+/* Option B moon style 5: centered headline with a row of collage moons under it */
+.lunar-hero--row .lunar-hero__title {
+  max-width: none;
+  margin: auto 0 0;
+  text-align: center;
+  font-size: clamp(2.4rem, min(5.6vw, 8.5vh), 5.5rem);
+}
+.lunar-hero--row .lunar-line {
+  display: inline-block;
+  padding-left: 0;
+}
+.lunar-hero__row {
+  display: block;
+  width: 100%;
+  margin: clamp(28px, 6vh, 64px) 0 auto;
+  overflow: visible;
+}
+@media (max-width: 760px) {
+  .lunar-hero--row .lunar-hero__title {
+    margin: auto 0 0;
+  }
 }
 .collage-tile {
   transform-box: fill-box;
