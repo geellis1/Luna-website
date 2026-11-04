@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
 import { moons } from '../../components/moons'
@@ -5,9 +6,55 @@ import { pillars, tiers } from '../../content'
 import { useOptions } from '../../options'
 
 // Option B: editorial hero with a glowing moon cycling through its phases.
-// Headline lines are staggered like a magazine cover and slide up in turn.
+// Headline lines are staggered like a magazine cover; letters rise into place
+// one by one, then a slow band of moonlight sweeps across the type.
 // The hero fills the first screen (see .lunar-hero in home.css).
 const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--bordeaux']
+
+const headline: { text: string; em?: boolean }[][] = [
+  [{ text: 'Equity-centered' }],
+  [{ text: 'advocacy strategy' }],
+  [{ text: 'for ' }, { text: 'audacious', em: true }],
+  [{ text: 'change.' }],
+]
+
+// Each letter is its own span (indexed for the staggered reveal); spaces stay
+// plain text so words still break and space normally
+function Letters({ text, start }: { text: string; start: number }) {
+  return [...text].map((ch, i) =>
+    ch === ' ' ? (
+      ' '
+    ) : (
+      <span key={i} className="lunar-char" style={{ '--i': start + i } as CSSProperties}>
+        {ch}
+      </span>
+    ),
+  )
+}
+
+function Headline() {
+  return (
+    <h1 className="lunar-hero__title">
+      <span className="sr-only">Equity-centered advocacy strategy for audacious change.</span>
+      <span aria-hidden="true">
+        {headline.map((line, li) => {
+          let count = 0
+          return (
+            <span key={li}>
+              <span className={`lunar-line lunar-line--${li + 1}`} style={{ '--line': li } as CSSProperties}>
+                {line.map((seg, si) => {
+                  const letters = <Letters text={seg.text} start={count} />
+                  count += seg.text.length
+                  return seg.em ? <em key={si}>{letters}</em> : <span key={si}>{letters}</span>
+                })}
+              </span>{' '}
+            </span>
+          )
+        })}
+      </span>
+    </h1>
+  )
+}
 
 export default function HomeBold() {
   const { moon } = useOptions()
@@ -15,16 +62,8 @@ export default function HomeBold() {
   // The collage moons run in a row under a big centered headline; every
   // other style sits beside the headline on the right
   const row = moon.startsWith('collage')
-  const title = (
-    <h1 className="lunar-hero__title">
-      <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}
-      <span className="lunar-line lunar-line--2">advocacy strategy</span>{' '}
-      <span className="lunar-line lunar-line--3">
-        for <em>audacious</em>
-      </span>{' '}
-      <span className="lunar-line lunar-line--4">change.</span>
-    </h1>
-  )
+  const title = <Headline />
+
   return (
     <>
       <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}`}>
