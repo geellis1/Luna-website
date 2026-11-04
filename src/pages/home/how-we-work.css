@@ -1,25 +1,12 @@
 /* ---------- How we work together (Round 2 designs A–C) ----------
-   Shared: big burgundy headline + Explore services on the left (~36%), the
-   interactive panels on the right (~64%). Each design has its own shape and
-   motion; all transitions are 350–600ms with no bounce, and the panels keep a
-   fixed height so nothing below the section moves. Option D reuses the
-   original .moon-card styles in home.css. */
+   Shared: a wide two-column layout, with the headline, paragraph and link on
+   the left and the interactive design on the right. Each design has its own
+   shape and motion, with no bounce, and keeps a fixed height so nothing below
+   the section moves. Option D reuses the original .moon-card styles in
+   home.css. */
 .hww {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-slide: cubic-bezier(0.65, 0, 0.35, 1);
-}
-.hww__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
-  column-gap: clamp(40px, 5vw, 88px);
-  align-items: stretch;
-}
-.hww__head {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 32px;
 }
 .hww__title {
   margin: 0;
@@ -45,166 +32,6 @@
   --on: var(--cream);
 }
 
-/* ===== A · Expanding Capsules ===== */
-.caps-a {
-  container-type: inline-size;
-  display: flex;
-  gap: 14px;
-  height: clamp(440px, 40vw, 540px);
-}
-.caps-a__item {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--on);
-  background: var(--tone);
-  /* A tall arch: half the width across, 150px down, so narrow capsules are
-     slender and the open one gets a wide dome */
-  border-radius: 50% 50% 28px 28px / 150px 150px 28px 28px;
-  transition: flex-grow 0.55s var(--ease-out);
-}
-.caps-a__item.is-open {
-  flex-grow: 3.4;
-}
-@media (hover: hover) {
-  .caps-a__item:not(.is-open):hover {
-    flex-grow: 1.18;
-  }
-}
-.caps-a__toggle {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
-  border-radius: inherit;
-  cursor: pointer;
-}
-.caps-a__toggle:focus-visible {
-  outline: 2px solid var(--on);
-  outline-offset: -8px;
-}
-.caps-a__num {
-  position: absolute;
-  top: 64px;
-  left: 50%;
-  translate: -50% 0;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-.caps-a__vtitle {
-  position: absolute;
-  bottom: 92px;
-  left: 50%;
-  translate: -50% 0;
-  writing-mode: vertical-rl;
-  rotate: 180deg;
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 6cqi, 3.75rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-/* Closed: number and vertical title come back after the content has gone */
-.caps-a__num,
-.caps-a__vtitle {
-  transition: opacity 0.3s ease 0.3s;
-}
-.caps-a__item.is-open .caps-a__num,
-.caps-a__item.is-open .caps-a__vtitle {
-  opacity: 0;
-  transition-delay: 0s;
-  transition-duration: 0.18s;
-}
-/* + that becomes a −, sliding from the center to the bottom-right corner */
-.caps-a__icon {
-  position: absolute;
-  bottom: 26px;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  translate: -50% 0;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  transition:
-    left 0.55s var(--ease-out),
-    translate 0.55s var(--ease-out);
-}
-.caps-a__icon::before,
-.caps-a__icon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 1.5px;
-  translate: -50% -50%;
-  background: currentColor;
-  transition: rotate 0.45s var(--ease-out);
-}
-.caps-a__icon::after {
-  rotate: 90deg;
-}
-.caps-a__item.is-open .caps-a__icon {
-  left: calc(100% - 26px);
-  translate: -100% 0;
-}
-.caps-a__item.is-open .caps-a__icon::after {
-  rotate: 0deg;
-}
-/* The open capsule's story: laid out at the open width from the start (so it
-   never re-wraps while the capsule grows), rising in once there's room */
-.caps-a__content {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 1;
-  width: calc((100cqi - 28px) * 3.4 / 5.4);
-  padding: 0 84px 30px 34px;
-  opacity: 0;
-  translate: 0 18px;
-  pointer-events: none;
-  transition:
-    opacity 0.2s ease,
-    translate 0.2s ease;
-}
-.caps-a__item.is-open .caps-a__content {
-  opacity: 1;
-  translate: none;
-  pointer-events: auto;
-  transition:
-    opacity 0.4s ease 0.25s,
-    translate 0.5s var(--ease-out) 0.25s;
-}
-.caps-a__kind {
-  margin: 0 0 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.caps-a__title {
-  margin: 0 0 14px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3.5rem, 13cqi, 6.5rem);
-  line-height: 0.86;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-}
-.caps-a__text {
-  margin: 0 0 18px;
-  max-width: 30ch;
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  line-height: 1.45;
-}
 .caps-a__more,
 .caps-b__more,
 .panel-c__more {
@@ -215,177 +42,42 @@
   text-underline-offset: 4px;
 }
 
-/* ===== B · Rising Capsules ===== */
-.caps-b__row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 1.6vw, 20px);
-  /* Room above for the rise, so the section never changes height */
-  padding-top: 32px;
-  height: calc(clamp(360px, 33vw, 480px) + 32px);
+/* ===== C · Editorial Accordion =====
+   Full-height color blocks with 4px gaps. The open panel takes 70% of the
+   width and the closed two share the rest; widths change over 0.75s while
+   the total stays fixed. The open panel's content is laid out at its final
+   width (so it never re-wraps) and fades in once there's room. */
+.hww--c {
+  --panel-h: clamp(460px, 34vw, 540px);
 }
-.caps-b__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 0;
-  padding: clamp(30px, 3.6vw, 48px) 10px clamp(34px, 3.8vw, 52px);
-  font: inherit;
-  color: var(--on);
-  background: var(--tone);
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    translate 0.5s var(--ease-out),
-    box-shadow 0.4s ease;
+.section.hww-wide.hww--c {
+  padding-block: clamp(40px, 4vw, 60px);
 }
-/* Chosen: rises and gets a burgundy ring with a cream gap */
-.caps-b__item.is-active {
-  translate: 0 -30px;
-  box-shadow:
-    0 0 0 4px var(--cream),
-    0 0 0 6px var(--bordeaux);
+.hww--c .hww-wide__layout {
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
 }
-@media (hover: hover) {
-  .caps-b__item:not(.is-active):hover {
-    translate: 0 -8px;
-  }
-}
-.caps-b__item:focus-visible {
-  outline: 2px solid var(--bordeaux);
-  outline-offset: 10px;
-}
-.caps-b__label {
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-}
-.caps-b__num {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-.caps-b__title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 3.4rem);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-/* Symbols: drawn in the capsule's text color; each moves once on choosing */
-.sym {
-  width: clamp(56px, 6vw, 84px);
-  overflow: visible;
-  fill: currentColor;
-}
-.sym__ring {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-}
-.sym--seed .sym__ring,
-.sym--seed .sym__dot {
-  transform-box: fill-box;
-  transform-origin: center;
-  transition:
-    scale 0.6s var(--ease-out),
-    opacity 0.6s ease;
-}
-.sym--seed .sym__ring {
-  scale: 0.55;
-  opacity: 0.45;
-}
-.caps-b__item.is-active .sym--seed .sym__ring {
-  scale: 1;
-  opacity: 1;
-}
-.caps-b__item.is-active .sym--seed .sym__dot {
-  scale: 1.25;
-}
-.sym__block {
-  translate: calc((var(--n) - 1) * 5px) calc(var(--n) * -5px);
-  opacity: 0.55;
-  transition:
-    translate 0.5s var(--ease-out) calc(var(--n) * 70ms),
-    opacity 0.5s ease calc(var(--n) * 70ms);
-}
-.caps-b__item.is-active .sym__block {
-  translate: 0 0;
-  opacity: 1;
-}
-.sym__orbiter {
-  transform-box: view-box;
-  transform-origin: 32px 32px;
-  rotate: -40deg;
-  transition: rotate 0.9s var(--ease-slide);
-}
-.caps-b__item.is-active .sym__orbiter {
-  rotate: 140deg;
-}
-/* Description: all three stacked in one spot and cross-faded */
-.caps-b__detail {
-  display: grid;
-  margin-top: 28px;
-}
-.caps-b__copy {
-  grid-area: 1 / 1;
-  max-width: 560px;
-  opacity: 0;
-  translate: 0 10px;
-  transition:
-    opacity 0.25s ease,
-    translate 0.25s ease;
-}
-.caps-b__copy.is-active {
-  opacity: 1;
-  translate: none;
-  transition:
-    opacity 0.4s ease 0.15s,
-    translate 0.45s var(--ease-out) 0.15s;
-}
-.caps-b__kind {
-  margin: 0 0 8px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--crimson);
-}
-.caps-b__text {
-  margin: 0 0 14px;
-  font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
-  line-height: 1.4;
-}
-
-/* ===== C · Sliding Editorial Panels ===== */
 .panels-c {
-  --spine: 92px;
   container-type: inline-size;
   display: flex;
   gap: 4px;
-  height: clamp(440px, 40vw, 540px);
+  height: var(--panel-h);
 }
 .panel-c {
   position: relative;
-  flex: 0 0 var(--spine);
+  flex: 15 1 0;
   min-width: 0;
   overflow: hidden;
   color: var(--on);
   background: var(--tone);
-  border-radius: 3px;
-  transition:
-    flex-grow 0.6s var(--ease-slide),
-    flex-basis 0.35s var(--ease-out);
+  transition: flex-grow 0.75s var(--ease-slide);
 }
 .panel-c.is-open {
-  flex-grow: 1;
+  flex-grow: 70;
 }
-/* A closed panel peeks out a little on hover */
+/* A closed panel widens a touch on hover */
 @media (hover: hover) {
   .panel-c:not(.is-open):hover {
-    flex-basis: calc(var(--spine) + 20px);
+    flex-grow: 18;
   }
 }
 .panel-c__spine {
@@ -394,9 +86,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
   width: 100%;
-  padding: 26px 0 30px;
+  padding: 28px 0;
   font: inherit;
   color: inherit;
   background: none;
@@ -421,41 +112,49 @@
   stroke-linejoin: round;
   transition: rotate 0.5s var(--ease-slide);
 }
+/* Closed: number at the top, title centered, arrow at the bottom */
+.panel-c__spine .panel-c__arrow {
+  order: 2;
+}
 .panel-c__vtitle {
+  order: 1;
+  /* Physical margins: with vertical text, "block" margins run sideways */
   margin-top: auto;
+  margin-bottom: auto;
   writing-mode: vertical-rl;
   rotate: 180deg;
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+  font-size: clamp(2.2rem, 3.4vw, 3.2rem);
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
 }
 .panel-c__spine > * {
-  transition: opacity 0.3s ease 0.3s;
+  transition: opacity 0.3s ease 0.4s;
 }
 .panel-c.is-open .panel-c__spine > * {
   opacity: 0;
   transition-delay: 0s;
   transition-duration: 0.15s;
 }
-/* The open sheet: laid out at its final width and swept in from the left */
+/* Open: number and type at the top, a very large title, then the
+   description and link at the bottom */
 .panel-c__sheet {
   position: absolute;
   inset: 0 auto 0 0;
   z-index: 1;
   display: grid;
-  grid-template-rows: auto auto 1fr;
-  width: calc(100cqi - 2 * var(--spine) - 8px);
-  padding: clamp(26px, 4cqi, 44px);
-  clip-path: inset(0 100% 0 0);
+  grid-template-rows: auto 1fr auto;
+  width: calc((100cqi - 8px) * 0.7);
+  padding: clamp(28px, 2.6vw, 40px);
+  opacity: 0;
   pointer-events: none;
-  transition: clip-path 0.3s var(--ease-slide);
+  transition: opacity 0.2s ease;
 }
 .panel-c.is-open .panel-c__sheet {
-  clip-path: inset(0 0 0 0);
+  opacity: 1;
   pointer-events: auto;
-  transition: clip-path 0.6s var(--ease-slide) 0.1s;
+  transition: opacity 0.45s ease 0.4s;
 }
 .panel-c__top {
   display: flex;
@@ -463,7 +162,7 @@
   justify-content: space-between;
 }
 .panel-c__meta {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -472,73 +171,518 @@
   rotate: 90deg;
 }
 .panel-c__title {
-  margin: clamp(14px, 3cqi, 28px) 0 0;
+  margin: clamp(12px, 2cqi, 22px) 0 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(4rem, 21cqi, 11rem);
+  font-size: clamp(4.5rem, 15cqi, 10rem);
   line-height: 0.82;
   letter-spacing: 0.005em;
   text-transform: uppercase;
-  translate: -28px 0;
-  opacity: 0;
-  transition:
-    translate 0.3s ease,
-    opacity 0.2s ease;
+  translate: -20px 0;
+  transition: translate 0.2s ease;
 }
 .panel-c.is-open .panel-c__title {
   translate: none;
-  opacity: 1;
-  transition:
-    translate 0.6s var(--ease-out) 0.25s,
-    opacity 0.5s ease 0.25s;
+  transition: translate 0.7s var(--ease-out) 0.4s;
 }
 .panel-c__body {
-  align-self: end;
-  justify-self: end;
-  width: min(100%, 340px);
   padding-top: 18px;
   border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  translate: 0 12px;
+  transition: translate 0.2s ease;
+}
+.panel-c.is-open .panel-c__body {
+  translate: none;
+  transition: translate 0.7s var(--ease-out) 0.5s;
 }
 .panel-c__text {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
+  max-width: 26ch;
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: clamp(1.25rem, 1.6vw, 1.6rem);
+  line-height: 1.35;
+}
+
+/* ===== Wide layout (A, B and C) =====
+   Uses most of the screen (up to 1720px wide): headline, paragraph and link as
+   one block on the left, vertically centered on the capsules on the right. */
+/* Doubled class so this beats the generic .section padding */
+.section.hww-wide {
+  padding-block: clamp(72px, 7vw, 104px);
+}
+.hww-wide__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
+  align-items: center;
+  column-gap: clamp(48px, 5vw, 96px);
+  width: min(100%, 1720px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.hww--b .hww-wide__layout {
+  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+}
+.hww-wide__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 520px;
+}
+.hww-wide .hww__title {
+  font-size: clamp(3rem, 4.6vw, 5.5rem);
+}
+.hww-wide__lede {
+  margin: clamp(20px, 2vw, 28px) 0 clamp(28px, 2.6vw, 36px);
+  max-width: 30em;
+  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
+  line-height: 1.6;
+}
+.hww-wide__stage {
+  min-width: 0;
+}
+.hww--a .hww-wide__stage {
+  justify-self: end;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.hww--b .hww-wide__stage {
+  justify-self: center;
+}
+
+/* ===== A · Expanding Capsules (A1) and All Open (A2) =====
+   Arches with true semicircular tops (999px radii scale down to exactly half
+   the width, at any width) and nearly flat bottoms. */
+.hww--a {
+  --cap-h: clamp(450px, 34vw, 540px);
+  --cw: clamp(120px, 10vw, 170px); /* closed capsule */
+  --ow: calc(var(--cap-h) * 1.08); /* open capsule, at most */
+  --gap: 16px;
+}
+.caps-a,
+.caps-a2 {
+  display: flex;
+  gap: var(--gap);
+  width: min(100%, calc(2 * var(--cw) + var(--ow) + 2 * var(--gap)));
+  height: var(--cap-h);
+}
+.caps-a {
+  container-type: inline-size;
+}
+.caps-a__item,
+.caps-a2__item {
+  color: var(--on);
+  background: var(--tone);
+  border-radius: 999px 999px 18px 18px;
+}
+.caps-a__item {
+  position: relative;
+  flex: none;
+  width: var(--cw);
+  overflow: hidden;
+  transition: width 0.6s var(--ease-slide);
+}
+/* The open capsule takes the rest of the row */
+.caps-a__item.is-open {
+  width: calc(100cqi - 2 * var(--cw) - 2 * var(--gap));
+}
+.caps-a__toggle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.caps-a__toggle:focus-visible {
+  outline: 2px solid var(--on);
+  outline-offset: -8px;
+}
+.caps-a__num {
+  position: absolute;
+  top: calc(var(--cw) * 0.42);
+  left: 50%;
+  translate: -50% 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.caps-a__vtitle {
+  position: absolute;
+  bottom: 96px;
+  left: 50%;
+  translate: -50% 0;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 3.4vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* Closed: number and vertical title come back after the content has gone */
+.caps-a__num,
+.caps-a__vtitle {
+  transition:
+    opacity 0.3s ease 0.35s,
+    translate 0.35s var(--ease-out);
+}
+.caps-a__item.is-open .caps-a__num,
+.caps-a__item.is-open .caps-a__vtitle {
+  opacity: 0;
+  transition-delay: 0s;
+  transition-duration: 0.18s;
+}
+@media (hover: hover) {
+  .caps-a__item:not(.is-open):hover .caps-a__vtitle {
+    translate: -50% -6px;
+  }
+}
+/* + that becomes a −, sliding from the center to the bottom-right corner */
+.caps-a__icon {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  translate: -50% 0;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  transition:
+    left 0.6s var(--ease-slide),
+    translate 0.6s var(--ease-slide);
+}
+.caps-a__icon::before,
+.caps-a__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  translate: -50% -50%;
+  background: currentColor;
+  transition: rotate 0.5s var(--ease-out);
+}
+.caps-a__icon::after {
+  rotate: 90deg;
+}
+.caps-a__item.is-open .caps-a__icon {
+  left: calc(100% - 28px);
+  translate: -100% 0;
+}
+.caps-a__item.is-open .caps-a__icon::after {
+  rotate: 0deg;
+}
+/* The open capsule's story: laid out at the open width from the start (so it
+   never re-wraps), and only shown once the capsule is nearly full width */
+.caps-a__content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: calc(100cqi - 2 * var(--cw) - 2 * var(--gap));
+  padding: 0 92px 34px 40px;
+  opacity: 0;
+  translate: 0 14px;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    translate 0.15s ease;
+}
+.caps-a__item.is-open .caps-a__content {
+  opacity: 1;
+  translate: none;
+  pointer-events: auto;
+  transition:
+    opacity 0.4s ease 0.45s,
+    translate 0.5s var(--ease-out) 0.45s;
+}
+.caps-a__kind {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.caps-a__title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 8cqi, 6.25rem);
+  line-height: 0.86;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.caps-a__text {
+  margin: 0 0 18px;
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
   line-height: 1.45;
 }
 
-/* ===== Tablet: headline above, panels full width ===== */
-@media (max-width: 1024px) {
-  .hww__layout {
+/* A2: all three open at equal widths */
+.caps-a2__item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(20px, 1.8vw, 30px) clamp(28px, 2.4vw, 36px);
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.6s ease calc(var(--i) * 140ms),
+    translate 0.8s var(--ease-out) calc(var(--i) * 140ms);
+}
+.caps-a2.is-shown .caps-a2__item {
+  opacity: 1;
+  translate: none;
+}
+.caps-a2__content {
+  transition: translate 0.4s var(--ease-out);
+}
+@media (hover: hover) {
+  .caps-a2__item:hover .caps-a2__content {
+    translate: 0 -6px;
+  }
+  .caps-a2__item:hover .text-link::after {
+    transform: translate(2px, -2px);
+  }
+}
+.caps-a2__title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+.caps-a2__text {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.1vw, 1.12rem);
+  line-height: 1.45;
+}
+.caps-a2__more {
+  padding-bottom: 6px;
+  font-size: 0.78rem;
+}
+
+/* ===== B · Rising Capsules =====
+   Three oversized, fully rounded pills of equal width; the chosen one rises
+   34px (room is reserved above, so the section never changes height). */
+.section.hww-wide.hww--b {
+  padding-block: clamp(56px, 5.5vw, 88px);
+}
+.hww--b {
+  --pill-w: clamp(160px, 15vw, 230px);
+  --pill-gap: clamp(20px, 2.4vw, 36px);
+  --rise: 34px;
+}
+.caps-b {
+  width: max-content;
+  max-width: 100%;
+}
+.caps-b__row {
+  display: grid;
+  grid-template-columns: repeat(3, var(--pill-w));
+  gap: var(--pill-gap);
+  padding-top: calc(var(--rise) + 8px);
+}
+.caps-b__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(var(--pill-w) * 2.15);
+  padding: calc(var(--pill-w) * 0.22) 12px calc(var(--pill-w) * 0.28);
+  font: inherit;
+  color: var(--on);
+  background: var(--tone);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    translate 0.6s var(--ease-slide),
+    box-shadow 0.5s ease;
+}
+/* Chosen: rises and gets a burgundy ring with a cream gap */
+.caps-b__item.is-active {
+  translate: 0 calc(-1 * var(--rise));
+  box-shadow:
+    0 0 0 5px var(--cream),
+    0 0 0 7px var(--bordeaux);
+}
+@media (hover: hover) {
+  .caps-b__item:not(.is-active):hover {
+    translate: 0 -8px;
+  }
+}
+.caps-b__item:focus-visible {
+  outline: 2px solid var(--bordeaux);
+  outline-offset: 12px;
+}
+.caps-b__label {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.caps-b__num {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.caps-b__title {
+  font-family: var(--font-display);
+  font-size: calc(var(--pill-w) * 0.24);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+/* Moon-phase marks: one circle, one line weight, one position on every pill;
+   the chosen pill's ring draws itself in and its phase brightens */
+.phase {
+  width: calc(var(--pill-w) * 0.4);
+  overflow: visible;
+}
+.phase__ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-dasharray: 100;
+  opacity: 0.45;
+  transition: opacity 0.5s ease;
+}
+.phase__lit {
+  fill: currentColor;
+  opacity: 0.55;
+  transform-box: fill-box;
+  transform-origin: center;
+  scale: 0.92;
+  transition:
+    opacity 0.5s ease,
+    scale 0.6s var(--ease-out);
+}
+.caps-b__item.is-active .phase__ring {
+  opacity: 1;
+  animation: phase-draw 0.9s var(--ease-out) 0.15s both;
+}
+.caps-b__item.is-active .phase__lit {
+  opacity: 1;
+  scale: 1;
+}
+@keyframes phase-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* The chosen engagement, in one reserved area under the pills, aligned to
+   their left edge: all three stacked in one cell (so it's as tall as the
+   longest) and cross-faded. Width 0 / min 100% so it never widens the group. */
+.caps-b__detail {
+  display: grid;
+  width: 0;
+  min-width: 100%;
+  margin-top: clamp(26px, 2.4vw, 36px);
+  padding-top: 18px;
+  border-top: 1px solid rgba(62, 25, 33, 0.2);
+}
+.caps-b__copy {
+  grid-area: 1 / 1;
+  opacity: 0;
+  translate: 0 10px;
+  transition:
+    opacity 0.25s ease,
+    translate 0.25s ease;
+}
+.caps-b__copy.is-active {
+  opacity: 1;
+  translate: none;
+  transition:
+    opacity 0.45s ease 0.2s,
+    translate 0.55s var(--ease-out) 0.2s;
+}
+.caps-b__kind {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.caps-b__heading {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 2.6vw, 2.6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.caps-b__text {
+  margin: 0 0 18px;
+  max-width: 34ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+  line-height: 1.45;
+}
+.caps-b__more {
+  padding-bottom: 6px;
+  font-size: 0.8rem;
+}
+
+/* A and B, narrower screens: the intro block above, capsules full width */
+@media (max-width: 1180px) {
+  .hww-wide__layout,
+  .hww--b .hww-wide__layout,
+  .hww--c .hww-wide__layout {
     grid-template-columns: 1fr;
-    row-gap: 40px;
+    row-gap: 48px;
   }
-  .hww__head {
-    flex-direction: row;
-    align-items: flex-end;
+  .hww-wide__intro {
+    max-width: 640px;
   }
-  .hww__title {
-    max-width: 11ch;
-    font-size: clamp(2.6rem, 7vw, 4.5rem);
+  .hww--a .hww-wide__stage {
+    justify-content: flex-start;
+  }
+  .hww--a {
+    --cap-h: clamp(420px, 50vw, 500px);
+    --cw: clamp(96px, 14vw, 150px);
+  }
+  .caps-a,
+  .caps-a2 {
+    width: 100%;
+  }
+  .hww--b {
+    --pill-w: clamp(140px, 22vw, 210px);
+  }
+  .hww--c {
+    --panel-h: clamp(420px, 56vw, 520px);
+  }
+  .section.hww-wide.hww--c {
+    padding-block: clamp(56px, 7vw, 80px);
   }
 }
 
 /* ===== Phones: each design gets its own stacked form ===== */
 @media (max-width: 640px) {
-  .hww__head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  /* A: stacked capsule bars; the open one grows downward like an accordion */
+  /* A1: stacked capsule bars; the open one grows downward like an accordion */
   .caps-a {
     container-type: normal;
     flex-direction: column;
     gap: 10px;
     height: auto;
   }
-  .caps-a__item {
-    flex: none;
+  .caps-a__item,
+  .caps-a__item.is-open {
+    width: auto;
     border-radius: 44px;
   }
   .caps-a__toggle {
@@ -603,24 +747,33 @@
     display: none;
   }
 
-  /* B: the capsules stay side by side, slimmer, with vertical titles */
-  .caps-b__row {
-    padding-top: 22px;
-    height: 320px;
+  /* A2: stacked, with a lower arch so three fit comfortably */
+  .caps-a2 {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+  }
+  .caps-a2__item {
+    flex: none;
+    min-height: 0;
+    padding: 96px 28px 30px;
+    border-radius: 50% 50% 18px 18px / 96px 96px 18px 18px;
+  }
+
+  /* B: the three pills stay side by side, slimmer, with vertical titles */
+  .hww--b {
+    --pill-gap: 12px;
+    --pill-w: calc((100vw - 2 * var(--gutter) - 2 * var(--pill-gap)) / 3);
+    --rise: 20px;
   }
   .caps-b__item {
-    padding: 26px 4px 30px;
-  }
-  .caps-b__item.is-active {
-    translate: 0 -20px;
+    height: calc(var(--pill-w) * 2.6);
+    padding-inline: 4px;
   }
   .caps-b__title {
     writing-mode: vertical-rl;
     rotate: 180deg;
-    font-size: 2.2rem;
-  }
-  .sym {
-    width: 46px;
+    font-size: 2.1rem;
   }
 
   /* C: horizontal bands like folder tabs; the open one slides down */
@@ -629,13 +782,9 @@
     flex-direction: column;
     height: auto;
   }
-  .panel-c {
+  .panel-c,
+  .panel-c.is-open {
     flex: none;
-  }
-  @media (hover: hover) {
-    .panel-c:not(.is-open):hover {
-      flex-basis: auto;
-    }
   }
   .panel-c__spine {
     position: relative;
@@ -663,18 +812,21 @@
     max-height: 0;
     overflow: hidden;
     padding: 0 20px;
-    clip-path: none;
     transition:
       max-height 0.45s var(--ease-slide),
-      padding 0.45s var(--ease-slide);
+      padding 0.45s var(--ease-slide),
+      opacity 0.2s ease;
   }
   .panel-c.is-open .panel-c__sheet {
-    max-height: 260px;
+    max-height: 280px;
     padding-bottom: 24px;
-    clip-path: none;
     transition:
       max-height 0.5s var(--ease-slide),
-      padding 0.5s var(--ease-slide);
+      padding 0.5s var(--ease-slide),
+      opacity 0.4s ease 0.15s;
+  }
+  .panel-c__text {
+    font-size: 1.15rem;
   }
   .panel-c__top,
   .panel-c__title {

@@ -11,6 +11,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // useSectionDesign(key), and give its options previews in SectionExplorer.
 
 type Choice = { readonly id: string; readonly label: string; readonly note: string }
+// A group with a `parent` is a set of sub-designs, shown in the panel only
+// while its parent design is selected (e.g. A1/A2 under Option A)
+type Group = {
+  title: string
+  param: string
+  anchor: string
+  choices: readonly Choice[]
+  parent?: { key: string; choice: string }
+}
 
 export const sectionDesigns = {
   howWeWork: {
@@ -24,7 +33,18 @@ export const sectionDesigns = {
       { id: 'd', label: 'D — Original Cards', note: 'The current three cards, for comparison' },
     ],
   },
-} as const satisfies Record<string, { title: string; param: string; anchor: string; choices: readonly Choice[] }>
+  // Option A's two versions
+  howWeWorkA: {
+    title: 'Option A',
+    param: 'workA',
+    anchor: 'how-we-work',
+    parent: { key: 'howWeWork', choice: 'a' },
+    choices: [
+      { id: 'a1', label: 'A1 — Auto-Expanding', note: 'One open at a time, moving on by itself' },
+      { id: 'a2', label: 'A2 — All Open', note: 'All three open side by side' },
+    ],
+  },
+} as const satisfies Record<string, Group>
 
 export type SectionKey = keyof typeof sectionDesigns
 export type SectionDesign<K extends SectionKey> = (typeof sectionDesigns)[K]['choices'][number]['id']
@@ -33,6 +53,16 @@ export type SectionDesign<K extends SectionKey> = (typeof sectionDesigns)[K]['ch
 export const showSectionDesigns = import.meta.env.VITE_HIDE_OPTIONS !== 'true'
 
 const storageKey = (key: SectionKey) => `luna-section-${key}`
+
+// Top-level sections, and the sub-designs that belong to a section's choice
+export const sectionKeys = (Object.keys(sectionDesigns) as SectionKey[]).filter(
+  (k) => !(sectionDesigns[k] as Group).parent,
+)
+export const subGroupsOf = (key: SectionKey, choice: string) =>
+  (Object.keys(sectionDesigns) as SectionKey[]).filter((k) => {
+    const parent = (sectionDesigns[k] as Group).parent
+    return parent?.key === key && parent.choice === choice
+  })
 
 const isChoice = <K extends SectionKey>(key: K, v: unknown): v is SectionDesign<K> =>
   (sectionDesigns[key].choices as readonly Choice[]).some((c) => c.id === v)

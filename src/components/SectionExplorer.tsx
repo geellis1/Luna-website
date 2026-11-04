@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   sectionDesigns,
+  sectionKeys,
   showSectionDesigns,
+  subGroupsOf,
   useSectionDesign,
   type SectionDesign,
   type SectionKey,
@@ -40,22 +42,21 @@ function Preview({ id }: { id: SectionDesign<'howWeWork'> }) {
     case 'a':
       return frame(
         <>
-          <path d="M44 56V22a14 18 0 0 1 28 0v34z" fill={tones[0]} />
-          <path d="M75 56V22a8 12 0 0 1 16 0v34z" fill={tones[1]} />
-          <path d="M94 56V22a8 12 0 0 1 16 0v34z" fill={tones[2]} />
-          <rect x="48" y="40" width="16" height="4" fill={C.bordeaux} />
-          <rect x="48" y="47" width="20" height="2" fill={C.bordeaux} opacity="0.6" />
+          <path d="M42 58V27a17 17 0 0 1 34 0v31z" fill={tones[0]} />
+          <path d="M79 58V22a7.5 7.5 0 0 1 15 0v36z" fill={tones[1]} />
+          <path d="M97 58V22a7.5 7.5 0 0 1 15 0v36z" fill={tones[2]} />
+          <rect x="47" y="40" width="18" height="4" fill={C.bordeaux} />
+          <rect x="47" y="47" width="22" height="2" fill={C.bordeaux} opacity="0.6" />
         </>,
       )
     case 'b':
       return frame(
         <>
           {[0, 1, 2].map((i) => (
-            <rect key={i} x={46 + i * 22} y={i === 0 ? 6 : 12} width="18" height="38" rx="9" fill={tones[i]} />
+            <rect key={i} x={50 + i * 20} y={i === 0 ? 4 : 9} width="16" height="40" rx="8" fill={tones[i]} />
           ))}
-          <circle cx="55" cy="16" r="3" fill="none" stroke={C.bordeaux} strokeWidth="1" />
-          <rect x="46" y="50" width="40" height="2.5" fill={C.bordeaux} />
-          <rect x="46" y="55" width="30" height="2" fill={C.bordeaux} opacity="0.6" />
+          <rect x="50" y="50" width="22" height="3" fill={C.bordeaux} />
+          <rect x="50" y="56" width="34" height="2" fill={C.bordeaux} opacity="0.6" />
         </>,
       )
     case 'c':
@@ -86,6 +87,29 @@ function Preview({ id }: { id: SectionDesign<'howWeWork'> }) {
   }
 }
 
+// Versions of one design (e.g. A1 / A2), as a pair of text buttons
+function SubChoices<K extends SectionKey>({ id }: { id: K }) {
+  const group = sectionDesigns[id]
+  const [value, set] = useSectionDesign(id)
+  return (
+    <div className="sx-subchoices" role="group" aria-label={group.title}>
+      {group.choices.map((c) => (
+        <button
+          key={c.id}
+          type="button"
+          className="sx-subchoice"
+          aria-pressed={value === c.id}
+          title={c.note}
+          onClick={() => set(c.id as SectionDesign<K>)}
+        >
+          <span className="sx-subchoice__label">{c.label}</span>
+          <span className="sx-subchoice__note">{c.note}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
 function SectionChoices<K extends SectionKey>({ id, index, onView }: { id: K; index: number; onView: (anchor: string) => void }) {
   const section = sectionDesigns[id]
   const [value, set] = useSectionDesign(id)
@@ -96,19 +120,28 @@ function SectionChoices<K extends SectionKey>({ id, index, onView }: { id: K; in
       </h3>
       <div className="sx-options" role="group" aria-label={section.title}>
         {section.choices.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            className="sx-option"
-            aria-pressed={value === c.id}
-            onClick={() => set(c.id as SectionDesign<K>)}
-          >
-            <Preview id={c.id as SectionDesign<'howWeWork'>} />
-            <span className="sx-option__text">
-              <span className="sx-option__label">{c.label}</span>
-              <span className="sx-option__note">{c.note}</span>
-            </span>
-          </button>
+          <div key={c.id} className="sx-option-wrap">
+            <button
+              type="button"
+              className="sx-option"
+              aria-pressed={value === c.id}
+              onClick={() => set(c.id as SectionDesign<K>)}
+            >
+              <Preview id={c.id as SectionDesign<'howWeWork'>} />
+              <span className="sx-option__text">
+                <span className="sx-option__label">{c.label}</span>
+                <span className="sx-option__note">{c.note}</span>
+              </span>
+            </button>
+            {/* This design's own versions, opening beneath it while it's chosen */}
+            {subGroupsOf(id, c.id).map((k) => (
+              <div key={k} className={`sx-sub${value === c.id ? ' is-open' : ''}`}>
+                <div className="sx-sub__inner" inert={value !== c.id}>
+                  <SubChoices id={k} />
+                </div>
+              </div>
+            ))}
+          </div>
         ))}
       </div>
       <button type="button" className="sx-view" onClick={() => onView(section.anchor)}>
@@ -211,7 +244,7 @@ export default function SectionExplorer() {
         </header>
 
         <div className="sx-body">
-          {(Object.keys(sectionDesigns) as SectionKey[]).map((k, i) => (
+          {sectionKeys.map((k, i) => (
             <SectionChoices key={k} id={k} index={i} onView={view} />
           ))}
         </div>
