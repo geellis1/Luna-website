@@ -68,7 +68,7 @@ export default function HomeBold() {
 
   return (
     <>
-      <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}`}>
+      <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}${beside ? ' lunar-hero--capsules' : ''}`}>
         {!row && !beside && <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />}
         <div className="container lunar-hero__stage">
           {row ? (
@@ -78,7 +78,7 @@ export default function HomeBold() {
             </div>
           ) : beside ? (
             <div className="lunar-hero__top">
-              {title}
+              <div className="lunar-hero__text">{title}</div>
               <Moon key={moon} className="lunar-hero__capsules" />
             </div>
           ) : (

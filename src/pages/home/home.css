@@ -65,6 +65,11 @@
   pointer-events: none;
   animation: lunar-fade 2.4s ease both;
 }
+/* Wider than the site container so the headline sits further left on big screens */
+.lunar-hero .container {
+  max-width: 1600px;
+}
+
 /* Headline: big and bold in the left column, vertically centered beside the
    moon (its right edge may run over the moon's glow) */
 .lunar-hero__title {
@@ -714,37 +719,43 @@
   color: var(--cream);
 }
 
-/* Option B moon style 1: Capsules. The headline and capsules share the space
-   above the bottom row; the capsule grid is sized by that height and sits on
-   the right, so it never reaches the divider. */
-.lunar-hero__top {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-height: min(64vh, 640px);
+/* Option B moon style 1: Capsules. Headline and pill grid are two columns of
+   one grid, in normal flow: the pills keep a set width, the headline column
+   takes the rest, and the hero is as tall as its content. */
+.lunar-hero--capsules .lunar-hero__stage {
+  min-height: 0;
 }
-/* Slightly smaller than the halo layout so the lines clear the capsules */
+/* Doubled class so the padding beats .container's shorthand, which loads later */
+.lunar-hero.lunar-hero--capsules .lunar-hero__stage {
+  padding-top: clamp(32px, 6vh, 72px);
+}
+.lunar-hero__top {
+  --pill-w: clamp(112px, 9.8vw, 160px);
+  --pill-gap: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(40px, 4vw, 60px);
+  align-items: center;
+}
+/* The headline scales to its column, up to the halo layout's size. Its
+   longest line is about 8.1em, so 11.6cqi leaves ~50px before the pills. */
+.lunar-hero__text {
+  container-type: inline-size;
+  min-width: 0;
+}
 .lunar-hero__top .lunar-hero__title {
   margin: 0;
-  font-size: clamp(2.4rem, min(6.4vw, 10vh), 7.5rem);
-}
-.lunar-hero__capsules {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  height: 88%;
-  translate: 0 -50%;
+  max-width: none;
+  font-size: min(clamp(2.6rem, min(8vw, 12vh), 9rem), 11.6cqi);
 }
 .capsules {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: clamp(10px, 1.4vw, 20px);
+  grid-template-columns: repeat(3, var(--pill-w));
+  gap: var(--pill-gap);
 }
 .capsule {
   display: block;
-  height: 100%;
+  width: 100%;
   aspect-ratio: 1 / 2.1;
   border-radius: 999px;
   object-fit: cover;
@@ -773,31 +784,51 @@
     transform: none;
   }
 }
+/* Divider ~72px below the composition, ~40px above the CTA row */
+.lunar-hero--capsules .lunar-hero__foot {
+  margin-top: 72px;
+}
+.lunar-hero--capsules .hero-foot {
+  padding-top: 40px;
+}
+
+/* Tablet: headline full width, then the six pills in one row beneath it */
+@media (max-width: 1100px) {
+  .lunar-hero__top {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 48px;
+  }
+  .capsules {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lunar-hero--capsules .lunar-hero__foot {
+    margin-top: 64px;
+  }
+}
+/* Phones: back to three across, slightly shorter capsules */
 @media (max-width: 760px) {
   .lunar-hero__top {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 32px;
-  }
-  .lunar-hero__top {
-    min-height: 0;
+    row-gap: 32px;
   }
   .lunar-hero__top .lunar-hero__title {
-    margin: 0;
     font-size: clamp(2rem, 9vw, 3rem);
   }
-  .lunar-hero__capsules {
-    position: static;
-    height: auto;
-    translate: none;
-  }
-  .lunar-hero__capsules.capsules {
+  .capsules {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
   }
   .lunar-hero__capsules .capsule {
-    width: 100%;
-    height: auto;
     aspect-ratio: 1 / 1.7;
+  }
+  /* The shared phone stage adds a 48px flex gap; spacing here comes from the margin */
+  .lunar-hero--capsules .lunar-hero__stage {
+    gap: 0;
+  }
+  .lunar-hero--capsules .lunar-hero__foot {
+    margin-top: 48px;
+  }
+  .lunar-hero--capsules .hero-foot {
+    padding-top: 28px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
