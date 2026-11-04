@@ -1,14 +1,23 @@
 import { Link } from 'react-router-dom'
-import { Ballot, Capitol, Megaphone, Rally } from '../../components/AdvocacyArt'
 import { pillars, tiers } from '../../content'
 
-// Option C: Scrapbook. A huge condensed serif headline on cream, with
-// advocacy "photo" cut-outs tucked around it (some behind the letters, some in
-// front) and a handwritten note that writes itself on. Deep color bands follow.
-// Hero styles live in home.css under "Option C".
+// Option C: Scrapbook. A huge condensed serif headline on cream, with advocacy
+// photos tucked behind the letters, each peeking out from a gap: past a line's
+// end, past the left edge, or between lines. A handwritten note writes itself
+// on. Deep color bands follow. Hero styles live in home.css under "Option C".
 const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
 
 const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.']
+
+// Placeholder photos, free under the Unsplash license and loaded from
+// Unsplash for now; to be swapped for final images and saved into /public.
+const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=640&q=70`
+const photos = [
+  { key: 'capitol', id: '1602364438008-9aa4242284b8', alt: 'State capitol dome' },
+  { key: 'rally', id: '1591824353737-61237487acf4', alt: 'People rallying with a "Time for change" sign' },
+  { key: 'hands', id: '1582213782179-e0d53f98f2ca', alt: 'Hands stacked together in a circle' },
+  { key: 'meeting', id: '1515187029135-18ee286d815b', alt: 'A community meeting' },
+]
 const note = ["Let's move from", 'mission to', 'movement.']
 
 export default function HomeScrapbook() {
@@ -19,9 +28,16 @@ export default function HomeScrapbook() {
           <p className="scrap-hero__eyebrow">Advocacy strategy for nonprofits and coalitions</p>
 
           <div className="scrap-hero__board">
-            {/* Behind the letters */}
-            <Rally className="scrap-card scrap-card--rally" />
-            <Ballot className="scrap-card scrap-card--ballot" />
+            {/* Photos sit behind the letters */}
+            {photos.map((ph) => (
+              <img
+                key={ph.key}
+                className={`scrap-card scrap-card--${ph.key}`}
+                src={unsplash(ph.id)}
+                alt={ph.alt}
+                loading="eager"
+              />
+            ))}
 
             <h1 className="scrap-hero__title">
               {lines.map((line, i) => (
@@ -30,10 +46,6 @@ export default function HomeScrapbook() {
                 </span>
               ))}
             </h1>
-
-            {/* In front of the letters */}
-            <Capitol className="scrap-card scrap-card--capitol" />
-            <Megaphone className="scrap-card scrap-card--megaphone" />
 
             <p className="scrap-hero__note">
               {note.map((line, i) => (
