@@ -38,7 +38,45 @@ function Preview({ section, id }: { section: SectionKey; id: string }) {
   }
   if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
+  if (section === 'cta') return <CtaPreview id={id as SectionDesign<'cta'>} />
   return <WorkPreview id={id as SectionDesign<'howWeWork'>} />
+}
+
+function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
+  return (
+    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+      <rect width="120" height="64" fill={C.cream} />
+      {id === 'a' && (
+        <>
+          <rect x="8" y="8" width="104" height="48" rx="7" fill={C.crimson} />
+          <rect x="16" y="20" width="44" height="7" fill={C.cream} />
+          <rect x="16" y="30" width="34" height="7" fill={C.cream} />
+          <rect x="16" y="43" width="20" height="6" rx="3" fill={C.chartreuse} />
+          <circle cx="92" cy="32" r="16" fill="none" stroke={C.cream} strokeWidth="0.8" opacity="0.6" />
+          <circle cx="92" cy="32" r="8" fill={C.cream} />
+        </>
+      )}
+      {id === 'b' && (
+        <>
+          <rect x="10" y="16" width="62" height="10" fill={C.bordeaux} />
+          <rect x="30" y="30" width="54" height="10" fill={C.powder} />
+          <rect x="10" y="48" width="30" height="2" fill={C.bordeaux} opacity="0.6" />
+          <circle cx="100" cy="35" r="11" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
+          <path d="M96 39l8-8M99 31h5v5" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
+        </>
+      )}
+      {id === 'c' && (
+        <>
+          <path d="M15 8h45v48H15a7 7 0 0 1-7-7V15a7 7 0 0 1 7-7z" fill={C.crimson} />
+          <path d="M60 8h45a7 7 0 0 1 7 7v34a7 7 0 0 1-7 7H60z" fill={C.powder} />
+          <rect x="16" y="20" width="34" height="7" fill={C.cream} />
+          <rect x="16" y="30" width="26" height="7" fill={C.cream} />
+          <circle cx="86" cy="28" r="12" fill={C.cream} />
+          <rect x="72" y="45" width="26" height="6" rx="3" fill={C.bordeaux} />
+        </>
+      )}
+    </svg>
+  )
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
@@ -129,20 +167,6 @@ function WorkPreview({ id }: { id: SectionDesign<'howWeWork'> }) {
           <rect x="60" y="42" width="24" height="2" fill={C.bordeaux} opacity="0.6" />
           <rect x="60" y="46" width="20" height="2" fill={C.bordeaux} opacity="0.6" />
         </>,
-      )
-    case 'd':
-      return (
-        <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-          <rect width="120" height="64" fill={C.cream} />
-          <rect x="8" y="8" width="44" height="5" rx="1" fill={C.bordeaux} />
-          {[0, 1, 2].map((i) => (
-            <g key={i}>
-              <rect x={8 + i * 36} y="20" width="32" height="36" fill="#fff" stroke={C.bordeaux} strokeWidth="1" />
-              <rect x={8 + i * 36} y="20" width="32" height="4" fill={[C.powder, C.chartreuse, C.red][i]} />
-              <rect x={12 + i * 36} y="30" width="16" height="4" fill={C.bordeaux} />
-            </g>
-          ))}
-        </svg>
       )
   }
 }

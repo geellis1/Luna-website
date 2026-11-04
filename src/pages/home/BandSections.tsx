@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom'
+import CtaSection from './CtaSection'
 import HowWeWork from './HowWeWork'
 import NoteStatement from './NoteStatement'
 import WhyLuna from './WhyLuna'
 
-// The sections below the homepage hero: statement (notebook page), Why Luna
-// and How we work together (both in the Round 2 design under review), CTA.
+// The sections below the homepage hero: the intro statement, Why Luna, How
+// we work together and the invitation (each in the Round 2 design under
+// review).
 
 export default function BandSections() {
   return (
@@ -15,14 +16,7 @@ export default function BandSections() {
 
       <HowWeWork />
 
-      <section className="section section--cream moon-cta">
-        <div className="container">
-          <h2>Let's Work Together.</h2>
-          <Link to="/contact" className="button button--crimson">
-            Let's Chat
-          </Link>
-        </div>
-      </section>
+      <CtaSection />
     </>
   )
 }

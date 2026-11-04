@@ -73,41 +73,6 @@
   }
 }
 
-.moon-card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  text-decoration: none;
-  border: 2px solid var(--bordeaux);
-}
-.moon-card__band {
-  height: 16px;
-  transition: height 0.15s;
-}
-.moon-card:hover .moon-card__band {
-  height: 28px;
-}
-.moon-card__body {
-  padding: clamp(24px, 3vw, 36px);
-}
-.moon-card__body p {
-  margin: 0;
-}
-.card--powder .moon-card__band {
-  background: var(--powder);
-}
-.card--chartreuse .moon-card__band {
-  background: var(--chartreuse);
-}
-.card--red .moon-card__band {
-  background: var(--red);
-}
-
-.moon-cta {
-  text-align: center;
-  border-top: 2px solid var(--bordeaux);
-}
-
 /* ---------- Hero: Scrapbook ---------- */
 .scrap-hero {
   background: var(--p-bg);

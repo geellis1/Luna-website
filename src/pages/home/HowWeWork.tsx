@@ -16,7 +16,7 @@ import './how-we-work.css'
 // Homepage "How we work together", in the Round 2 design picked in the
 // Explore Section Designs panel (src/sectionDesigns.ts):
 //   A Expanding Capsules (A1 auto-expanding / A2 all open) · B Rising
-//   Capsules · C Editorial Accordion · D Original Cards (unchanged)
+//   Capsules · C Editorial Accordion
 // A, B and C share a wide two-column layout with an intro paragraph.
 // Styles: how-we-work.css.
 
@@ -27,7 +27,6 @@ type Item = (typeof items)[number]
 export default function HowWeWork() {
   const [design] = useSectionDesign('howWeWork')
   const [aVersion] = useSectionDesign('howWeWorkA')
-  if (design === 'd') return <OriginalCards />
   if (design === 'a') {
     return (
       <WideSection variant="a">
@@ -363,36 +362,5 @@ function Arrow(): ReactNode {
     <svg className="panel-c__arrow" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 12h15M13 6l6 6-6 6" />
     </svg>
-  )
-}
-
-// ---------- D · Original Cards ----------
-// The section exactly as it was (styles: .moon-card in home.css)
-const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
-
-function OriginalCards() {
-  return (
-    <section className="section section--cream" id="how-we-work">
-      <div className="container">
-        <div className="section-head">
-          <h2>How we work together</h2>
-          <Link to="/services" className="text-link">
-            Explore services
-          </Link>
-        </div>
-        <div className="grid-3">
-          {tiers.map((t, i) => (
-            <Link to={`/services#${t.id}`} className={`moon-card ${tierAccents[i]}`} key={t.id}>
-              <div className="moon-card__band" />
-              <div className="moon-card__body">
-                <div className="tier-card__kind">{t.kind}</div>
-                <div className="tier-card__label">{t.label}</div>
-                <p>{t.summary}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
   )
 }

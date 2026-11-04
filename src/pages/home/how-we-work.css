@@ -2,8 +2,7 @@
    Shared: a wide two-column layout, with the headline, paragraph and link on
    the left and the interactive design on the right. Each design has its own
    shape and motion, with no bounce, and keeps a fixed height so nothing below
-   the section moves. Option D reuses the original .moon-card styles in
-   home.css. */
+   the section moves. */
 .hww {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-slide: cubic-bezier(0.65, 0, 0.35, 1);

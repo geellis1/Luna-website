@@ -50,7 +50,16 @@ export const sectionDesigns = {
       { id: 'a', label: 'A — Expanding Capsules', note: 'Tall capsules; the one you choose widens to tell its story' },
       { id: 'b', label: 'B — Rising Capsules', note: 'Equal capsules with a symbol each; the one you choose rises' },
       { id: 'c', label: 'C — Sliding Editorial Panels', note: 'Architectural panels that slide open like a folder' },
-      { id: 'd', label: 'D — Original Cards', note: 'The current three cards, for comparison' },
+    ],
+  },
+  cta: {
+    title: 'Let’s Work Together — CTA',
+    param: 'cta',
+    anchor: 'cta',
+    choices: [
+      { id: 'a', label: 'A — Rounded Invitation', note: 'A large burgundy panel with an orbital moon' },
+      { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type and a big circular arrow' },
+      { id: 'c', label: 'C — Split-Panel Graphic', note: 'Burgundy and powder halves with a moving moon' },
     ],
   },
   aboutHeadshot: {

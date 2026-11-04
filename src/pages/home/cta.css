@@ -1,0 +1,417 @@
+/* ---------- Let's Work Together (Round 2 designs A–C) ----------
+   A compact invitation between How we work together and the footer: 40–60px
+   of cream around a panel of ~350–450px. Each design animates in once, when
+   it comes into view. */
+.cta {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  padding: clamp(40px, 4.5vw, 60px) var(--gutter);
+  color: var(--bordeaux);
+  background: var(--cream);
+}
+.cta h2,
+.cta p {
+  margin: 0;
+}
+/* Masked line: rises into view */
+.cta__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+.cta__mask > span {
+  display: block;
+  translate: 0 105%;
+  transition: translate 1s var(--ease-out);
+}
+.cta__mask + .cta__mask > span {
+  transition-delay: 0.12s;
+}
+.cta.is-in .cta__mask > span {
+  translate: none;
+}
+
+/* ===== A · Rounded Invitation ===== */
+.cta-a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 1624px);
+  min-height: clamp(360px, 30vw, 440px);
+  margin-inline: auto;
+  padding: clamp(40px, 4.5vw, 72px);
+  overflow: hidden;
+  color: var(--cream);
+  background: var(--crimson);
+  border-radius: 28px;
+  opacity: 0;
+  scale: 0.96;
+  transition:
+    opacity 0.7s ease,
+    scale 1s var(--ease-out);
+}
+.cta--a.is-in .cta-a {
+  opacity: 1;
+  scale: 1;
+}
+.cta-a__text {
+  position: relative;
+  z-index: 1;
+  max-width: 62%;
+}
+.cta-a__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(3rem, 6.4vw, 6.75rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.cta-a__title .cta__mask > span {
+  transition-delay: 0.25s;
+}
+.cta-a__title .cta__mask + .cta__mask > span {
+  transition-delay: 0.37s;
+}
+.cta-a__support {
+  max-width: 38ch;
+  margin: clamp(18px, 2vw, 26px) 0 clamp(24px, 2.6vw, 34px) !important;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+.button.cta-a__button {
+  color: var(--bordeaux);
+  background: var(--chartreuse);
+  border-color: var(--chartreuse);
+}
+.button.cta-a__button:hover {
+  color: var(--chartreuse);
+  background: transparent;
+}
+/* Orbits running off the right edge, around a crescent moon */
+.cta-a__orbit {
+  position: absolute;
+  top: 50%;
+  right: -6%;
+  width: min(48%, 640px);
+  translate: 0 -50%;
+  overflow: visible;
+}
+.cta-a__ring {
+  fill: none;
+  stroke: var(--cream);
+  stroke-width: 1;
+  opacity: 0.35;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 1.6s var(--ease-out) 0.5s;
+}
+.cta-a__ring--2 {
+  opacity: 0.5;
+  transition-delay: 0.65s;
+}
+.cta-a__ring--3 {
+  opacity: 0.25;
+  transition-delay: 0.8s;
+}
+.cta--a.is-in .cta-a__ring {
+  stroke-dashoffset: 0;
+}
+.cta-a__moon {
+  fill: var(--cream);
+}
+.cta-a__disc {
+  fill: none;
+  stroke: var(--cream);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 1s ease 1s;
+}
+.cta--a.is-in .cta-a__disc {
+  opacity: 0.45;
+}
+.cta-a__dot {
+  fill: var(--chartreuse);
+}
+.cta-a__moon,
+.cta-a__dot {
+  opacity: 0;
+  transition: opacity 1s ease 1s;
+}
+.cta--a.is-in .cta-a__moon,
+.cta--a.is-in .cta-a__dot {
+  opacity: 1;
+}
+
+/* ===== B · Editorial Typography ===== */
+.cta-b {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'note note'
+    'title circle';
+  align-items: end;
+  column-gap: clamp(32px, 4vw, 72px);
+  width: min(100%, 1624px);
+  margin-inline: auto;
+  padding-block: clamp(8px, 1.5vw, 24px);
+  border-top: 1px solid rgba(62, 25, 33, 0.25);
+}
+.cta-b__note {
+  grid-area: note;
+  display: flex;
+  gap: 24px;
+  max-width: 560px;
+  padding-top: 16px;
+  margin-bottom: clamp(12px, 2vw, 28px) !important;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.9s;
+}
+.cta-b__note > span:first-child {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  padding-top: 0.15em;
+}
+.cta--b.is-in .cta-b__note {
+  opacity: 1;
+}
+.cta-b__title {
+  grid-area: title;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(3.5rem, 9vw, 10rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+/* "Together." set in from the right and tucked up under "Let's Work" */
+.cta-b__together {
+  display: block;
+  margin-top: -0.12em;
+  padding-left: 1.6em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--powder);
+  opacity: 0;
+  translate: 0.6em 0;
+  transition:
+    opacity 0.9s ease 0.35s,
+    translate 1.2s var(--ease-out) 0.35s;
+}
+.cta--b.is-in .cta-b__together {
+  opacity: 1;
+  translate: none;
+}
+.cta-b__circle {
+  grid-area: circle;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  width: clamp(132px, 13vw, 190px);
+  aspect-ratio: 1;
+  margin-bottom: 0.4em;
+  text-decoration: none;
+  color: var(--bordeaux);
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  scale: 0.85;
+  opacity: 0;
+  transition:
+    scale 0.9s var(--ease-out) 0.6s,
+    opacity 0.6s ease 0.6s,
+    color 0.3s ease,
+    background 0.3s ease;
+}
+.cta--b.is-in .cta-b__circle {
+  scale: 1;
+  opacity: 1;
+}
+.cta-b__circle-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cta-b__circle svg {
+  width: 34%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: rotate 0.4s var(--ease-out);
+}
+.cta-b__circle:hover,
+.cta-b__circle:focus-visible {
+  color: var(--cream);
+  background: var(--crimson);
+  border-color: var(--crimson);
+  outline: none;
+}
+.cta-b__circle:hover svg,
+.cta-b__circle:focus-visible svg {
+  rotate: 45deg;
+}
+
+/* ===== C · Split-Panel Graphic ===== */
+.cta-c {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  width: min(100%, 1624px);
+  min-height: clamp(360px, 30vw, 440px);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 28px;
+}
+.cta-c__left,
+.cta-c__right {
+  transition:
+    opacity 0.8s ease,
+    translate 1s var(--ease-out);
+  opacity: 0;
+}
+.cta-c__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(40px, 4.5vw, 72px);
+  color: var(--cream);
+  background: var(--crimson);
+  translate: -40px 0;
+}
+.cta-c__right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: clamp(28px, 3vw, 44px);
+  background: var(--powder);
+  translate: 40px 0;
+  transition-delay: 0.1s;
+}
+.cta--c.is-in .cta-c__left,
+.cta--c.is-in .cta-c__right {
+  opacity: 1;
+  translate: none;
+}
+.cta-c__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(3rem, 5.8vw, 6.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.cta-c__title .cta__mask > span {
+  transition-delay: 0.3s;
+}
+.cta-c__title .cta__mask + .cta__mask > span {
+  transition-delay: 0.42s;
+}
+.cta-c__support {
+  max-width: 36ch;
+  margin-top: clamp(18px, 2vw, 26px) !important;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+.cta-c__moon {
+  width: min(78%, 300px);
+  overflow: visible;
+}
+.cta-c__orbit {
+  fill: none;
+  stroke: var(--bordeaux);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+.cta-c__shadow {
+  fill: #86a3c3;
+}
+.cta-c__lit {
+  fill: var(--cream);
+}
+.cta-c__sat {
+  fill: var(--crimson);
+}
+.button.cta-c__button {
+  white-space: nowrap;
+  color: var(--cream);
+  background: var(--bordeaux);
+  border-color: var(--bordeaux);
+}
+.button.cta-c__button:hover {
+  color: var(--bordeaux);
+  background: transparent;
+}
+
+/* ===== Tablet and phones ===== */
+@media (max-width: 860px) {
+  .cta-a {
+    display: block;
+    min-height: 0;
+    padding-bottom: clamp(200px, 48vw, 300px);
+  }
+  .cta-a__text {
+    max-width: none;
+  }
+  /* The orbit settles into the bottom-right corner, under the text */
+  .cta-a__orbit {
+    top: auto;
+    bottom: -18%;
+    right: -14%;
+    width: min(70%, 380px);
+    translate: none;
+  }
+
+  .cta-b {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'note'
+      'title'
+      'circle';
+  }
+  .cta-b__note {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cta-b__together {
+    padding-left: 0.9em;
+  }
+  .cta-b__circle {
+    justify-self: end;
+    margin: 20px 0 0;
+  }
+
+  .cta-c {
+    grid-template-columns: 1fr;
+  }
+  .cta-c__left {
+    translate: 0 -24px;
+  }
+  .cta-c__right {
+    flex-direction: row;
+    justify-content: space-between;
+    translate: 0 24px;
+  }
+  .cta-c__moon {
+    width: min(46%, 200px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta *,
+  .cta *::before,
+  .cta *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
