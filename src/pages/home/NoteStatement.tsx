@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { useSectionDesign } from '../../sectionDesigns'
+import IntroMics from './IntroMics'
 import IntroPoster from './IntroPoster'
 
 // The statement right under the homepage hero. Half of it is handwritten on
@@ -14,7 +15,9 @@ import IntroPoster from './IntroPoster'
 
 export default function NoteStatement() {
   const [design] = useSectionDesign('intro')
-  return design === 'notebook' ? <NotebookStatement /> : <IntroPoster variant={design} />
+  if (design === 'notebook') return <NotebookStatement />
+  if (design === 'mics') return <IntroMics />
+  return <IntroPoster variant={design} />
 }
 
 function NotebookStatement() {

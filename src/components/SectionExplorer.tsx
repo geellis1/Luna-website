@@ -136,6 +136,18 @@ function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
+  if (id === 'mics') {
+    return (
+      <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+        <rect width="120" height="64" fill={C.cream} />
+        <rect x="30" y="5" width="60" height="6" fill={C.bordeaux} />
+        <circle cx="60" cy="44" r="24" fill={C.bordeaux} />
+        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+          <rect key={i} x={34 + i * 7.5} y={46 - (i % 3) * 3} width="4" height="22" rx="2" fill="#444" transform={`rotate(${(i - 3) * 6} ${36 + i * 7.5} 60)`} />
+        ))}
+      </svg>
+    )
+  }
   if (id === 'notebook') {
     return (
       <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
