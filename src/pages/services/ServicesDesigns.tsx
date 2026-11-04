@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Copy from '../../components/Copy'
 import { tiers } from '../../content'
@@ -9,8 +9,8 @@ import './services.css'
 // (Begin Powder Blue, Build Chartreuse, Sustain Deep Crimson; big uppercase
 // display names):
 //   A · Horizontal Accordion: three full-bleed bands, one open at a time
-//   B · Editorial Color Blocks: three full-bleed blocks, all open, the
-//       composition alternating from band to band
+//   B · Editorial Chapters: three full-bleed magazine-spread chapters, all
+//       open, alternating sides, building in as they scroll into view
 // Both show the same content and keep the #begin / #build / #sustain anchors
 // the homepage links to. The Let's Work Together section at the end is
 // picked separately in the panel (home/CtaSection.tsx). Styles: services.css.
@@ -131,38 +131,70 @@ export function ServicesAccordion() {
   )
 }
 
-// ---------- B · Editorial Color Blocks ----------
-// Three full-bleed blocks, all open. Begin and Sustain set the huge name on
-// the left with the details on the right; Build mirrors it, its name on the
-// right and set low, so the page alternates as it goes.
+// ---------- B · Editorial Chapters ----------
+// Three full-bleed chapters, all open, set like magazine spreads: a small
+// "01 / Training" line over a hairline, a dramatically oversized name, and
+// the details beside it. Begin and Sustain put the name on the left; Build
+// mirrors it, so the page alternates. As each chapter comes into view its
+// rule draws across, the name slides into place and the details fade in.
 export function ServicesBlocks() {
   return (
     <div className="svc svc--b">
       <Intro />
       {services.map((s, i) => (
-        <section
-          key={s.id}
-          id={s.id}
-          className={`svc-block tone--${s.tone}${i % 2 ? ' svc-block--flip' : ''}`}
-          aria-labelledby={`svc-${s.id}-title`}
-        >
-          <div className="svc-block__inner">
-            <header className="svc-block__head">
-              <p className="svc-block__num">
-                {s.num} <span>/ 03</span>
-              </p>
-              <h2 className="svc-block__name" id={`svc-${s.id}-title`}>
-                {s.label}
-              </h2>
-              <p className="svc-block__kind">{s.kind}</p>
-            </header>
-            <div className="svc-block__body">
-              <Details service={s} />
-            </div>
-          </div>
-        </section>
+        <Chapter key={s.id} service={s} flip={i % 2 === 1} />
       ))}
       <CtaSection section="ctaServices" />
     </div>
+  )
+}
+
+// Each name's width in the display face, in ems, so it can be sized to fill
+// its column exactly
+const nameWidths: Record<string, number> = { begin: 2.22, build: 2.2, sustain: 2.98 }
+
+function Chapter({ service: s, flip }: { service: Service; flip: boolean }) {
+  const ref = useRef<HTMLElement>(null)
+  const [shown, setShown] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.2 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <section
+      ref={ref}
+      id={s.id}
+      className={`svc-block tone--${s.tone}${flip ? ' svc-block--flip' : ''}${shown ? ' is-in' : ''}`}
+      aria-labelledby={`svc-${s.id}-title`}
+    >
+      <div className="svc-block__inner">
+        <header className="svc-block__head">
+          <p className="svc-block__meta">
+            {s.num} <span aria-hidden="true">/</span> {s.kind}
+          </p>
+          <h2
+            className="svc-block__name"
+            id={`svc-${s.id}-title`}
+            style={{ '--em-width': nameWidths[s.id] ?? 3 } as CSSProperties}
+          >
+            {s.label}
+          </h2>
+        </header>
+        <div className="svc-block__body">
+          <Details service={s} />
+        </div>
+      </div>
+    </section>
   )
 }

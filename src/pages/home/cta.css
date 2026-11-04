@@ -427,3 +427,9 @@
 .cta--on-powder {
   background: var(--powder);
 }
+
+/* B: "Together" starts nudged right for its entrance; keep that from making
+   the page scroll sideways on narrow screens */
+.cta--b {
+  overflow-x: clip;
+}

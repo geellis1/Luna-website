@@ -40,7 +40,7 @@ const names: Record<string, string> = {
   'aboutHeadshot:glasses': 'Red Glasses',
   'aboutHeadshot:cardigan': 'Green Cardigan',
   'services:a': 'Option A — Horizontal Accordion',
-  'services:b': 'Option B — Editorial Color Blocks',
+  'services:b': 'Option B — Editorial Chapters',
   'footer:a': 'Option A — Editorial Colophon',
   'footer:b': 'Option B — Service Bands',
   'footer:c': 'Option C — Moon Wordmark',

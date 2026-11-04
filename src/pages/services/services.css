@@ -287,7 +287,7 @@
   border-top: 1px solid var(--rule);
 }
 
-/* ---------- B · Editorial Color Blocks ---------- */
+/* ---------- B · Editorial Chapters ---------- */
 .svc-block {
   color: var(--on);
   background: var(--tone);
@@ -295,67 +295,99 @@
 }
 .svc-block__inner {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   grid-template-areas: 'head body';
-  gap: clamp(32px, 6vw, 110px);
-  max-width: 1400px;
+  gap: clamp(40px, 6vw, 110px);
+  max-width: 1440px;
   margin-inline: auto;
-  padding: clamp(64px, 8vw, 120px) var(--gutter);
+  padding: clamp(88px, 10vw, 160px) var(--gutter);
 }
 .svc-block--flip .svc-block__inner {
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   grid-template-areas: 'body head';
 }
 .svc-block__head {
   grid-area: head;
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
-}
-.svc-block__body {
-  grid-area: body;
-  align-self: end;
 }
 .svc-block--flip .svc-block__head {
   align-items: flex-end;
   justify-content: flex-end;
   text-align: right;
 }
+.svc-block__body {
+  grid-area: body;
+  align-self: end;
+}
 .svc-block--flip .svc-block__body {
   align-self: start;
 }
-.svc-block__num {
-  margin: 0 0 clamp(18px, 3vw, 40px);
-  padding-bottom: 12px;
+/* "01 / Training" over a hairline that draws across */
+.svc-block__meta {
+  position: relative;
   width: 100%;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  border-bottom: 1px solid var(--rule);
+  margin: 0 0 clamp(20px, 3cqi, 40px);
+  padding-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
-.svc-block__num span {
+.svc-block__meta span {
+  margin-inline: 4px;
+  font-weight: 400;
   opacity: 0.55;
 }
+.svc-block__meta::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: var(--rule);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 1.1s var(--ease-out);
+}
+.svc-block--flip .svc-block__meta::after {
+  transform-origin: right;
+}
+/* Each name fills its column's width (--em-width: its width in ems) */
 .svc-block__name {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(4.4rem, 15vw, 14rem);
+  font-size: calc(97cqi / var(--em-width));
   line-height: 0.8;
   text-transform: uppercase;
-  /* The display face sits high; nudge it down onto its baseline */
-  translate: -0.04em 0.04em;
+  white-space: nowrap;
+  opacity: 0;
+  translate: -6% 0.04em;
+  transition:
+    opacity 1s ease 0.15s,
+    translate 1.3s var(--ease-out) 0.15s;
 }
 .svc-block--flip .svc-block__name {
-  translate: 0.03em 0.04em;
+  translate: 6% 0.04em;
 }
-.svc-block__kind {
-  margin: clamp(16px, 2vw, 26px) 0 0;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.svc-block__body {
+  opacity: 0;
+  translate: 0 18px;
+  transition:
+    opacity 0.9s ease 0.55s,
+    translate 1s var(--ease-out) 0.55s;
 }
-.svc-block__kind::before {
-  content: '— ';
+.svc-block.is-in .svc-block__meta::after {
+  scale: 1 1;
+}
+.svc-block.is-in .svc-block__name {
+  opacity: 1;
+  translate: 0 0.04em;
+}
+.svc-block.is-in .svc-block__body {
+  opacity: 1;
+  translate: none;
 }
 
 /* Tablets and phones */
@@ -367,7 +399,10 @@
   .svc-block--flip .svc-block__inner {
     grid-template-columns: 1fr;
     grid-template-areas: 'head' 'body';
-    gap: 32px;
+    gap: 36px;
+  }
+  .svc-block__inner {
+    padding-block: clamp(64px, 12vw, 96px);
   }
   /* Build keeps its name on the right, so the page still alternates */
   .svc-block__body,
@@ -412,9 +447,6 @@
   }
   .svc-band__body {
     max-width: none;
-  }
-  .svc-block__name {
-    font-size: clamp(3.8rem, 22vw, 6.5rem);
   }
 }
 

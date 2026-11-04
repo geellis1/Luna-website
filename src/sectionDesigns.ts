@@ -103,7 +103,7 @@ export const sectionDesigns = {
     path: '/services',
     choices: [
       { id: 'a', label: 'Option A — Horizontal Accordion', note: 'Three full-width color bands; one opens at a time' },
-      { id: 'b', label: 'Option B — Editorial Color Blocks', note: 'Three full-width color blocks, all open, alternating' },
+      { id: 'b', label: 'Option B — Editorial Chapters', note: 'Three magazine-spread chapters, all open, alternating' },
     ],
   },
   // On every page
