@@ -12,23 +12,32 @@ const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--
 export default function HomeBold() {
   const { moon } = useOptions()
   const Moon = moons[moon]
-  // The collage moons run in a row under a centered headline; every other
-  // style sits beside the headline on the right
+  // The collage moons run in a band behind a big centered headline; every
+  // other style sits beside the headline on the right
   const row = moon === 'collage'
+  const title = (
+    <h1 className="lunar-hero__title">
+      <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}
+      <span className="lunar-line lunar-line--2">advocacy strategy</span>{' '}
+      <span className="lunar-line lunar-line--3">
+        for <em>audacious</em>
+      </span>{' '}
+      <span className="lunar-line lunar-line--4">change.</span>
+    </h1>
+  )
   return (
     <>
       <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}`}>
         {!row && <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />}
         <div className="container lunar-hero__stage">
-          <h1 className="lunar-hero__title">
-            <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}
-            <span className="lunar-line lunar-line--2">advocacy strategy</span>{' '}
-            <span className="lunar-line lunar-line--3">
-              for <em>audacious</em>
-            </span>{' '}
-            <span className="lunar-line lunar-line--4">change.</span>
-          </h1>
-          {row && <Moon key={moon} className="lunar-hero__row" />}
+          {row ? (
+            <div className="lunar-hero__center">
+              <Moon key={moon} className="lunar-hero__row" />
+              {title}
+            </div>
+          ) : (
+            title
+          )}
           <div className="lunar-hero__foot">
             <Link to="/contact" className="button button--cream">
               Let's Work Together

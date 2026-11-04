@@ -393,42 +393,69 @@
   border-top: 2px solid var(--bordeaux);
 }
 
-/* Option B moon style 5: centered headline with a row of collage moons under it */
+/* Option B moon style 5: huge bold centered headline over a band of collage
+   moons that bleeds off both edges of the screen */
+.lunar-hero__center {
+  position: relative;
+  margin: auto 0;
+  display: grid;
+  place-items: center;
+}
 .lunar-hero--row .lunar-hero__title {
   max-width: none;
-  margin: auto 0 0;
+  margin: 0;
   text-align: center;
-  font-size: clamp(2.4rem, min(5.6vw, 8.5vh), 5.5rem);
+  font-size: clamp(3rem, min(10vw, 14vh), 10rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
 }
 .lunar-hero--row .lunar-line {
   display: inline-block;
   padding-left: 0;
 }
 .lunar-hero__row {
-  display: block;
-  width: 100%;
-  margin: clamp(28px, 6vh, 64px) 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(130vw, 900px);
+  translate: -50% -50%;
   overflow: visible;
+  pointer-events: none;
 }
 @media (max-width: 760px) {
   .lunar-hero--row .lunar-hero__title {
-    margin: auto 0 0;
+    font-size: clamp(2rem, 9.5vw, 4rem);
+  }
+  .lunar-hero__row {
+    width: 260vw;
   }
 }
 .collage-tile {
   transform-box: fill-box;
   transform-origin: center;
   rotate: var(--tilt);
-  animation: collage-drop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) var(--delay) both;
+  animation:
+    collage-drop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) var(--delay) both,
+    collage-float 7s ease-in-out calc(var(--delay) + 0.6s) infinite;
 }
 .collage-tile__line {
   stroke: var(--cream);
-  stroke-opacity: 0.85;
+  stroke-opacity: 0.6;
   transition: stroke 0.5s;
 }
 .collage-tile.is-active .collage-tile__line {
   stroke: var(--chartreuse);
   stroke-opacity: 1;
+}
+@keyframes collage-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
 }
 @keyframes collage-drop {
   from {

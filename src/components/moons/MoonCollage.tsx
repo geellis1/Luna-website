@@ -1,13 +1,13 @@
 import { useId, useRef, type CSSProperties } from 'react'
 import { litPath, useMoonPhase } from './phase'
 
-// Style 5 · Collage: a row of cut-out moons with rough, hand-drawn outlines,
-// shown under a centered headline. Pieces drop into place left to right; a
-// chartreuse outline then tracks the current phase along the row. The moon
-// surface is generated (fractal noise), not a photo.
+// Style 5 · Collage: a band of cut-out moons with rough, hand-drawn outlines,
+// running behind a big centered headline. Pieces drop into place left to
+// right, then float gently; a chartreuse outline tracks the current phase
+// along the row. The moon surface is generated (fractal noise), not a photo.
 
-const R = 60 // tile moon radius
-const GAP = 150 // spacing between tile centers
+const R = 68 // tile moon radius
+const GAP = 142 // spacing between tile centers
 
 // Left to right: the (empty) new moon, then waxing through full and waning
 const tiles = [0, 0.07, 0.16, 0.25, 0.38, 0.5, 0.62, 0.75, 0.86].map((p, i) => ({
@@ -43,7 +43,7 @@ export default function MoonCollage({ className }: { className?: string }) {
   })
 
   return (
-    <svg className={className} viewBox="-690 -84 1380 168" aria-hidden="true">
+    <svg className={className} viewBox="-660 -92 1320 184" aria-hidden="true">
       <defs>
         {/* Moon surface: fine grain plus darker "maria" patches, warm grey */}
         <filter id={`surface${uid}`} x="0" y="0" width="100%" height="100%">
@@ -71,7 +71,17 @@ export default function MoonCollage({ className }: { className?: string }) {
             <feFuncG type="linear" slope="1.56" intercept="0.01" />
             <feFuncB type="linear" slope="1.48" intercept="-0.01" />
           </feComponentTransfer>
-          <feBlend in="contrast" in2="mariaShapes" mode="multiply" result="moon" />
+          <feBlend in="contrast" in2="mariaShapes" mode="multiply" result="grey" />
+          {/* Map grey to brand tints: shadows Deep Crimson, highlights dusty rose,
+              kept mid-toned so cream headline type stays readable on top */}
+          <feColorMatrix
+            in="grey"
+            values="0.36 0 0 0 0.45
+                    0.36 0 0 0 0.09
+                    0.32 0 0 0 0.20
+                    0    0 0 0 1"
+            result="moon"
+          />
           <feComposite in="moon" in2="SourceAlpha" operator="in" />
         </filter>
         {/* Wobbly, chalky edges for the outlines */}
