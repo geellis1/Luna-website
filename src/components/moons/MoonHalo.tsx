@@ -1,98 +1,118 @@
 import { useId, useRef } from 'react'
 import { litPath, useMoonPhase } from './phase'
 
-// Style 2 · Halo: dreamy, layered light in brand tints. Blurred crimson and red
-// auras, soft cream / powder / red / chartreuse rings, and a moon that warms
-// from cream into crimson pinks, with a crimson shadow side washed in powder
-// blue and a soft terminator.
+// Moon Halo: a recognizable, softly textured moon in brand tones (cream to
+// muted rose, with burgundy seas and craters) inside one or two delicate
+// orbital rings and a faint atmospheric glow. The lunar-phase detail is a
+// crescent of shadow on the left that drifts slowly, so the moon always reads
+// as a moon (never goes dark).
 //
-// The auras extend past the viewBox on purpose; the SVG has overflow: visible
-// (see .lunar-hero__moon) so the glow fades out instead of ending in a box.
+// The glow extends past the viewBox on purpose; the SVG has overflow: visible
+// (see .lunar-hero__moon) so it fades out instead of ending in a box.
 
 const R = 112
+
+// Craters: [x, y, radius]. Each is a soft dark bowl with a faint lit rim.
+const craters: [number, number, number][] = [
+  [44, 40, 10],
+  [-48, 18, 7],
+  [12, -64, 6],
+  [62, -28, 5.5],
+  [-18, 70, 5],
+  [-62, -40, 4.5],
+  [30, 78, 4],
+]
 
 export default function MoonHalo({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, '')
   const mask = useRef<SVGPathElement>(null)
-  const aura = useRef<SVGPathElement>(null)
 
+  // Keep the phase within a waxing gibbous range so only a slim crescent of
+  // shadow moves across the left edge
   useMoonPhase((p) => {
-    const d = litPath(p, R)
-    mask.current?.setAttribute('d', d)
-    aura.current?.setAttribute('d', d)
+    const phase = 0.4 + 0.05 * Math.sin(2 * Math.PI * p)
+    mask.current?.setAttribute('d', litPath(phase, R))
   })
 
   return (
     <svg className={className} viewBox="-260 -260 520 520" aria-hidden="true">
       <defs>
-        <filter id={`soft${uid}`} x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="34" />
+        <filter id={`glow${uid}`} x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="38" />
         </filter>
-        <filter id={`ringblur${uid}`} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3" />
+        <filter id={`terminator${uid}`} x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="4" />
         </filter>
-        <filter id={`edge${uid}`} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="10" />
-        </filter>
-        {/* Mottled surface: fractal noise tinted Deep Crimson */}
-        <filter id={`mottle${uid}`} x="0" y="0" width="100%" height="100%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="7" />
+        {/* Fine surface grain in a muted burgundy */}
+        <filter id={`grain${uid}`} x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" />
           <feColorMatrix
             values="0 0 0 0 0.45
                     0 0 0 0 0.09
                     0 0 0 0 0.20
-                    2 0 0 0 -0.75"
+                    1.6 0 0 0 -0.62"
           />
         </filter>
-        <filter id={`haze${uid}`}>
-          <feGaussianBlur stdDeviation="2.5" />
-        </filter>
-        {/* Lit side: cream core warming into red and crimson tints */}
-        <radialGradient id={`lit${uid}`} cx="45%" cy="62%" r="72%">
+        {/* Lit surface: warm cream into a muted rose toward the limb */}
+        <radialGradient id={`lit${uid}`} cx="58%" cy="40%" r="70%">
           <stop offset="0%" stopColor="#F5F0E8" />
-          <stop offset="35%" stopColor="#F3D3CC" />
-          <stop offset="72%" stopColor="#E39AA6" />
-          <stop offset="100%" stopColor="#B5577A" />
+          <stop offset="55%" stopColor="#EEDDD3" />
+          <stop offset="100%" stopColor="#D7B3AE" />
         </radialGradient>
-        <linearGradient id={`band${uid}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#9AB7D5" stopOpacity="0.8" />
-          <stop offset="30%" stopColor="#9AB7D5" stopOpacity="0.4" />
-          <stop offset="55%" stopColor="#9AB7D5" stopOpacity="0" />
-        </linearGradient>
-        <radialGradient id={`dark${uid}`} cx="50%" cy="25%" r="85%">
-          <stop offset="0%" stopColor="#9AB7D5" stopOpacity="0.38" />
-          <stop offset="100%" stopColor="#9AB7D5" stopOpacity="0.06" />
+        {/* Gentle limb darkening for dimension (not a glossy sphere) */}
+        <radialGradient id={`limb${uid}`} cx="55%" cy="42%" r="62%">
+          <stop offset="70%" stopColor="#741734" stopOpacity="0" />
+          <stop offset="100%" stopColor="#741734" stopOpacity="0.22" />
         </radialGradient>
-        <mask id={`mask${uid}`}>
-          <path ref={mask} fill="#fff" filter={`url(#edge${uid})`} />
+        <mask id={`lit-mask${uid}`}>
+          <path ref={mask} fill="#fff" filter={`url(#terminator${uid})`} />
         </mask>
         <clipPath id={`disc${uid}`}>
           <circle r={R} />
         </clipPath>
       </defs>
 
-      {/* Auras */}
-      <circle r="210" fill="#741734" opacity="0.7" filter={`url(#soft${uid})`} />
-      <circle cy="16" r="160" fill="#DA1A10" opacity="0.38" filter={`url(#soft${uid})`} />
-      <path ref={aura} fill="#E39AA6" opacity="0.4" transform="scale(1.3)" filter={`url(#soft${uid})`} />
+      {/* Very soft atmospheric glow */}
+      <circle r="190" fill="#741734" opacity="0.4" filter={`url(#glow${uid})`} />
+      <circle r="130" fill="#E39AA6" opacity="0.12" filter={`url(#glow${uid})`} />
 
-      {/* Soft nested rings, slightly offset like light through glass */}
-      <circle r="172" fill="none" stroke="#F5F0E8" strokeOpacity="0.2" strokeWidth="10" filter={`url(#ringblur${uid})`} />
-      <ellipse cy="6" rx="152" ry="147" fill="none" stroke="#D5E272" strokeOpacity="0.45" strokeWidth="2" filter={`url(#ringblur${uid})`} />
-      <ellipse cy="-8" rx="134" ry="128" fill="none" stroke="#9AB7D5" strokeOpacity="0.6" strokeWidth="4" filter={`url(#ringblur${uid})`} />
-      <circle cy="10" r="124" fill="none" stroke="#DA1A10" strokeOpacity="0.55" strokeWidth="6" filter={`url(#ringblur${uid})`} />
+      {/* Two delicate orbital rings */}
+      <circle r="160" fill="none" stroke="#F5F0E8" strokeOpacity="0.22" strokeWidth="1" />
+      <ellipse rx="180" ry="168" fill="none" stroke="#E39AA6" strokeOpacity="0.16" strokeWidth="1" transform="rotate(-18)" />
 
-      {/* Moon: crimson shadow side, then the lit side through a soft-edged mask */}
+      {/* Moon */}
       <g clipPath={`url(#disc${uid})`}>
-        <circle r={R} fill="#741734" />
-        <circle r={R} fill={`url(#dark${uid})`} />
-        <g mask={`url(#mask${uid})`} filter={`url(#haze${uid})`}>
+        {/* Shadow side: burgundy with a faint crimson earthshine */}
+        <circle r={R} fill="#3E1921" />
+        <circle r={R} fill="#741734" opacity="0.45" />
+        {/* Lit side through the soft-edged phase mask */}
+        <g mask={`url(#lit-mask${uid})`}>
           <circle r={R} fill={`url(#lit${uid})`} />
-          {/* Cool powder band across the top, like light through tinted glass */}
-          <circle r={R} fill={`url(#band${uid})`} />
-          <rect x={-R} y={-R} width={R * 2} height={R * 2} filter={`url(#mottle${uid})`} opacity="0.45" />
+          <rect x={-R} y={-R} width={R * 2} height={R * 2} filter={`url(#grain${uid})`} opacity="0.35" />
+          {/* Seas: large soft darker patches */}
+          <g fill="#741734">
+            <ellipse cx="-24" cy="-24" rx="34" ry="24" opacity="0.13" transform="rotate(-20 -24 -24)" />
+            <ellipse cx="28" cy="-6" rx="22" ry="28" opacity="0.11" />
+            <ellipse cx="-6" cy="40" rx="30" ry="17" opacity="0.1" />
+          </g>
+          {/* Craters: dark bowl, lit lower-right rim */}
+          {craters.map(([x, y, r]) => (
+            <g key={`${x},${y}`}>
+              <circle cx={x} cy={y} r={r} fill="#741734" opacity="0.2" />
+              <path
+                d={`M${x - r * 0.7} ${y + r * 0.7}A${r} ${r} 0 0 0 ${x + r * 0.7} ${y - r * 0.7}`}
+                fill="none"
+                stroke="#FFFDF8"
+                strokeOpacity="0.6"
+                strokeWidth="1.2"
+              />
+            </g>
+          ))}
+          <circle r={R} fill={`url(#limb${uid})`} />
         </g>
       </g>
+      {/* A delicate illuminated edge defines the full circle */}
+      <circle r={R} fill="none" stroke="#F5F0E8" strokeOpacity="0.35" strokeWidth="1" />
     </svg>
   )
 }

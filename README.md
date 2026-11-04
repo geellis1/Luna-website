@@ -42,13 +42,15 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 
 ## Design options (review mode)
 
-A **Design options** button in the bottom-right corner opens a panel for switching
-between home page options, moon styles (home option B), headline color (B and C),
-nav bar styles, and the floating pill's color. It floats
-over the page, so the real layout is never pushed down. Each combination has a
-shareable link (e.g. `/?home=bold&moon=collage&nav=pill`); **Copy link** copies it.
+An **Explore Designs** button (bottom-right) opens a drawer where the client
+compares homepage designs, navigation styles (with their own settings, such as
+pill color or menu layout and trigger) and color combinations. Every choice
+updates the site immediately and is written into the URL; **Share This Design**
+copies that link, which reproduces the same design in any browser.
+**Reset to Default** returns to the original choices.
 
-- Options are listed in `optionGroups` in `src/options.ts`. Home options are components in
-  `src/pages/home/`, moon styles in `src/components/moons/`, nav styles in
-  `src/components/Nav.tsx` plus `.nav--<style>` rules in `src/index.css`.
-- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel (or delete the unused options) to hide it.
+- Choices are defined in `optionGroups` in `src/options.ts`; the drawer is
+  `src/components/DesignDrawer.tsx` with previews in `DesignPreviews.tsx`.
+- Not offered to the client but kept in the code: the Classic navigation bar
+  and the Collage moon styles.
+- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel to hide the button and drawer.

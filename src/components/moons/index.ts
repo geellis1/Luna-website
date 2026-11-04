@@ -1,9 +1,10 @@
 import type { ComponentType } from 'react'
-import type { MoonStyle } from '../../options'
 import CollageCream, { CollagePowder, CollageRose } from './MoonCollage'
 import MoonHalo from './MoonHalo'
 
-export const moons: Record<MoonStyle, ComponentType<{ className?: string }>> = {
+// Moon Halo (home option B) shows the halo; the collage styles are kept for
+// reference but no longer offered as client choices.
+export const moons: Record<string, ComponentType<{ className?: string }>> = {
   halo: MoonHalo,
   collage: CollageCream,
   'collage-powder': CollagePowder,

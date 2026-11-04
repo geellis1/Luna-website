@@ -4,7 +4,6 @@ import CtaBand from '../../components/CtaBand'
 import Capsules from '../../components/Capsules'
 import { moons } from '../../components/moons'
 import { pillars, tiers } from '../../content'
-import { useOptions } from '../../options'
 
 // Option B: editorial hero with a glowing moon cycling through its phases.
 // Headline lines are staggered like a magazine cover; letters rise into place
@@ -60,7 +59,9 @@ function Headline() {
 // Also renders home option D (Capsules), which shares this page with the
 // capsules beside the headline in place of a moon.
 export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
-  const { moon } = useOptions()
+  // Moon Halo is the one moon offered; the collage styles stay in
+  // components/moons for reference
+  const moon: string = 'halo'
   const Moon = capsules ? Capsules : moons[moon]
   // The collage moons run in a row under a big centered headline; the
   // capsules sit beside the headline, above the bottom row; the halo floats
@@ -72,7 +73,6 @@ export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
   return (
     <>
       <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}${beside ? ' lunar-hero--capsules' : ''}`}>
-        {!row && !beside && <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />}
         <div className="container lunar-hero__stage">
           {row ? (
             <div className="lunar-hero__center">
@@ -85,7 +85,12 @@ export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
               <Moon key={moon} className="lunar-hero__capsules" />
             </div>
           ) : (
-            title
+            // The moon is anchored to the headline area, so it sits level with
+            // the headline and never reaches the bottom row
+            <div className="lunar-hero__halo-area">
+              {title}
+              <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />
+            </div>
           )}
           <div className="hero-foot lunar-hero__foot">
             <Link to="/contact" className="button button--cream">

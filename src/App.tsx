@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
-import OptionsBar from './components/OptionsBar'
+import DesignDrawer from './components/DesignDrawer'
 import Nav from './components/Nav'
 import About from './pages/About'
 import Contact from './pages/Contact'
@@ -33,7 +33,6 @@ export default function App() {
   return (
     <>
       <RouteEffects />
-      <OptionsBar />
       <Nav />
       <main>
         <Routes>
@@ -45,6 +44,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <DesignDrawer />
     </>
   )
 }

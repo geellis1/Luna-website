@@ -1,18 +1,39 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, NavLink } from 'react-router-dom'
 import { navLinks } from '../content'
+import { useOptions } from '../options'
 
-// Nav option D: Editorial menu. Closed, it's just the logo and a MENU button
-// sitting on the page (like the circled nav). Open, a near-fullscreen cream
-// panel shows four oversized numbered rows. Rendered into <body> so it sits
-// above every page element, including the design options panel.
+// Nav option: Editorial menu. Closed, it's the logo and a crescent-moon
+// trigger sitting on the page (like the circled nav). Open, the same editorial
+// rows show either as a rounded fullscreen takeover or as a right-side half
+// panel (Menu Layout option). Rendered into <body> so it sits above every page
+// element, including the Explore Designs drawer.
 
-const CLOSE_MS = 300 // matches the closing animation (content 180ms, panel 60 + 240ms)
+const CLOSE_MS = 340 // covers both layouts' closing animations
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+// A crescent moon in a thin circle; when `closing` it turns into an ×
+function MoonMark({ closing = false }: { closing?: boolean }) {
+  const uid = useId().replace(/:/g, '')
+  return (
+    <svg className={`moon-mark${closing ? ' is-x' : ''}`} viewBox="0 0 44 44" aria-hidden="true">
+      <defs>
+        <mask id={`cut${uid}`}>
+          <rect width="44" height="44" fill="#fff" />
+          <circle cx="26" cy="18.5" r="8.4" fill="#000" />
+        </mask>
+      </defs>
+      <circle className="moon-mark__ring" cx="22" cy="22" r="21" />
+      <circle className="moon-mark__crescent" cx="21" cy="22" r="9.5" mask={`url(#cut${uid})`} />
+      <path className="moon-mark__x" d="M16 16l12 12M28 16 16 28" />
+    </svg>
+  )
+}
+
 export default function EditorialMenu({ light }: { light: boolean }) {
+  const { menuLayout, menuTrigger } = useOptions()
   const [open, setOpen] = useState(false)
   const [closing, setClosing] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
@@ -76,22 +97,25 @@ export default function EditorialMenu({ light }: { light: boolean }) {
         <button
           ref={menuButton}
           type="button"
-          className="menu-toggle"
+          className={`moon-trigger${open ? ' is-open' : ''}`}
+          aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="editorial-menu"
           onClick={() => setOpen(true)}
         >
-          Menu
-          <span className="menu-toggle__icon" aria-hidden="true">
-            <span />
-            <span />
-          </span>
+          <MoonMark closing={open} />
+          {menuTrigger === 'moon-lines' && (
+            <span className="moon-trigger__lines" aria-hidden="true">
+              <span />
+              <span />
+            </span>
+          )}
         </button>
       </div>
 
       {open &&
         createPortal(
-          <div className={`ed-menu${closing ? ' is-closing' : ''}`}>
+          <div className={`ed-menu ed-menu--${menuLayout}${closing ? ' is-closing' : ''}`}>
             <div className="ed-menu__backdrop" onClick={close} />
             <div
               ref={panel}
@@ -107,6 +131,7 @@ export default function EditorialMenu({ light }: { light: boolean }) {
                 </Link>
                 <button ref={closeButton} type="button" className="ed-menu__close" onClick={close}>
                   Close
+                  <MoonMark closing />
                 </button>
               </div>
 

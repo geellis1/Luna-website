@@ -160,18 +160,42 @@
   padding-bottom: clamp(32px, 6vh, 72px);
 }
 
-/* The moon sits to the right of the headline, vertically centered with it.
-   overflow: visible lets glows fade past the SVG's edges instead of being boxed in. */
+/* The moon sits to the right of the headline, vertically centered on the
+   headline area (not the whole hero). overflow: visible lets glows fade past
+   the SVG's edges instead of being boxed in. */
+.lunar-hero__halo-area {
+  position: relative;
+  margin: auto 0;
+}
 .lunar-hero__moon {
   position: absolute;
   top: 50%;
-  right: -10%;
-  width: min(72vh, 46vw, 820px);
+  right: -8%;
+  width: min(60vh, 34vw, 620px);
   translate: 0 -50%;
   overflow: visible;
   pointer-events: none;
   animation: lunar-fade 2.4s ease both;
 }
+/* Phones: the moon sits above the headline, in room reserved at the top of
+   the headline area */
+@media (max-width: 760px) {
+  /* Room for the moon and its rings (ring bottom ≈ 54vw) */
+  .lunar-hero__halo-area {
+    padding-top: 58vw;
+  }
+  .lunar-hero__halo-area .lunar-hero__title {
+    margin-top: 0;
+  }
+  .lunar-hero__halo-area .lunar-hero__moon {
+    top: 0;
+    right: -10vw;
+    width: 74vw;
+    translate: 0 -12%;
+    opacity: 1;
+  }
+}
+
 /* Wider than the site container so the headline sits further left on big screens */
 .lunar-hero .container {
   max-width: 1600px;
