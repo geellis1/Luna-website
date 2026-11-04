@@ -484,12 +484,13 @@
 /* Bottom room inside the hero. Doubled class so it beats .container's
    padding shorthand, which loads after this file. */
 .scrap-hero .scrap-hero__stage {
-  padding-bottom: 112px;
+  padding-bottom: 100px;
 }
 /* The board is the headline's box; cut-outs and the note are placed on it */
+/* Spare height goes above the headline, so the bottom row stays close to it */
 .scrap-hero__board {
   position: relative;
-  margin: auto 0;
+  margin: auto 0 0;
 }
 .scrap-hero__title {
   position: relative;
@@ -602,14 +603,19 @@
   animation: scrap-underline 0.9s ease-out 5.1s forwards;
 }
 
+/* Bottom row: button left, paragraph right, centered on one line, under a
+   thin divider that spans the content container */
 .scrap-hero__foot {
   display: grid;
-  grid-template-columns: 1fr minmax(0, 46ch);
-  align-items: end;
+  grid-template-columns: auto minmax(0, 500px);
+  justify-content: space-between;
+  align-items: center;
   gap: 32px;
   width: 100%;
   /* Clears the handwritten note, which hangs below the headline */
-  margin-top: clamp(72px, 11vh, 120px);
+  margin-top: clamp(88px, 13vh, 136px);
+  padding-top: clamp(28px, 4vh, 40px);
+  border-top: 1px solid rgba(245, 240, 232, 0.2);
   color: var(--cream);
   animation: scrap-fade 1.4s ease 3s both;
 }
@@ -619,7 +625,9 @@
 }
 .scrap-hero__foot p {
   margin: 0;
-  font-size: 1rem;
+  max-width: 500px;
+  font-size: 1.1875rem;
+  line-height: 1.5;
 }
 
 @keyframes scrap-rise {
@@ -694,10 +702,13 @@
   }
   .scrap-hero__foot {
     grid-template-columns: 1fr;
+    gap: 24px;
     margin-top: 32px;
+    padding-top: 28px;
   }
   .scrap-hero__foot p {
     order: -1;
+    font-size: 1.0625rem;
   }
 }
 
