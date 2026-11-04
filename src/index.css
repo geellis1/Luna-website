@@ -10,6 +10,9 @@
   /* Placeholder typefaces: swap these two lines when brand fonts arrive */
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  /* Home option C only: tall condensed display serif + handwriting */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-hand: 'Nothing You Could Do', 'Bradley Hand', cursive;
 
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);

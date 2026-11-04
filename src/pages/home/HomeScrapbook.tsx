@@ -1,25 +1,62 @@
 import { Link } from 'react-router-dom'
-import MoonPlaceholder from '../../components/MoonPlaceholder'
+import { Ballot, Capitol, Megaphone, Rally } from '../../components/AdvocacyArt'
 import { pillars, tiers } from '../../content'
 
-// Option C: light cream hero with a centered moon, then deep color bands.
+// Option C: Scrapbook. A huge condensed serif headline on cream, with
+// advocacy "photo" cut-outs tucked around it (some behind the letters, some in
+// front) and a handwritten note that writes itself on. Deep color bands follow.
+// Hero styles live in home.css under "Option C".
 const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
 
-export default function HomeMoonrise() {
+const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.']
+const note = ["Let's move from", 'mission to', 'movement.']
+
+export default function HomeScrapbook() {
   return (
     <>
-      <section className="section--cream moon-hero">
-        <div className="container moon-hero__inner">
-          <MoonPlaceholder className="moon-hero__art" color="#741734" accent="#DA1A10" />
-          <h1>Equity-centered advocacy strategy for audacious change.</h1>
-          <p className="lede">
-            Working alongside nonprofits and coalitions ready to move from mission to movement:
-            building advocacy programs that are strategic, values-driven, and built for the current
-            political reality.
-          </p>
-          <Link to="/contact" className="button button--crimson">
-            Let's Work Together
-          </Link>
+      <section className="scrap-hero">
+        <div className="container scrap-hero__stage">
+          <p className="scrap-hero__eyebrow">Advocacy strategy for nonprofits and coalitions</p>
+
+          <div className="scrap-hero__board">
+            {/* Behind the letters */}
+            <Rally className="scrap-card scrap-card--rally" />
+            <Ballot className="scrap-card scrap-card--ballot" />
+
+            <h1 className="scrap-hero__title">
+              {lines.map((line, i) => (
+                <span className="scrap-line" key={line}>
+                  <span style={{ animationDelay: `${0.2 + i * 0.22}s` }}>{line}</span>
+                </span>
+              ))}
+            </h1>
+
+            {/* In front of the letters */}
+            <Capitol className="scrap-card scrap-card--capitol" />
+            <Megaphone className="scrap-card scrap-card--megaphone" />
+
+            <p className="scrap-hero__note">
+              {note.map((line, i) => (
+                <span key={line} style={{ animationDelay: `${2.6 + i * 0.8}s` }}>
+                  {line}
+                </span>
+              ))}
+              <svg className="scrap-hero__scribble" viewBox="0 0 160 16" aria-hidden="true">
+                <path d="M3 10c30-6 60-8 90-4s45 2 64-5" />
+              </svg>
+            </p>
+          </div>
+
+          <div className="scrap-hero__foot">
+            <Link to="/contact" className="button button--crimson">
+              Let's Work Together
+            </Link>
+            <p>
+              Working alongside nonprofits and coalitions ready to move from mission to movement:
+              building advocacy programs that are strategic, values-driven, and built for the current
+              political reality.
+            </p>
+          </div>
         </div>
       </section>
 

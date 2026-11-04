@@ -6,7 +6,7 @@ import { createContext, useContext } from 'react'
 export const homeOptions = [
   { id: 'editorial', label: 'A · Editorial', note: 'Split hero, color-blocked sections' },
   { id: 'bold', label: 'B · Moon phases', note: 'Editorial type, animated moon phases' },
-  { id: 'moonrise', label: 'C · Moonrise', note: 'Cream hero, centered moon' },
+  { id: 'scrapbook', label: 'C · Scrapbook', note: 'Huge serif headline with photo cut-outs and a handwritten note' },
 ] as const
 
 // Moon styles for option B (components in src/components/moons/)
