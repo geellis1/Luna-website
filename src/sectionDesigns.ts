@@ -23,15 +23,14 @@ type Group = {
 }
 
 export const sectionDesigns = {
-  howWeWork: {
-    title: 'How We Work Together',
-    param: 'work',
-    anchor: 'how-we-work',
+  // The statement right under the hero ("We help you do something about it")
+  intro: {
+    title: 'Intro Section',
+    param: 'intro',
+    anchor: 'intro-statement',
     choices: [
-      { id: 'a', label: 'A — Expanding Capsules', note: 'Tall capsules; the one you choose widens to tell its story' },
-      { id: 'b', label: 'B — Rising Capsules', note: 'Equal capsules with a symbol each; the one you choose rises' },
-      { id: 'c', label: 'C — Sliding Editorial Panels', note: 'Architectural panels that slide open like a folder' },
-      { id: 'd', label: 'D — Original Cards', note: 'The current three cards, for comparison' },
+      { id: 'poster', label: 'A — Editorial Poster Collage', note: 'Layered paper poster on a powder-blue canvas' },
+      { id: 'notebook', label: 'B — Notebook Page', note: 'The current torn page beside monochrome text' },
     ],
   },
   whyLuna: {
@@ -41,6 +40,17 @@ export const sectionDesigns = {
     choices: [
       { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type set like a magazine spread' },
       { id: 'c', label: 'C — Editorial Collage', note: 'Layered paper, photos and type that assemble' },
+    ],
+  },
+  howWeWork: {
+    title: 'How We Work Together',
+    param: 'work',
+    anchor: 'how-we-work',
+    choices: [
+      { id: 'a', label: 'A — Expanding Capsules', note: 'Tall capsules; the one you choose widens to tell its story' },
+      { id: 'b', label: 'B — Rising Capsules', note: 'Equal capsules with a symbol each; the one you choose rises' },
+      { id: 'c', label: 'C — Sliding Editorial Panels', note: 'Architectural panels that slide open like a folder' },
+      { id: 'd', label: 'D — Original Cards', note: 'The current three cards, for comparison' },
     ],
   },
   aboutHeadshot: {

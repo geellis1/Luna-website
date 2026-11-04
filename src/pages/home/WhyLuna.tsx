@@ -1,4 +1,5 @@
-import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
+import { pillars } from '../../content'
 import { photos, unsplash, type PhotoKey } from '../../photos'
 import { useSectionDesign } from '../../sectionDesigns'
 import './why-luna.css'
@@ -44,19 +45,20 @@ function useReveal() {
 }
 
 // ---------- B · Editorial Typography ----------
-// The four reasons set as one typographic spread on burgundy: oversized,
-// offset phrases in two serifs at different scales, small numbers and an
-// annotation. Each line rises out of a mask as it comes into view; then a
-// key word warms to chartreuse and "an afterthought" is struck through.
+// A typographic spread on burgundy with a clear grid: "Why Luna." large at
+// the top left with the intro beside it, then the four reasons in a
+// two-column grid, all in the site's serif at one size. Each reason has one
+// italic key word that warms to powder blue once it's in; hovering (or
+// focusing) a reason brings up its short description. The heading rises in
+// first, then the reasons, one after another, out of masks.
 
-// One masked line; `d` staggers it after the lines before it
-function Line({ d, className = '', children }: { d: number; className?: string; children: ReactNode }) {
-  return (
-    <span className={`why-b__line ${className}`}>
-      <span style={{ '--d': d } as CSSProperties}>{children}</span>
-    </span>
-  )
-}
+// The reasons, with the one word in each that carries the accent
+const reasons: { lead: string; key: string; tail: string }[] = [
+  { lead: 'First-Hand ', key: 'Experience', tail: '' },
+  { lead: 'An equity lens that is ', key: 'integrated,', tail: ' not an afterthought' },
+  { lead: '', key: 'Intelligence-driven', tail: ' strategy' },
+  { lead: '', key: 'Movement', tail: ' Awareness' },
+]
 
 function TypeSpread() {
   const ref = useReveal()
@@ -64,50 +66,38 @@ function TypeSpread() {
     <section ref={ref} className="section why why--b" id="why-luna">
       <div className="why__wrap">
         <header className="why-b__head" data-reveal>
-          <p className="why-b__eyebrow">
-            <span>Why Luna</span>
-            <span className="why-b__rule" aria-hidden="true" />
-            <span>Four reasons</span>
-          </p>
+          <h2 className="why-b__title">
+            <span className="why-b__mask">
+              <span>Why Luna.</span>
+            </span>
+          </h2>
           <p className="why-b__lede">{lede}</p>
         </header>
 
-        <ol className="why-b__spread">
-          <li className="why-b__item why-b__item--1" data-reveal>
-            <span className="why-b__num">01</span>
-            <Line d={0}>First-Hand</Line>
-            <Line d={1} className="why-b__line--in">
-              <em>Experience</em>
-            </Line>
-          </li>
-          <li className="why-b__item why-b__item--2" data-reveal>
-            <span className="why-b__num">02</span>
-            <Line d={0}>An equity lens</Line>
-            <Line d={1} className="why-b__line--small">
-              that is <span className="why-b__warm">integrated,</span>
-            </Line>
-            <Line d={2} className="why-b__line--small">
-              not <span className="why-b__strike">an afterthought</span>
-            </Line>
-          </li>
-          <li className="why-b__item why-b__item--3" data-reveal>
-            <span className="why-b__num">03</span>
-            <Line d={0}>
-              <span className="why-b__warm">Intelligence-</span>
-            </Line>
-            <Line d={1} className="why-b__line--in">
-              <em>driven strategy</em>
-            </Line>
-          </li>
-          <li className="why-b__item why-b__item--4" data-reveal>
-            <span className="why-b__num">04</span>
-            <Line d={0} className="why-b__line--heavy">
-              Movement
-            </Line>
-            <Line d={1} className="why-b__line--in">
-              <em>Awareness</em>
-            </Line>
-          </li>
+        <ol className="why-b__grid">
+          {reasons.map((r, i) => {
+            // A short description, once it's real copy (not a [placeholder])
+            const note = /^\[.*\]$/.test(pillars[i].description) ? null : pillars[i].description
+            return (
+              <li
+                key={pillars[i].title}
+                className="why-b__item"
+                data-reveal
+                tabIndex={note ? 0 : undefined}
+                style={{ '--i': i } as CSSProperties}
+              >
+                <span className="why-b__num">0{i + 1}</span>
+                <span className="why-b__mask">
+                  <span className="why-b__phrase">
+                    {r.lead}
+                    <em className="why-b__key">{r.key}</em>
+                    {r.tail}
+                  </span>
+                </span>
+                {note && <span className="why-b__note">{note}</span>}
+              </li>
+            )
+          })}
         </ol>
       </div>
     </section>

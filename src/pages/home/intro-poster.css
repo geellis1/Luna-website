@@ -1,0 +1,290 @@
+/* ---------- Intro Section A: Editorial Poster Collage ----------
+   One poster, built from overlapping pieces on a powder-blue canvas, after a
+   Good Call Studio poster but widened to a landscape stage on desktop. Every
+   piece is placed and sized in % of the stage (type in cqi), so the whole
+   composition scales as one. Pieces assemble in order on first view:
+   canvas → headline panel → note → sheet → bottom line → small type. */
+.poster {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --peach: #f3d2c1;
+  --pale-chartreuse: #eef2c4;
+  overflow: hidden;
+  color: var(--bordeaux);
+  background: var(--cream);
+}
+.section.poster {
+  padding-block: clamp(48px, 5vw, 84px);
+}
+.poster__stage {
+  container-type: inline-size;
+  position: relative;
+  width: min(100% - 2 * var(--gutter), 1240px);
+  aspect-ratio: 1240 / 760;
+  margin-inline: auto;
+}
+.poster__frame {
+  display: contents;
+}
+.poster__stage p {
+  margin: 0;
+}
+.poster__canvas,
+.poster__brand,
+.poster__aside,
+.poster__panel,
+.poster__note,
+.poster__sheet,
+.poster__big {
+  position: absolute;
+}
+
+/* The canvas */
+.poster__canvas {
+  top: 7%;
+  left: 5%;
+  width: 72%;
+  height: 90%;
+  background: var(--powder);
+}
+
+/* Small type: the studio line and a parenthetical aside */
+.poster__brand {
+  top: 13%;
+  left: 33%;
+  font-size: max(11px, 0.95cqi);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.poster__aside {
+  top: 46%;
+  left: 43%;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  max-width: 21%;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: max(11px, 1cqi);
+  line-height: 1.35;
+  text-align: center;
+}
+.poster__aside > span:first-child,
+.poster__aside > span:last-child {
+  font-family: var(--font-sans);
+  font-size: 2.6em;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* The headline panel: tall, crimson, tilted over the canvas's top-right
+   edge, its type broken into short lines like a poster */
+.poster__panel {
+  container-type: inline-size;
+  top: 0;
+  left: 64%;
+  width: 27%;
+  height: 84%;
+  /* (cqi here is the stage's; the headline's cqi is the panel's) */
+  padding: 2.4cqi 2.2cqi 0;
+  color: var(--cream);
+  background: var(--crimson);
+  rotate: -4deg;
+}
+.poster__headline {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 24cqi;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.poster__hline {
+  display: block;
+}
+.poster__hline--spread {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25em;
+}
+.poster__gap {
+  display: block;
+  height: 0.7em;
+}
+
+/* The handwritten note: a peach slip upper left, over the canvas edge */
+.poster__note {
+  top: 19%;
+  left: 2.5%;
+  width: 20%;
+  padding: 1.6cqi 2cqi 1.8cqi;
+  font-family: var(--font-hand);
+  font-size: 2cqi;
+  line-height: 1.25;
+  background: var(--peach);
+  rotate: -9deg;
+}
+
+/* The paragraph, set small on a pale chartreuse sheet, lower left */
+.poster__sheet {
+  top: 47%;
+  left: 1.5%;
+  width: 36%;
+  padding: 2cqi 2.4cqi 2.2cqi;
+  background: var(--pale-chartreuse);
+  rotate: 6deg;
+}
+.poster__sheet p {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: max(12px, 1.08cqi);
+  line-height: 1.55;
+}
+
+/* The bottom line, huge, across the foot of the canvas */
+.poster__big {
+  top: 84.5%;
+  left: 7.5%;
+  width: 68%;
+  font-family: var(--font-display);
+  font-size: 6.15cqi;
+  line-height: 0.9;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* ---------- Assembly ---------- */
+.poster__canvas {
+  opacity: 0;
+  scale: 0.97;
+  transition:
+    opacity 0.8s ease,
+    scale 1s var(--ease-out);
+}
+.poster__panel,
+.poster__note,
+.poster__sheet {
+  opacity: 0;
+  transition:
+    opacity 0.6s ease var(--delay),
+    transform 1s var(--ease-out) var(--delay),
+    translate 0.35s var(--ease-out);
+}
+.poster__panel {
+  --delay: 0.25s;
+  transform: translateY(-110px) rotate(-5deg);
+}
+.poster__note {
+  --delay: 0.6s;
+  transform: translateX(-120px) rotate(-12deg);
+}
+.poster__sheet {
+  --delay: 0.85s;
+  transform: translateY(90px);
+}
+.poster__big {
+  clip-path: inset(-10% 100% -10% 0);
+  transition: clip-path 1.1s var(--ease-out) 1.15s;
+}
+.poster__brand,
+.poster__aside {
+  opacity: 0;
+  transition: opacity 0.8s ease 1.5s;
+}
+.poster.is-in .poster__canvas {
+  opacity: 1;
+  scale: 1;
+}
+.poster.is-in .poster__panel,
+.poster.is-in .poster__note,
+.poster.is-in .poster__sheet {
+  opacity: 1;
+  transform: none;
+}
+.poster.is-in .poster__big {
+  clip-path: inset(-10% 0 -10% 0);
+}
+.poster.is-in .poster__brand,
+.poster.is-in .poster__aside {
+  opacity: 1;
+}
+/* A paper piece lifts slightly on hover */
+@media (hover: hover) {
+  .poster__panel:hover,
+  .poster__note:hover,
+  .poster__sheet:hover {
+    translate: 0 -5px;
+  }
+}
+
+/* ---------- Phones: back to a portrait poster ---------- */
+@media (max-width: 760px) {
+  .poster__stage {
+    aspect-ratio: auto;
+  }
+  .poster__frame {
+    display: block;
+    position: relative;
+    aspect-ratio: 0.72;
+  }
+  .poster__canvas {
+    top: 6%;
+    left: 4%;
+    width: 82%;
+    height: 92%;
+  }
+  .poster__brand {
+    top: 10%;
+    left: 8%;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+  .poster__aside {
+    top: 57%;
+    left: 9%;
+    max-width: 44%;
+    font-size: 11px;
+    text-align: left;
+  }
+  .poster__panel {
+    left: 54%;
+    width: 42%;
+    height: 64%;
+  }
+  .poster__note {
+    top: 23%;
+    left: 0;
+    width: 46%;
+    font-size: 4.4cqi;
+  }
+  .poster__big {
+    top: 75%;
+    left: 9%;
+    width: auto;
+    font-size: 10.5cqi;
+    white-space: normal;
+  }
+  .poster__big span {
+    display: block;
+  }
+  .poster__sheet {
+    position: relative;
+    top: auto;
+    left: 2%;
+    width: 94%;
+    margin-top: -8%;
+    padding: 18px 20px;
+    rotate: 3deg;
+  }
+  .poster__sheet p {
+    font-size: 12.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster *,
+  .poster *::before,
+  .poster *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
