@@ -1,65 +1,32 @@
-import { useEffect, useId, useRef } from 'react'
+import { useId, useRef } from 'react'
+import { litPath, useMoonPhase } from './phase'
 
-// A glowing moon that slowly cycles through its phases, ringed by eight small
-// outline moons (a lunar phase diagram). The ring moon matching the current
-// phase lights up as the big moon passes through it.
+// Style 1 · Phase ring: a glowing moon ringed by eight small outline moons
+// (a lunar phase diagram). The ring moon matching the current phase lights up.
 
 const R = 100 // big moon radius (viewBox units)
 const RING = 168 // distance of the small moons from center
 const SMALL = 20 // small moon radius
-const CYCLE_MS = 16000 // one full lunation
-const STATIC_PHASE = 0.36 // waxing gibbous, for reduced motion
-
-// Lit portion of a moon at phase p (0 = new, 0.5 = full, 1 = new again)
-function litPath(p: number, r: number, cx = 0, cy = 0) {
-  const k = Math.cos(2 * Math.PI * p)
-  const rx = Math.max(Math.abs(k) * r, 0.001)
-  const waxing = p < 0.5
-  const outerSweep = waxing ? 1 : 0
-  const termSweep = waxing ? (k > 0 ? 0 : 1) : k > 0 ? 1 : 0
-  return (
-    `M${cx} ${cy - r}` +
-    `A${r} ${r} 0 0 ${outerSweep} ${cx} ${cy + r}` +
-    `A${rx} ${r} 0 0 ${termSweep} ${cx} ${cy - r}Z`
-  )
-}
 
 const ringPhases = Array.from({ length: 8 }, (_, i) => i / 8)
 
-export default function MoonPhases({ className }: { className?: string }) {
+export default function MoonRing({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, '')
   const lit = useRef<SVGPathElement>(null)
   const glow = useRef<SVGPathElement>(null)
   const clip = useRef<SVGPathElement>(null)
   const ring = useRef<SVGGElement>(null)
 
-  useEffect(() => {
-    const set = (p: number) => {
-      const d = litPath(p, R)
-      lit.current?.setAttribute('d', d)
-      glow.current?.setAttribute('d', d)
-      clip.current?.setAttribute('d', d)
-      const active = Math.round(p * 8) % 8
-      ring.current?.querySelectorAll('.moon-ring__moon').forEach((el, i) => {
-        el.classList.toggle('is-active', i === active)
-      })
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      set(STATIC_PHASE)
-      return
-    }
-
-    let frame = 0
-    // Start just after new moon so the first thing you see is a crescent growing
-    const start = performance.now() - CYCLE_MS * 0.04
-    const tick = (now: number) => {
-      set(((now - start) % CYCLE_MS) / CYCLE_MS)
-      frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [])
+  useMoonPhase((p) => {
+    const d = litPath(p, R)
+    lit.current?.setAttribute('d', d)
+    glow.current?.setAttribute('d', d)
+    clip.current?.setAttribute('d', d)
+    const active = Math.round(p * 8) % 8
+    ring.current?.querySelectorAll('.moon-ring__moon').forEach((el, i) => {
+      el.classList.toggle('is-active', i === active)
+    })
+  })
 
   return (
     <svg className={className} viewBox="-260 -260 520 520" aria-hidden="true">

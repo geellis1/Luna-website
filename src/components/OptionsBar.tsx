@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { homeOptions, showOptions, useOptions, type HomeOption } from '../options'
+import {
+  homeOptions,
+  moonStyles,
+  showOptions,
+  useOptions,
+  type HomeOption,
+  type MoonStyle,
+} from '../options'
 
-// Review-only bar above the nav for switching between home page options.
+// Review-only bar above the nav for switching between home page options,
+// plus a second row of moon styles while option B is showing.
 export default function OptionsBar() {
-  const { home, setHome } = useOptions()
+  const { home, setHome, moon, setMoon } = useOptions()
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const [copied, setCopied] = useState(false)
@@ -27,14 +35,22 @@ export default function OptionsBar() {
 
   if (!showOptions) return null
 
+  const showMoons = home === 'bold' && pathname === '/'
+  const linkFor = (h: HomeOption, m: MoonStyle) => (h === 'bold' ? `/?home=${h}&moon=${m}` : `/?home=${h}`)
+
   const choose = (id: HomeOption) => {
     setHome(id)
-    navigate(`/?home=${id}`)
+    navigate(linkFor(id, moon))
     window.scrollTo(0, 0)
   }
 
+  const chooseMoon = (id: MoonStyle) => {
+    setMoon(id)
+    navigate(linkFor(home, id), { replace: true })
+  }
+
   const copyLink = async () => {
-    const url = `${window.location.origin}/?home=${home}`
+    const url = window.location.origin + linkFor(home, moon)
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
@@ -44,7 +60,7 @@ export default function OptionsBar() {
     }
   }
 
-  const current = homeOptions.find((o) => o.id === home)
+  const current = showMoons ? moonStyles.find((o) => o.id === moon) : homeOptions.find((o) => o.id === home)
 
   return (
     <div ref={bar} className="options-bar" role="region" aria-label="Design options (preview only)">
@@ -66,6 +82,25 @@ export default function OptionsBar() {
             </button>
           ))}
         </div>
+        {showMoons && (
+          <>
+            <span className="options-bar__title">Moon</span>
+            <div className="options-bar__choices" role="group" aria-label="Moon style">
+              {moonStyles.map((o) => (
+                <button
+                  key={o.id}
+                  type="button"
+                  className="options-bar__choice"
+                  aria-pressed={o.id === moon}
+                  title={o.note}
+                  onClick={() => chooseMoon(o.id)}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
         <span className="options-bar__note">{current?.note}</span>
         <button type="button" className="options-bar__copy" onClick={copyLink}>
           {copied ? 'Link copied' : 'Copy link'}

@@ -29,6 +29,11 @@
   pointer-events: none;
   animation: lunar-fade 2.4s ease both;
 }
+/* Solid color blocks compete with the headline, so keep them smaller */
+.lunar-hero__moon--eclipse {
+  width: min(66vh, 50vw, 720px);
+  right: -7%;
+}
 .moon-big__disc {
   fill: rgba(245, 240, 232, 0.05);
   stroke: rgba(245, 240, 232, 0.28);
@@ -381,4 +386,40 @@
 .moon-cta {
   text-align: center;
   border-top: 2px solid var(--bordeaux);
+}
+
+/* Option B moon style 5: collage grid */
+.lunar-hero__moon--collage {
+  width: min(68vh, 44vw, 700px);
+  right: 1%;
+}
+.collage-tile {
+  transform-box: fill-box;
+  transform-origin: center;
+  rotate: var(--tilt);
+  animation: collage-drop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) var(--delay) both;
+}
+.collage-tile__line {
+  stroke: var(--cream);
+  stroke-opacity: 0.85;
+  transition: stroke 0.5s;
+}
+.collage-tile.is-active .collage-tile__line {
+  stroke: var(--chartreuse);
+  stroke-opacity: 1;
+}
+@keyframes collage-drop {
+  from {
+    opacity: 0;
+    scale: 1.25;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .collage-tile {
+    animation: none;
+  }
 }

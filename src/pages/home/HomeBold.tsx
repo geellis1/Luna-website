@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
-import MoonPhases from '../../components/MoonPhases'
+import { moons } from '../../components/moons'
 import { pillars, tiers } from '../../content'
+import { useOptions } from '../../options'
 
 // Option B: editorial hero with a glowing moon cycling through its phases.
 // Headline lines are staggered like a magazine cover and slide up in turn.
@@ -9,10 +10,12 @@ import { pillars, tiers } from '../../content'
 const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--bordeaux']
 
 export default function HomeBold() {
+  const { moon } = useOptions()
+  const Moon = moons[moon]
   return (
     <>
       <section className="lunar-hero">
-        <MoonPhases className="lunar-hero__moon" />
+        <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />
         <div className="container lunar-hero__stage">
           <h1 className="lunar-hero__title">
             <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}
