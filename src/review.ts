@@ -34,7 +34,8 @@ const names: Record<string, string> = {
   'howWeWork:c': 'Editorial Accordion',
   'cta:a': 'Rounded Invitation',
   'cta:b': 'Editorial Typography',
-  'cta:c': 'Split-Panel Graphic',
+  'cta:c': 'Split Panel · A — Night Bordeaux Background',
+  'cta:c-powder': 'Split Panel · B — Powder Blue Background',
   'aboutHeadshot:blazer': 'Houndstooth Blazer',
   'aboutHeadshot:glasses': 'Red Glasses',
   'aboutHeadshot:cardigan': 'Green Cardigan',
@@ -77,6 +78,19 @@ function designsOf(key: SectionKey): Design[] {
         })),
     ]
   }
+  // Let's Work Together's Option C is listed as its two section backgrounds;
+  // Night Bordeaux keeps C's original key, so earlier notes on C carry over
+  if (key === 'cta') {
+    return [
+      ...sectionDesigns.cta.choices
+        .filter((c) => c.id !== 'c')
+        .map((c) => ({ key: `cta:${c.id}`, section: key, id: c.id, name: names[`cta:${c.id}`], picks: { cta: c.id } })),
+      ...sectionDesigns.ctaC.choices.map((v) => {
+        const id = v.id === 'bordeaux' ? 'c' : `c-${v.id}`
+        return { key: `cta:${id}`, section: key, id, name: names[`cta:${id}`], picks: { cta: 'c', ctaC: v.id } }
+      }),
+    ]
+  }
   return sectionDesigns[key].choices.map((c) => ({
     key: `${key}:${c.id}`,
     section: key,
@@ -111,6 +125,7 @@ export const findDesign = (key: string) => allDesigns.find((d) => d.design.key =
 export function currentDesignKey(key: SectionKey, search: string) {
   const value = readDesign(key, search)
   if (key === 'howWeWork' && value === 'a') return `howWeWork:${readDesign('howWeWorkA', search)}`
+  if (key === 'cta' && value === 'c') return readDesign('ctaC', search) === 'powder' ? 'cta:c-powder' : 'cta:c'
   return `${key}:${value}`
 }
 

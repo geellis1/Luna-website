@@ -106,6 +106,17 @@ export const sectionDesigns = {
       { id: 'cardigan', label: 'C — Green Cardigan', note: 'Big smile, dark backdrop' },
     ],
   },
+  // CTA Option C's section backgrounds
+  ctaC: {
+    title: 'Option C · Background',
+    param: 'ctaBg',
+    anchor: 'cta',
+    parent: { key: 'cta', choice: 'c' },
+    choices: [
+      { id: 'bordeaux', label: 'A — Night Bordeaux Background', note: 'The card framed on Night Bordeaux' },
+      { id: 'powder', label: 'B — Powder Blue Background', note: 'The card on Powder Blue' },
+    ],
+  },
   // Option A's two versions
   howWeWorkA: {
     title: 'Option A',

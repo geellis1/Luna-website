@@ -414,3 +414,16 @@
     transition-delay: 0s !important;
   }
 }
+
+/* C's section: a full-width Night Bordeaux or Powder Blue background with
+   room around the card, so it reads as its own section between How we
+   work together and the footer */
+.cta.cta--c {
+  padding-block: clamp(64px, 6vw, 80px);
+}
+.cta--on-bordeaux {
+  background: var(--bordeaux);
+}
+.cta--on-powder {
+  background: var(--powder);
+}

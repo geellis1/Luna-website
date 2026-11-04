@@ -19,7 +19,7 @@ export default function CtaSection() {
 }
 
 // The section and an .is-in class added once it's well on screen
-function Section({ variant, children }: { variant: string; children: ReactNode }) {
+function Section({ variant, className = '', children }: { variant: string; className?: string; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null)
   const [shown, setShown] = useState(false)
   useEffect(() => {
@@ -38,7 +38,7 @@ function Section({ variant, children }: { variant: string; children: ReactNode }
     return () => io.disconnect()
   }, [])
   return (
-    <section ref={ref} id="cta" className={`cta cta--${variant}${shown ? ' is-in' : ''}`}>
+    <section ref={ref} id="cta" className={`cta cta--${variant} ${className}${shown ? ' is-in' : ''}`}>
       {children}
     </section>
   )
@@ -113,10 +113,12 @@ function TypeInvitation() {
 // One rounded container split in two: burgundy with the headline and support
 // on the left; powder blue with an advocacy collage burst (photos within
 // brand-colored rays) and the button on the right. The halves slide in
-// toward each other and the burst opens out.
+// toward each other and the burst opens out. The section around it is
+// Night Bordeaux or Powder Blue (picked in the panel), edge to edge.
 function SplitInvitation() {
+  const [bg] = useSectionDesign('ctaC')
   return (
-    <Section variant="c">
+    <Section variant="c" className={`cta--on-${bg}`}>
       <div className="cta-c">
         <div className="cta-c__left">
           <h2 className="cta-c__title">

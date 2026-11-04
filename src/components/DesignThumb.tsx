@@ -24,7 +24,11 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   }
   if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'cta') return <CtaPreview id={id as SectionDesign<'cta'>} />
+  if (section === 'cta') {
+    // Option C's backgrounds: "c" (Night Bordeaux) and "c-powder"
+    if (id.startsWith('c')) return <CtaPreview id="c" bg={id === 'c-powder' ? C.powder : C.bordeaux} />
+    return <CtaPreview id={id as SectionDesign<'cta'>} />
+  }
   if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
   if (section === 'services') return <ServicesPreview id={id as SectionDesign<'services'>} />
   return <WorkPreview id={id} />
@@ -76,10 +80,10 @@ function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
   )
 }
 
-function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
+function CtaPreview({ id, bg = C.cream }: { id: SectionDesign<'cta'>; bg?: string }) {
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
+      <rect width="120" height="64" fill={bg} />
       {id === 'a' && (
         <>
           <rect x="8" y="8" width="104" height="48" rx="7" fill={C.crimson} />
