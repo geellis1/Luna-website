@@ -13,21 +13,29 @@ export const homeOptions = [
 export const moonStyles = [
   { id: 'ring', label: '1 · Phase ring', note: 'Glowing moon ringed by the eight phases' },
   { id: 'halo', label: '2 · Halo', note: 'Soft layered light, cool shadow side' },
-  { id: 'eclipse', label: '3 · Eclipse', note: 'Flat color blocks, sliding shadow' },
-  { id: 'line', label: '4 · Line art', note: 'Fine-line astronomical drawing' },
-  { id: 'collage', label: '5 · Collage', note: 'Cut-out moons, hand-drawn outlines' },
+  { id: 'collage', label: '3 · Collage cream', note: 'Cut-out moons in warm ivory' },
+  { id: 'collage-powder', label: '4 · Collage powder', note: 'Cut-out moons in powder blue' },
+  { id: 'collage-rose', label: '5 · Collage rose', note: 'Cut-out moons in rose' },
+] as const
+
+// Nav bar styles, on every page (variants live in src/components/Nav.tsx + index.css)
+export const navStyles = [
+  { id: 'classic', label: 'A · Classic', note: 'Full-width dark bar' },
+  { id: 'pill', label: 'B · Floating pill', note: 'Rounded cream bar floating over the page' },
 ] as const
 
 export type HomeOption = (typeof homeOptions)[number]['id']
 export type MoonStyle = (typeof moonStyles)[number]['id']
+export type NavStyle = (typeof navStyles)[number]['id']
 
 // The switcher bar shows unless VITE_HIDE_OPTIONS=true is set (do that at launch).
 export const showOptions = import.meta.env.VITE_HIDE_OPTIONS !== 'true'
 
 export const HOME_KEY = 'luna-home-option'
 export const MOON_KEY = 'luna-moon-style'
+export const NAV_KEY = 'luna-nav-style'
 
-// A ?home= / ?moon= link wins, then the viewer's last pick, then the first option
+// A ?home= / ?moon= / ?nav= link wins, then the viewer's last pick, then the first option
 function initial<T extends string>(param: string, key: string, ids: readonly T[]): T {
   const isId = (v: unknown): v is T => ids.includes(v as T)
   const fromUrl = new URLSearchParams(window.location.search).get(param)
@@ -55,11 +63,35 @@ export const initialMoon = () =>
     moonStyles.map((o) => o.id),
   )
 
+export const initialNav = () =>
+  initial(
+    'nav',
+    NAV_KEY,
+    navStyles.map((o) => o.id),
+  )
+
+// Query string that reproduces a set of picks (moon only matters on option B)
+export function optionsQuery(home: HomeOption, moon: MoonStyle, nav: NavStyle) {
+  const q = new URLSearchParams({ home })
+  if (home === 'bold') q.set('moon', moon)
+  q.set('nav', nav)
+  return `?${q}`
+}
+
 export const OptionsContext = createContext<{
   home: HomeOption
   setHome: (o: HomeOption) => void
   moon: MoonStyle
   setMoon: (m: MoonStyle) => void
-}>({ home: homeOptions[0].id, setHome: () => {}, moon: moonStyles[0].id, setMoon: () => {} })
+  nav: NavStyle
+  setNav: (n: NavStyle) => void
+}>({
+  home: homeOptions[0].id,
+  setHome: () => {},
+  moon: moonStyles[0].id,
+  setMoon: () => {},
+  nav: navStyles[0].id,
+  setNav: () => {},
+})
 
 export const useOptions = () => useContext(OptionsContext)

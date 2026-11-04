@@ -42,8 +42,12 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 
 ## Design options (review mode)
 
-A chartreuse bar above the nav lets reviewers switch between home page options.
-Each option has a shareable link, e.g. `/?home=bold`, and the bar's **Copy link** button copies it.
+A **Design options** button in the bottom-right corner opens a panel for switching
+between home page options, moon styles (home option B) and nav bar styles. It floats
+over the page, so the real layout is never pushed down. Each combination has a
+shareable link (e.g. `/?home=bold&moon=collage&nav=pill`); **Copy link** copies it.
 
-- Options are listed in `src/options.ts`; each one is a component in `src/pages/home/`.
-- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel (or delete the unused options) to hide the bar.
+- Options are listed in `src/options.ts`. Home options are components in
+  `src/pages/home/`, moon styles in `src/components/moons/`, nav styles in
+  `src/components/Nav.tsx` plus `.nav--<style>` rules in `src/index.css`.
+- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel (or delete the unused options) to hide it.

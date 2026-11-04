@@ -1,21 +1,29 @@
 import { useId, useRef, type CSSProperties } from 'react'
-import { litPath, useMoonPhase } from './phase'
+import { litExtent, litPath, useMoonPhase } from './phase'
 
-// Style 5 · Collage: a row of cut-out moons with rough, hand-drawn outlines,
-// under a big centered headline. Pieces drop into place left to right, then
+// Style 3 · Collage: a row of cut-out moons with rough, hand-drawn outlines,
+// under a big centered headline. Pieces fade up into place left to right, then
 // float gently; a chartreuse outline tracks the current phase along the row.
 // The moon surface is generated (fractal noise), not a photo.
 
 const R = 68 // tile moon radius
-const GAP = 142 // spacing between tile centers
+const SPACE = 44 // equal gap between the visible edges of neighboring moons
+const PAD = 24 // room around the row for outlines and floating
 
-// Left to right: the (empty) new moon, then waxing through full and waning
-const tiles = [0, 0.07, 0.16, 0.25, 0.38, 0.5, 0.62, 0.75, 0.86].map((p, i) => ({
-  p,
-  x: (i - 4) * GAP,
-  y: 0,
-  tilt: [-3, 4, -2, 2, -3, 1, -2, 3, -4][i],
-}))
+// Left to right: the (empty) new moon, then waxing through full and waning.
+// Crescents are much narrower than full moons, so each moon is placed by its
+// visible width rather than on a fixed grid, giving even gaps between shapes.
+const phases = [0, 0.07, 0.16, 0.25, 0.38, 0.5, 0.62, 0.75, 0.86]
+const extents = phases.map((p) => litExtent(p, R))
+const rowWidth = extents.reduce((w, e) => w + e.right - e.left, 0) + SPACE * (phases.length - 1)
+let cursor = -rowWidth / 2
+const tiles = phases.map((p, i) => {
+  const { left, right } = extents[i]
+  const x = cursor - left // moon center, so its visible left edge sits at cursor
+  cursor += right - left + SPACE
+  return { p, x, y: 0 }
+})
+const viewBox = `${-rowWidth / 2 - PAD} ${-R - PAD} ${rowWidth + PAD * 2} ${(R + PAD) * 2}`
 
 // Which tile is nearest the current phase (wrapping around new moon)
 const nearest = (p: number) => {
@@ -31,7 +39,30 @@ const nearest = (p: number) => {
   return best
 }
 
-export default function MoonCollage({ className }: { className?: string }) {
+// Grey surface → brand tint, as color-matrix rows (output = slope × grey + offset).
+// Shadows go dark, highlights go to the named color.
+const tints = {
+  // Night Bordeaux shadows → warm ivory cream
+  cream: '0.60 0 0 0 0.36  0.76 0 0 0 0.18  0.71 0 0 0 0.20  0 0 0 0 1',
+  // Deep blue-crimson shadows → light powder blue
+  powder: '0.61 0 0 0 0.24  0.72 0 0 0 0.18  0.66 0 0 0 0.30  0 0 0 0 1',
+  // Deep Crimson shadows → light rose cream
+  rose: '0.52 0 0 0 0.45  0.80 0 0 0 0.09  0.72 0 0 0 0.20  0 0 0 0 1',
+}
+type Tint = keyof typeof tints
+
+type Props = { className?: string }
+export default function CollageCream(props: Props) {
+  return <MoonCollage {...props} tint="cream" />
+}
+export function CollagePowder(props: Props) {
+  return <MoonCollage {...props} tint="powder" />
+}
+export function CollageRose(props: Props) {
+  return <MoonCollage {...props} tint="rose" />
+}
+
+function MoonCollage({ className, tint }: Props & { tint: Tint }) {
   const uid = useId().replace(/:/g, '')
   const grid = useRef<SVGGElement>(null)
 
@@ -43,7 +74,7 @@ export default function MoonCollage({ className }: { className?: string }) {
   })
 
   return (
-    <svg className={className} viewBox="-660 -92 1320 184" aria-hidden="true">
+    <svg className={className} viewBox={viewBox} aria-hidden="true">
       <defs>
         {/* Moon surface: fine grain plus darker "maria" patches, warm grey */}
         <filter id={`surface${uid}`} x="0" y="0" width="100%" height="100%">
@@ -72,16 +103,8 @@ export default function MoonCollage({ className }: { className?: string }) {
             <feFuncB type="linear" slope="1.48" intercept="-0.01" />
           </feComponentTransfer>
           <feBlend in="contrast" in2="mariaShapes" mode="multiply" result="grey" />
-          {/* Map grey to brand tints: shadows Deep Crimson, highlights a light
-              rose cream so the moons glow against the Night Bordeaux background */}
-          <feColorMatrix
-            in="grey"
-            values="0.52 0 0 0 0.45
-                    0.80 0 0 0 0.09
-                    0.72 0 0 0 0.20
-                    0    0 0 0 1"
-            result="moon"
-          />
+          {/* Map grey to the chosen brand tint */}
+          <feColorMatrix in="grey" values={tints[tint]} result="moon" />
           <feComposite in="moon" in2="SourceAlpha" operator="in" />
         </filter>
         {/* Wobbly, chalky edges for the outlines */}
@@ -103,7 +126,8 @@ export default function MoonCollage({ className }: { className?: string }) {
             <g
               key={i}
               className="collage-tile"
-              style={{ '--tilt': `${t.tilt}deg`, '--delay': `${0.25 + i * 0.12}s` } as CSSProperties}
+              // Moons start once the headline has settled, then follow slowly
+              style={{ '--delay': `${2 + i * 0.5}s`, '--float-delay': `${-i * 1.1}s` } as CSSProperties}
             >
               {t.p !== 0 && (
                 <g clipPath={`url(#tile${uid}-${i})`}>

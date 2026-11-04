@@ -14,7 +14,7 @@ export default function HomeBold() {
   const Moon = moons[moon]
   // The collage moons run in a row under a big centered headline; every
   // other style sits beside the headline on the right
-  const row = moon === 'collage'
+  const row = moon.startsWith('collage')
   const title = (
     <h1 className="lunar-hero__title">
       <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}

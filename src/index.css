@@ -308,6 +308,96 @@ svg {
   }
 }
 
+/* Nav option B: floating pill. The header is a transparent sticky strip that
+   overlaps the first section (pulled up by its own height), so the page's
+   background shows around the cream pill. */
+.nav--pill {
+  background: transparent;
+  color: var(--bordeaux);
+  height: var(--nav-h);
+  /* Padding, not a margin on the pill, so the gap can't collapse out of the header */
+  padding-top: 20px;
+  margin-bottom: calc(-1 * var(--nav-h));
+  pointer-events: none;
+}
+.nav--pill .nav__inner {
+  position: relative;
+  width: min(100% - 2 * var(--gutter), 1120px);
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 8px 0 22px;
+  gap: 24px;
+  background: var(--cream);
+  border: 1px solid rgba(62, 25, 33, 0.12);
+  border-radius: 999px;
+  pointer-events: auto;
+}
+.logo__mark {
+  display: block;
+  height: 44px;
+  aspect-ratio: 3 / 1;
+  background: var(--bordeaux);
+  -webkit-mask: url('/logo-white.png') center / contain no-repeat;
+  mask: url('/logo-white.png') center / contain no-repeat;
+}
+.nav--pill .nav__links {
+  gap: clamp(16px, 2.6vw, 40px);
+}
+.nav--pill .nav__links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+.nav--pill .nav__links a:hover,
+.nav--pill .nav__links a.active {
+  border-bottom-color: var(--crimson);
+}
+.nav__cta {
+  flex: none;
+  padding: 11px 22px;
+  border: 1.5px solid var(--bordeaux);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.nav__cta:hover {
+  background: var(--bordeaux);
+  color: var(--cream);
+}
+
+/* The first section on each page runs up behind the pill. A transparent top
+   border adds the room without changing the section's own padding, and its
+   background still paints underneath. */
+:root[data-nav='pill'] main > section:first-child {
+  border-top: var(--nav-h) solid transparent;
+}
+
+@media (max-width: 960px) {
+  .nav__cta {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .nav--pill .nav__inner {
+    padding: 0 8px 0 18px;
+  }
+  .logo__mark {
+    height: 38px;
+  }
+  .nav--pill .nav__links {
+    top: calc(100% + 8px);
+    background: var(--cream);
+    border: 1px solid rgba(62, 25, 33, 0.12);
+    border-radius: 24px;
+    padding: 8px 24px 16px;
+  }
+}
+
 /* ---------- Footer ---------- */
 .footer {
   background: var(--bordeaux);
@@ -603,19 +693,47 @@ fieldset.field {
   }
 }
 
-/* ---------- Review-only options bar (hidden at launch with VITE_HIDE_OPTIONS=true) ---------- */
+/* ---------- Review-only design options (hidden at launch with VITE_HIDE_OPTIONS=true) ----------
+   A corner button opens a floating panel, so the page layout is never pushed down. */
+.options-dock {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+  font-size: 0.85rem;
+}
+.options-dock__toggle {
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 10px 16px;
+  background: var(--chartreuse);
+  color: var(--bordeaux);
+  border: 2px solid var(--bordeaux);
+  border-radius: 999px;
+  cursor: pointer;
+}
 .options-bar {
   background: var(--chartreuse);
   color: var(--bordeaux);
-  font-size: 0.85rem;
+  border: 2px solid var(--bordeaux);
+  width: min(960px, calc(100vw - 32px));
+  max-height: 60vh;
+  overflow-y: auto;
 }
 .options-bar__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  gap: 10px 28px;
+  padding: 14px 16px;
 }
 .options-bar__title {
   font-weight: 700;
@@ -654,16 +772,14 @@ fieldset.field {
 .options-bar__choice[aria-pressed='true']:hover {
   background: var(--bordeaux);
 }
-.options-bar__note {
-  font-style: italic;
+.options-bar__group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
 }
 .options-bar__copy {
   margin-left: auto;
-}
-@media (max-width: 760px) {
-  .options-bar__note {
-    display: none;
-  }
 }
 
 .sr-only {
