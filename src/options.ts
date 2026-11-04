@@ -17,14 +17,24 @@ export const optionGroups = {
     param: 'home',
     choices: [
       { id: 'editorial', label: 'Editorial', note: 'Huge bold type with hand-drawn accents' },
-      { id: 'bold', label: 'Moon Halo', note: 'Bold headline beside a softly glowing moon' },
+      { id: 'moons', label: 'Moon Collage', note: 'Bold headline with a row of moons drawing in beneath it' },
       { id: 'scrapbook', label: 'Scrapbook', note: 'Tall serif headline with advocacy photos tucked behind' },
       { id: 'capsules', label: 'Capsules', note: 'Bold headline beside six photo and color capsules' },
       { id: 'handwritten', label: 'Handwritten', note: 'Sprawling red script behind a centered serif statement' },
     ],
   },
-  // Color combination = the big hero headline color on Moon Halo, Scrapbook
-  // and Capsules (html[data-headline]); shown as curated palettes
+  // Moon Collage only: the color of the cut-out moons
+  moonColor: {
+    title: 'Moon Color',
+    param: 'moon',
+    choices: [
+      { id: 'cream', label: 'Cream', note: 'Warm ivory moons' },
+      { id: 'powder', label: 'Powder', note: 'Powder blue moons' },
+      { id: 'rose', label: 'Rose', note: 'Rose moons' },
+    ],
+  },
+  // Color combination = the big hero headline color on Moon Collage,
+  // Scrapbook and Capsules (html[data-headline]); shown as curated palettes
   headline: {
     title: 'Color Combinations',
     param: 'headline',
@@ -114,7 +124,9 @@ export const initialOptions = (): Options =>
 export function relevant(key: OptionKey, o: Options, onHome: boolean) {
   switch (key) {
     case 'headline':
-      return onHome && (o.home === 'bold' || o.home === 'scrapbook' || o.home === 'capsules')
+      return onHome && (o.home === 'moons' || o.home === 'scrapbook' || o.home === 'capsules')
+    case 'moonColor':
+      return onHome && o.home === 'moons'
     case 'pill':
       return o.nav === 'pill'
     case 'menuLayout':

@@ -1500,6 +1500,16 @@ fieldset.field {
 .swatch__chip--crimson {
   background: var(--crimson);
 }
+/* Moon Collage moon colors (match the moon textures' light tones) */
+.swatch__chip--moon-cream {
+  background: #efe6da;
+}
+.swatch__chip--moon-powder {
+  background: #c9d7e6;
+}
+.swatch__chip--moon-rose {
+  background: #d9a9b3;
+}
 .swatch__chip--smoked {
   background: rgba(62, 25, 33, 0.72);
 }

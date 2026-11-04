@@ -52,5 +52,5 @@ copies that link, which reproduces the same design in any browser.
 - Choices are defined in `optionGroups` in `src/options.ts`; the drawer is
   `src/components/DesignDrawer.tsx` with previews in `DesignPreviews.tsx`.
 - Not offered to the client but kept in the code: the Classic navigation bar
-  and the Collage moon styles.
+  and the Moon Halo illustration.
 - At launch, set `VITE_HIDE_OPTIONS=true` in Vercel to hide the button and drawer.

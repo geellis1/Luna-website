@@ -57,21 +57,22 @@ export function HomePreview({ kind }: { kind: HomeOption }) {
           <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.cream} />
         </svg>
       )
-    case 'bold':
+    case 'moons':
       return (
         <svg {...frame}>
-          <defs>
-            <radialGradient id="pv-halo">
-              <stop offset="0%" stopColor="#F3D3CC" />
-              <stop offset="55%" stopColor="#E39AA6" />
-              <stop offset="100%" stopColor={C.crimson} stopOpacity="0" />
-            </radialGradient>
-          </defs>
           <rect width="160" height="100" fill={C.bordeaux} />
-          <circle cx="122" cy="40" r="30" fill="url(#pv-halo)" opacity="0.7" />
-          <circle cx="122" cy="40" r="15" fill="#F1D9CF" />
-          <circle cx="122" cy="40" r="22" fill="none" stroke={C.powder} strokeWidth="0.8" opacity="0.7" />
-          <Lines x={12} y={20} widths={[74, 84, 66, 44]} h={8} gap={4} accent={{ line: 2, color: C.chartreuse }} />
+          <Lines x={30} y={14} widths={[100, 100, 80]} h={9} gap={4} accent={{ line: 2, color: C.chartreuse }} />
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            <circle
+              key={i}
+              cx={26 + i * 18}
+              cy="64"
+              r="7"
+              fill={i === 0 ? 'none' : '#E6DCCF'}
+              stroke={i === 4 ? C.chartreuse : C.cream}
+              strokeWidth="1.2"
+            />
+          ))}
           <rect x="12" y="80" width="136" height="0.6" fill={C.cream} opacity="0.35" />
           <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.cream} />
         </svg>

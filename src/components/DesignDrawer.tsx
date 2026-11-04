@@ -82,7 +82,7 @@ export default function DesignDrawer() {
     applyAll(defaults, false)
   }
 
-  const { home, nav, pill, headline, menuLayout, menuTrigger } = optionGroups
+  const { home, nav, pill, headline, menuLayout, menuTrigger, moonColor } = optionGroups
 
   // Settings that belong to one navigation style, shown beneath it
   const subGroups = { menuLayout, menuTrigger } as const
@@ -150,6 +150,26 @@ export default function DesignDrawer() {
                   <span className="choice-card__note">{c.note}</span>
                 </button>
               ))}
+            </div>
+            <div className={`choice-sub${options.home === 'moons' ? ' is-open' : ''}`}>
+              <div className="choice-sub__inner" inert={options.home !== 'moons'}>
+                <p className="choice-sub__title">Moon Collage · {moonColor.title}</p>
+                <div className="swatches" role="group" aria-label={moonColor.title}>
+                  {moonColor.choices.map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      className="swatch"
+                      aria-pressed={options.moonColor === m.id}
+                      title={m.note}
+                      onClick={() => choose('moonColor', m.id)}
+                    >
+                      <span className={`swatch__chip swatch__chip--moon-${m.id}`} />
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 
@@ -228,7 +248,7 @@ export default function DesignDrawer() {
             <h3 className="drawer__heading">
               <span>03</span> {headline.title}
             </h3>
-            <p className="drawer__hint">Used on the Moon Halo, Scrapbook and Capsules homepages.</p>
+            <p className="drawer__hint">Used on the Moon Collage, Scrapbook and Capsules homepages.</p>
             <div className="drawer__cards">
               {headline.choices.map((c) => (
                 <button

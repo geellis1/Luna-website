@@ -11,7 +11,7 @@ const HomeCapsules = () => <HomeBold capsules />
 
 const homes: Record<HomeOption, ComponentType> = {
   editorial: HomeEditorial,
-  bold: HomeBold,
+  moons: HomeBold,
   scrapbook: HomeScrapbook,
   capsules: HomeCapsules,
   handwritten: HomeHandwritten,

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
 import Capsules from '../../components/Capsules'
 import { moons } from '../../components/moons'
+import { useOptions } from '../../options'
 import { pillars, tiers } from '../../content'
 
 // Option B: editorial hero with a glowing moon cycling through its phases.
@@ -59,9 +60,10 @@ function Headline() {
 // Also renders home option D (Capsules), which shares this page with the
 // capsules beside the headline in place of a moon.
 export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
-  // Moon Halo is the one moon offered; the collage styles stay in
-  // components/moons for reference
-  const moon: string = 'halo'
+  // Moon Collage in the chosen moon color. (The Halo moon stays in
+  // components/moons but is no longer offered.)
+  const { moonColor } = useOptions()
+  const moon: string = moonColor === 'cream' ? 'collage' : `collage-${moonColor}`
   const Moon = capsules ? Capsules : moons[moon]
   // The collage moons run in a row under a big centered headline; the
   // capsules sit beside the headline, above the bottom row; the halo floats
