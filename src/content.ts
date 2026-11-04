@@ -51,12 +51,6 @@ export const tiers = [
   },
 ]
 
-export const bio = [
-  '[Kelli bio paragraph 1, from existing site]',
-  '[Kelli bio paragraph 2, from existing site]',
-  '[Kelli bio paragraph 3, from existing site]',
-]
-
 // Keep in sync with the checkbox values the contact API accepts (api/contact.ts).
 export const serviceOptions = [
   'Training',
