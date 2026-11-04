@@ -12,7 +12,7 @@ const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--
 export default function HomeBold() {
   const { moon } = useOptions()
   const Moon = moons[moon]
-  // The collage moons run in a band behind a big centered headline; every
+  // The collage moons run in a row under a big centered headline; every
   // other style sits beside the headline on the right
   const row = moon === 'collage'
   const title = (
@@ -32,8 +32,8 @@ export default function HomeBold() {
         <div className="container lunar-hero__stage">
           {row ? (
             <div className="lunar-hero__center">
-              <Moon key={moon} className="lunar-hero__row" />
               {title}
+              <Moon key={moon} className="lunar-hero__row" />
             </div>
           ) : (
             title

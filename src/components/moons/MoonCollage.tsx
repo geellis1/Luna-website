@@ -1,10 +1,10 @@
 import { useId, useRef, type CSSProperties } from 'react'
 import { litPath, useMoonPhase } from './phase'
 
-// Style 5 · Collage: a band of cut-out moons with rough, hand-drawn outlines,
-// running behind a big centered headline. Pieces drop into place left to
-// right, then float gently; a chartreuse outline tracks the current phase
-// along the row. The moon surface is generated (fractal noise), not a photo.
+// Style 5 · Collage: a row of cut-out moons with rough, hand-drawn outlines,
+// under a big centered headline. Pieces drop into place left to right, then
+// float gently; a chartreuse outline tracks the current phase along the row.
+// The moon surface is generated (fractal noise), not a photo.
 
 const R = 68 // tile moon radius
 const GAP = 142 // spacing between tile centers
@@ -72,13 +72,13 @@ export default function MoonCollage({ className }: { className?: string }) {
             <feFuncB type="linear" slope="1.48" intercept="-0.01" />
           </feComponentTransfer>
           <feBlend in="contrast" in2="mariaShapes" mode="multiply" result="grey" />
-          {/* Map grey to brand tints: shadows Deep Crimson, highlights dusty rose,
-              kept mid-toned so cream headline type stays readable on top */}
+          {/* Map grey to brand tints: shadows Deep Crimson, highlights a light
+              rose cream so the moons glow against the Night Bordeaux background */}
           <feColorMatrix
             in="grey"
-            values="0.36 0 0 0 0.45
-                    0.36 0 0 0 0.09
-                    0.32 0 0 0 0.20
+            values="0.52 0 0 0 0.45
+                    0.80 0 0 0 0.09
+                    0.72 0 0 0 0.20
                     0    0 0 0 1"
             result="moon"
           />
