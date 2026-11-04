@@ -468,29 +468,23 @@
 
 /* Option C hero: Scrapbook */
 .scrap-hero {
-  background: var(--cream);
-  color: var(--crimson);
+  background: var(--bordeaux);
+  color: var(--cream);
   overflow: hidden;
 }
+/* At least one screen tall, but grows with its content (no fixed height), with
+   generous room inside the hero below the button and paragraph */
 .scrap-hero__stage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100svh - var(--nav-h));
-  min-height: 560px;
-  max-height: 1000px;
+  min-height: calc(100svh - var(--nav-h));
   padding-top: clamp(24px, 4vh, 48px);
-  padding-bottom: clamp(28px, 5vh, 56px);
 }
-.scrap-hero__eyebrow {
-  margin: 0;
-  color: var(--bordeaux);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-align: center;
-  animation: scrap-fade 1.2s ease 0.1s both;
+/* Bottom room inside the hero. Doubled class so it beats .container's
+   padding shorthand, which loads after this file. */
+.scrap-hero .scrap-hero__stage {
+  padding-bottom: 112px;
 }
 /* The board is the headline's box; cut-outs and the note are placed on it */
 .scrap-hero__board {
@@ -578,7 +572,7 @@
   font-family: var(--font-hand);
   font-size: clamp(1.15rem, 2vw, 1.9rem);
   line-height: 1.15;
-  color: var(--bordeaux);
+  color: var(--cream);
   text-align: left;
   rotate: -8deg;
 }
@@ -614,11 +608,14 @@
   align-items: end;
   gap: 32px;
   width: 100%;
-  color: var(--bordeaux);
+  /* Clears the handwritten note, which hangs below the headline */
+  margin-top: clamp(72px, 11vh, 120px);
+  color: var(--cream);
   animation: scrap-fade 1.4s ease 3s both;
 }
 .scrap-hero__foot .button {
   justify-self: start;
+  white-space: nowrap;
 }
 .scrap-hero__foot p {
   margin: 0;
@@ -672,10 +669,8 @@
 }
 
 @media (max-width: 760px) {
-  .scrap-hero__stage {
-    height: auto;
-    min-height: calc(100svh - var(--nav-h));
-    max-height: none;
+  .scrap-hero .scrap-hero__stage {
+    padding-bottom: 72px;
   }
   .scrap-hero__title {
     font-size: clamp(2.6rem, 13vw, 5rem);
@@ -707,7 +702,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scrap-hero__eyebrow,
   .scrap-line > span,
   .scrap-card,
   .scrap-hero__foot {

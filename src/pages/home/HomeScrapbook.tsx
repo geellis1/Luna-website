@@ -25,7 +25,6 @@ export default function HomeScrapbook() {
     <>
       <section className="scrap-hero">
         <div className="container scrap-hero__stage">
-          <p className="scrap-hero__eyebrow">Advocacy strategy for nonprofits and coalitions</p>
 
           <div className="scrap-hero__board">
             {/* Photos sit behind the letters */}
@@ -60,7 +59,7 @@ export default function HomeScrapbook() {
           </div>
 
           <div className="scrap-hero__foot">
-            <Link to="/contact" className="button button--crimson">
+            <Link to="/contact" className="button button--cream">
               Let's Work Together
             </Link>
             <p>
