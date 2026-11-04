@@ -65,39 +65,6 @@
   pointer-events: none;
   animation: lunar-fade 2.4s ease both;
 }
-.moon-big__disc {
-  fill: rgba(245, 240, 232, 0.05);
-  stroke: rgba(245, 240, 232, 0.28);
-  stroke-width: 1;
-}
-.moon-ring__orbit {
-  fill: none;
-  stroke: rgba(245, 240, 232, 0.12);
-  stroke-width: 1;
-}
-.moon-ring__outline {
-  fill: var(--bordeaux);
-  stroke: rgba(245, 240, 232, 0.35);
-  stroke-width: 1;
-  transition: stroke 0.6s;
-}
-.moon-ring__lit {
-  fill: rgba(245, 240, 232, 0.22);
-  transition: fill 0.6s;
-}
-.moon-ring__moon.is-active .moon-ring__outline {
-  stroke: var(--chartreuse);
-}
-.moon-ring__moon.is-active .moon-ring__lit {
-  fill: var(--chartreuse);
-}
-
-/* Staggered editorial headline */
-/* Wider than the site container so the headline sits further left on big screens */
-.lunar-hero .container {
-  max-width: 1600px;
-}
-
 /* Headline: big and bold in the left column, vertically centered beside the
    moon (its right edge may run over the moon's glow) */
 .lunar-hero__title {
@@ -745,4 +712,96 @@
 /* Keep "audacious" standing out when the headline itself turns chartreuse */
 :root[data-headline='chartreuse'] .lunar-hero__title em {
   color: var(--cream);
+}
+
+/* Option B moon style 1: Capsules. The headline and capsules share the space
+   above the bottom row; the capsule grid is sized by that height and sits on
+   the right, so it never reaches the divider. */
+.lunar-hero__top {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: min(64vh, 640px);
+}
+/* Slightly smaller than the halo layout so the lines clear the capsules */
+.lunar-hero__top .lunar-hero__title {
+  margin: 0;
+  font-size: clamp(2.4rem, min(6.4vw, 10vh), 7.5rem);
+}
+.lunar-hero__capsules {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 88%;
+  translate: 0 -50%;
+}
+.capsules {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 20px);
+}
+.capsule {
+  display: block;
+  height: 100%;
+  aspect-ratio: 1 / 2.1;
+  border-radius: 999px;
+  object-fit: cover;
+  animation: capsule-in 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--i) * 0.15s);
+}
+.capsule--photo {
+  border: 1.5px solid var(--cream);
+}
+.capsule--red {
+  background: var(--red);
+}
+.capsule--chartreuse {
+  background: var(--chartreuse);
+}
+.capsule--powder {
+  background: var(--powder);
+}
+@keyframes capsule-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .lunar-hero__top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+  .lunar-hero__top {
+    min-height: 0;
+  }
+  .lunar-hero__top .lunar-hero__title {
+    margin: 0;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+  .lunar-hero__capsules {
+    position: static;
+    height: auto;
+    translate: none;
+  }
+  .lunar-hero__capsules.capsules {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lunar-hero__capsules .capsule {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1.7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .capsule {
+    animation: none;
+  }
 }

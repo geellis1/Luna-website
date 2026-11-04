@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { pillars, tiers } from '../../content'
+import { photos, unsplash } from '../../photos'
 
 // Option C: Scrapbook. A huge condensed serif headline on cream, with advocacy
 // photos tucked behind the letters, each peeking out from a gap: past a line's
@@ -9,15 +10,8 @@ const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
 
 const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.']
 
-// Placeholder photos, free under the Unsplash license and loaded from
-// Unsplash for now; to be swapped for final images and saved into /public.
-const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=640&q=70`
-const photos = [
-  { key: 'capitol', id: '1602364438008-9aa4242284b8', alt: 'State capitol dome' },
-  { key: 'rally', id: '1591824353737-61237487acf4', alt: 'People rallying with a "Time for change" sign' },
-  { key: 'hands', id: '1582213782179-e0d53f98f2ca', alt: 'Hands stacked together in a circle' },
-  { key: 'meeting', id: '1515187029135-18ee286d815b', alt: 'A community meeting' },
-]
+// Placeholder photos (src/photos.ts), in the order they're placed
+const cutouts = (['capitol', 'rally', 'hands', 'meeting'] as const).map((key) => ({ key, ...photos[key] }))
 const note = ["Let's move from", 'mission to', 'movement.']
 
 export default function HomeScrapbook() {
@@ -28,7 +22,7 @@ export default function HomeScrapbook() {
 
           <div className="scrap-hero__board">
             {/* Photos sit behind the letters */}
-            {photos.map((ph) => (
+            {cutouts.map((ph) => (
               <img
                 key={ph.key}
                 className={`scrap-card scrap-card--${ph.key}`}

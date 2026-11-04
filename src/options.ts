@@ -24,7 +24,7 @@ export const optionGroups = {
     title: 'Moon',
     param: 'moon',
     choices: [
-      { id: 'ring', label: '1 · Phase ring', note: 'Glowing moon ringed by the eight phases' },
+      { id: 'capsules', label: '1 · Capsules', note: 'Six tall capsules of photos and brand colors' },
       { id: 'halo', label: '2 · Halo', note: 'Soft layered light, cool shadow side' },
       { id: 'collage', label: '3 · Collage cream', note: 'Cut-out moons in warm ivory' },
       { id: 'collage-powder', label: '4 · Collage powder', note: 'Cut-out moons in powder blue' },

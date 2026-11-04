@@ -59,20 +59,27 @@ function Headline() {
 export default function HomeBold() {
   const { moon } = useOptions()
   const Moon = moons[moon]
-  // The collage moons run in a row under a big centered headline; every
-  // other style sits beside the headline on the right
+  // The collage moons run in a row under a big centered headline; the
+  // capsules sit beside the headline, above the bottom row; the halo floats
+  // behind on the right
   const row = moon.startsWith('collage')
+  const beside = moon === 'capsules'
   const title = <Headline />
 
   return (
     <>
       <section className={`lunar-hero${row ? ' lunar-hero--row' : ''}`}>
-        {!row && <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />}
+        {!row && !beside && <Moon key={moon} className={`lunar-hero__moon lunar-hero__moon--${moon}`} />}
         <div className="container lunar-hero__stage">
           {row ? (
             <div className="lunar-hero__center">
               {title}
               <Moon key={moon} className="lunar-hero__row" />
+            </div>
+          ) : beside ? (
+            <div className="lunar-hero__top">
+              {title}
+              <Moon key={moon} className="lunar-hero__capsules" />
             </div>
           ) : (
             title
