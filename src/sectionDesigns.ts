@@ -74,6 +74,16 @@ export const sectionDesigns = {
       { id: 'c', label: 'Option C: Split Editorial', note: 'A huge statement on crimson beside the letter' },
     ],
   },
+  services: {
+    title: 'Services · Page Layout',
+    param: 'services',
+    anchor: 'services-top',
+    path: '/services',
+    choices: [
+      { id: 'a', label: 'Option A — Horizontal Accordion', note: 'Three full-width color bands; one opens at a time' },
+      { id: 'b', label: 'Option B — Editorial Color Blocks', note: 'Three full-width color blocks, all open, alternating' },
+    ],
+  },
   aboutHeadshot: {
     title: 'About · Kelli’s Headshot',
     param: 'photo',

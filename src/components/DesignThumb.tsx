@@ -26,6 +26,7 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
   if (section === 'cta') return <CtaPreview id={id as SectionDesign<'cta'>} />
   if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
+  if (section === 'services') return <ServicesPreview id={id as SectionDesign<'services'>} />
   return <WorkPreview id={id} />
 }
 
@@ -210,3 +211,43 @@ function WorkPreview({ id }: { id: string }) {
   }
 }
 
+
+// Services page: A three bands, the first open; B three full blocks,
+// alternating sides
+function ServicesPreview({ id }: { id: SectionDesign<'services'> }) {
+  const on = [C.bordeaux, C.bordeaux, C.cream]
+  return (
+    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+      <rect width="120" height="64" fill={C.cream} />
+      <rect x="10" y="4" width="50" height="5" fill={C.bordeaux} />
+      {id === 'a' ? (
+        <>
+          <rect y="13" width="120" height="27" fill={tones[0]} />
+          <rect x="8" y="17" width="36" height="7" fill={on[0]} />
+          <rect x="64" y="18" width="46" height="2" fill={on[0]} opacity="0.7" />
+          <rect x="64" y="23" width="40" height="2" fill={on[0]} opacity="0.7" />
+          <rect x="64" y="28" width="44" height="2" fill={on[0]} opacity="0.7" />
+          <rect y="40" width="120" height="12" fill={tones[1]} />
+          <rect x="8" y="43" width="28" height="6" fill={on[1]} />
+          <rect y="52" width="120" height="12" fill={tones[2]} />
+          <rect x="8" y="55" width="38" height="6" fill={on[2]} />
+        </>
+      ) : (
+        [0, 1, 2].map((i) => {
+          const y = 13 + i * 17
+          const nameX = i === 1 ? 70 : 8
+          const textX = i === 1 ? 8 : 64
+          return (
+            <g key={i}>
+              <rect y={y} width="120" height="17" fill={tones[i]} />
+              <rect x={nameX} y={y + 4} width="42" height="9" fill={on[i]} />
+              <rect x={textX} y={y + 4} width="44" height="2" fill={on[i]} opacity="0.7" />
+              <rect x={textX} y={y + 8} width="38" height="2" fill={on[i]} opacity="0.7" />
+              <rect x={textX} y={y + 12} width="42" height="1" fill={on[i]} opacity="0.5" />
+            </g>
+          )
+        })
+      )}
+    </svg>
+  )
+}

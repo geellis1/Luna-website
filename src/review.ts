@@ -38,6 +38,8 @@ const names: Record<string, string> = {
   'aboutHeadshot:blazer': 'Houndstooth Blazer',
   'aboutHeadshot:glasses': 'Red Glasses',
   'aboutHeadshot:cardigan': 'Green Cardigan',
+  'services:a': 'Option A — Horizontal Accordion',
+  'services:b': 'Option B — Editorial Color Blocks',
   'contact:a': 'Editorial Letter',
   'contact:b': 'Letter + Collage',
   'contact:c': 'Split Editorial',
@@ -46,6 +48,7 @@ const sectionTitles: Partial<Record<SectionKey, string>> = {
   cta: 'Let’s Work Together',
   aboutHeadshot: 'Kelli’s Headshot',
   contact: 'Contact Page',
+  services: 'Page Layout',
 }
 
 // A section's designs; How we work together's Option A is listed as its two
@@ -90,7 +93,7 @@ const section = (key: SectionKey): Section => ({
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: (['intro', 'whyLuna', 'howWeWork', 'cta'] as const).map(section) },
   { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot')] },
-  { id: 'services', title: 'Services', path: '/services', sections: [] },
+  { id: 'services', title: 'Services', path: '/services', sections: [section('services')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
 ]
 
