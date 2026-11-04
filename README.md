@@ -39,3 +39,14 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 3. In Vercel → Settings → Environment Variables, add the values from `.env.example`:
    `RESEND_API_KEY`, `CONTACT_TO_EMAIL` (Kelli's inbox), `CONTACT_FROM_EMAIL`.
 4. Add the custom domain `lunacivicstrategies.com` in Vercel → Settings → Domains.
+
+## Design
+
+The site uses the design Kelli chose in review: the **Scrapbook** homepage in
+the **Cream Paper** colors, with the **Moon Menu** (crescent moon + menu lines)
+opening as a **right-side drawer**.
+
+The full design explorer she reviewed (five homepages, color palettes, nav and
+menu options, favorites and shareable review links) is kept on the
+`brainstorm` branch and frozen at the tag `design-explorer-v1`, as a reference
+for future projects.

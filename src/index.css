@@ -10,11 +10,18 @@
   /* Placeholder typefaces: swap these two lines when brand fonts arrive */
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  /* Home option C only: tall condensed display serif + handwriting */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-hand: 'Nothing You Could Do', 'Bradley Hand', cursive;
+  /* Home option E only: connected brush script */
+  --font-brush: 'Mr Dafoe', 'Bradley Hand', cursive;
 
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);
   --section-y: clamp(72px, 10vw, 144px);
-  --nav-h: 84px;
+  --nav-h: 104px;
+  /* Extra room between the nav and the first content on every page */
+  --below-nav: clamp(24px, 4vw, 48px);
 }
 
 *,
@@ -145,36 +152,62 @@ svg {
   }
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons ----------
+   Three levels, each with a small ↗ arrow:
+   01 Primary   .button--cream (on dark) / .button--crimson (on light): solid pill
+   02 Secondary .button--secondary: outlined pill in the current text color
+   03 Tertiary  .text-link: underlined text link
+   On hover the arrow nudges up and to the right. */
 .button {
-  display: inline-block;
-  padding: 18px 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 15px 26px;
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
   text-transform: uppercase;
   text-decoration: none;
-  border: 2px solid currentColor;
-  border-radius: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
   background: transparent;
   color: inherit;
   cursor: pointer;
   transition:
     background 0.15s,
-    color 0.15s;
+    color 0.15s,
+    border-color 0.15s;
+}
+.button::after,
+.text-link::after {
+  content: '';
+  flex: none;
+  width: 0.8em;
+  height: 0.8em;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M3.5 12.5 12 4M5.5 3.5H12.5V10.5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M3.5 12.5 12 4M5.5 3.5H12.5V10.5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  transition: transform 0.2s;
+}
+.button:hover::after,
+.text-link:hover::after {
+  transform: translate(2px, -2px);
 }
 
+/* 01 Primary */
 .button--cream {
   background: var(--cream);
   border-color: var(--cream);
-  color: var(--crimson);
+  color: var(--bordeaux);
 }
 .button--cream:hover {
   background: transparent;
   color: var(--cream);
 }
-
 .button--crimson {
   background: var(--crimson);
   border-color: var(--crimson);
@@ -185,38 +218,53 @@ svg {
   border-color: var(--bordeaux);
 }
 
+/* 02 Secondary */
+.button--secondary:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
 .button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
+/* 03 Tertiary */
 .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  padding-bottom: 12px;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 0.9rem;
   text-decoration: none;
-  border-bottom: 2px solid var(--red);
-  padding-bottom: 2px;
-}
-.text-link:hover {
-  color: var(--red);
+  border-bottom: 1.5px solid currentColor;
 }
 
-/* ---------- Nav ---------- */
+/* ---------- Nav ----------
+   No bar: the logo and the crescent-moon menu button sit straight on the first
+   section (the header is pulled up over it) and scroll away with the page.
+   Cream on dark sections, burgundy on light ones (.nav--on-light). The
+   content area is wider than the site container, so the logo and button sit
+   near the edges. */
 .nav {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 50;
-  background: var(--bordeaux);
+  height: var(--nav-h);
+  margin-bottom: calc(-1 * var(--nav-h));
+  padding-top: 20px;
   color: var(--cream);
 }
-
+.nav--on-light {
+  color: var(--bordeaux);
+}
 .nav__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--nav-h);
+  max-width: 1600px;
+  height: calc(var(--nav-h) - 20px);
 }
 
 .logo {
@@ -230,81 +278,376 @@ svg {
 .logo--footer img {
   height: 80px;
 }
-
-.nav__links {
-  display: flex;
-  gap: clamp(20px, 3vw, 44px);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* The white logo file, painted in the nav's text color through a mask */
+.logo__mark {
+  display: block;
+  height: 56px;
+  aspect-ratio: 3 / 1;
+  background: currentColor;
+  -webkit-mask: url('/logo-white.png') center / contain no-repeat;
+  mask: url('/logo-white.png') center / contain no-repeat;
+}
+@media (max-width: 760px) {
+  .logo__mark {
+    height: 38px;
+  }
 }
 
-.nav__links a {
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 6px 0;
-  border-bottom: 2px solid transparent;
-}
-.nav__links a:hover,
-.nav__links a.active {
-  border-bottom-color: var(--chartreuse);
+/* Extra room below the nav on every page. A transparent top border on the
+   first section clears the nav and adds the space without touching the
+   section's own padding; the section's background still paints underneath. */
+main > section:first-child {
+  border-top: calc(var(--nav-h) + var(--below-nav)) solid transparent;
 }
 
-.nav__toggle {
-  display: none;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
+/* ---------- Menu ----------
+   Crescent-moon button with two menu lines; hover tilts the crescent, open
+   turns it into an ×. The menu is a cream drawer of oversized numbered rows,
+   rendered into <body> above everything (src/components/EditorialMenu.tsx). */
+.moon-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  /* 42px moon, 48px tap target; the moon's edge sits on the header margin */
+  min-height: 48px;
+  padding: 3px;
+  margin-right: -3px;
   background: none;
   border: 0;
   color: inherit;
   cursor: pointer;
 }
-.nav__toggle span {
+.moon-mark {
   display: block;
-  height: 2px;
-  margin: 5px 0;
-  background: currentColor;
+  width: 42px;
+  height: 42px;
+  overflow: visible;
+}
+.moon-mark__ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+}
+.moon-mark__crescent {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
   transition:
-    transform 0.2s,
-    opacity 0.2s;
+    transform 0.4s ease-out,
+    opacity 0.25s ease-out;
 }
-.nav__toggle[aria-expanded='true'] span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.nav__toggle[aria-expanded='true'] span:nth-child(2) {
+.moon-mark__x {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
   opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(-45deg) scale(0.6);
+  transition:
+    transform 0.35s ease-out,
+    opacity 0.25s ease-out;
 }
-.nav__toggle[aria-expanded='true'] span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+.moon-trigger:hover .moon-mark__crescent,
+.moon-trigger:focus-visible .moon-mark__crescent {
+  transform: rotate(-20deg);
+}
+.moon-mark.is-x .moon-mark__crescent {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+.moon-mark.is-x .moon-mark__x {
+  opacity: 1;
+  transform: none;
+}
+.moon-trigger__lines {
+  display: grid;
+  gap: 7px;
+  width: 26px;
+}
+.moon-trigger__lines span {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.35s ease-out;
+}
+.moon-trigger:hover .moon-trigger__lines span:last-child,
+.moon-trigger:focus-visible .moon-trigger__lines span:last-child {
+  transform: translateX(-6px);
+}
+.moon-trigger:focus-visible {
+  outline-offset: 2px;
 }
 
+.ed-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.ed-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(62, 25, 33, 0.6);
+  animation: ed-fade 0.4s ease-out both;
+}
+.ed-menu__panel {
+  position: absolute;
+  inset: clamp(8px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 64px) clamp(20px, 3vw, 36px);
+  overflow-y: auto;
+  background: var(--cream);
+  color: var(--bordeaux);
+  animation: ed-panel-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.ed-menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ed-menu__top .logo__mark {
+  height: 48px;
+}
+.ed-menu__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.ed-menu__close .moon-mark {
+  width: 38px;
+  height: 38px;
+}
+.ed-menu__close:hover {
+  color: var(--crimson);
+}
+
+/* The rows sit centered between the top bar and the tagline */
+.ed-menu__panel > nav {
+  margin: auto 0;
+}
+.ed-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: clamp(16px, 4vh, 48px) 0;
+}
+.ed-menu__list li {
+  border-bottom: 1px solid var(--bordeaux);
+  animation: ed-row 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.16s + var(--i) * 0.07s);
+}
+/* The whole row is the link */
+.ed-menu__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(36px, 5vw, 72px) 1fr auto;
+  align-items: center;
+  padding: clamp(4px, 1.2vh, 14px) 0;
+  text-decoration: none;
+}
+.ed-menu__num {
+  align-self: start;
+  padding-top: 0.9em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.ed-menu__label {
+  position: relative;
+  justify-self: start;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, min(13vh, 10vw), 9.5rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  transition: color 0.3s ease-out;
+}
+.ed-menu__arrow {
+  width: clamp(52px, 7vw, 110px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  transition: transform 0.3s ease-out;
+}
+/* Hover/focus: the label turns powder blue and the arrow slides 12px right;
+   the dividers stay put */
+.ed-menu__row:hover .ed-menu__label,
+.ed-menu__row:focus-visible .ed-menu__label {
+  color: var(--powder);
+}
+.ed-menu__row:hover .ed-menu__arrow,
+.ed-menu__row:focus-visible .ed-menu__arrow {
+  transform: translateX(12px);
+}
+.ed-menu__row:focus-visible {
+  outline: none;
+}
+
+.ed-menu__tagline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  text-align: right;
+}
+
+/* Right-side drawer, attached to the edge with rounded left corners. Slides
+   in from the right; the visible site is only lightly dimmed. Type scales to
+   the panel width. */
+.ed-menu--drawer .ed-menu__backdrop {
+  background: rgba(62, 25, 33, 0.32);
+}
+.ed-menu--drawer .ed-menu__panel {
+  inset: 0 0 0 auto;
+  width: min(50vw, 800px);
+  border-radius: 22px 0 0 22px;
+  container-type: inline-size;
+  animation: ed-drawer-in 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.ed-menu--drawer .ed-menu__label {
+  font-size: clamp(2.4rem, min(14cqi, 11vh), 7rem);
+}
+.ed-menu--drawer .ed-menu__row {
+  grid-template-columns: clamp(32px, 7cqi, 56px) 1fr auto;
+}
+.ed-menu--drawer .ed-menu__arrow {
+  width: clamp(44px, 9cqi, 84px);
+}
+/* Extra class so this beats the shared closing animation further down */
+.ed-menu.ed-menu--drawer.is-closing .ed-menu__panel {
+  animation: ed-drawer-out 0.32s cubic-bezier(0.55, 0, 0.75, 0.4) both;
+}
+@keyframes ed-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes ed-drawer-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+@media (max-width: 1100px) {
+  .ed-menu--drawer .ed-menu__panel {
+    width: min(78vw, 800px);
+  }
+}
 @media (max-width: 760px) {
-  .nav__toggle {
-    display: block;
+  /* Still attached to the right edge, just wider */
+  .ed-menu--drawer .ed-menu__panel {
+    width: min(90vw, 520px);
+    border-radius: 20px 0 0 20px;
   }
-  .nav__links {
-    display: none;
-    position: absolute;
-    top: var(--nav-h);
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    gap: 0;
-    background: var(--bordeaux);
-    border-top: 1px solid rgba(245, 240, 232, 0.2);
-    padding: 8px var(--gutter) 24px;
+}
+
+/* Closing: the menu content fades out first and faster, then the panel and
+   backdrop fade away (opacity and transform only) */
+.ed-menu.is-closing .ed-menu__panel > * {
+  animation: ed-content-out 0.18s ease-in both;
+}
+.ed-menu.is-closing .ed-menu__panel {
+  animation: ed-panel-out 0.24s ease-in 0.06s both;
+}
+.ed-menu.is-closing .ed-menu__backdrop {
+  animation: ed-backdrop-out 0.3s ease-in both;
+}
+@keyframes ed-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  .nav__links.open {
-    display: flex;
+  to {
+    opacity: 1;
+    transform: none;
   }
-  .nav__links a {
-    display: block;
-    padding: 14px 0;
-    font-size: 1.1rem;
+}
+@keyframes ed-panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes ed-content-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ed-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ed-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ed-row {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .ed-menu__row {
+    grid-template-columns: 32px 1fr auto;
+    padding: clamp(8px, 2.4vh, 22px) 0;
+  }
+  .ed-menu__label {
+    font-size: clamp(2.4rem, min(11vh, 15vw), 5rem);
+  }
+  .ed-menu__top .logo__mark {
+    height: 38px;
+  }
+  .ed-menu__tagline {
+    text-align: left;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-menu__backdrop,
+  .ed-menu__panel,
+  .ed-menu__list li,
+  .ed-menu.is-closing .ed-menu__panel,
+  .ed-menu.is-closing .ed-menu__panel > *,
+  .ed-menu.is-closing .ed-menu__backdrop {
+    animation: none;
+  }
+  .ed-menu__label,
+  .ed-menu__arrow {
+    transition: none;
+  }
+  .ed-menu.ed-menu--drawer .ed-menu__panel,
+  .ed-menu.ed-menu--drawer.is-closing .ed-menu__panel,
+  .moon-mark__crescent,
+  .moon-mark__x,
+  .moon-trigger__lines span {
+    animation: none;
+    transition: none;
   }
 }
 
@@ -363,41 +706,6 @@ svg {
 }
 
 /* ---------- Home ---------- */
-.hero {
-  padding: clamp(64px, 9vw, 128px) 0;
-}
-.hero h1 {
-  margin-bottom: 0.6em;
-}
-.hero .lede {
-  margin-bottom: 2.5rem;
-}
-.hero__art {
-  width: 100%;
-  max-width: 520px;
-  justify-self: center;
-}
-
-.statement h2 {
-  max-width: 20ch;
-}
-.statement__body {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: clamp(24px, 6vw, 96px);
-  margin-top: clamp(32px, 4vw, 56px);
-}
-.statement__rule {
-  height: 8px;
-  background: var(--red);
-  width: 96px;
-}
-@media (max-width: 760px) {
-  .statement__body {
-    grid-template-columns: 1fr;
-  }
-}
-
 .pillar {
   border-top: 4px solid var(--chartreuse);
   padding-top: 24px;
@@ -423,21 +731,7 @@ svg {
   margin: 0;
 }
 
-.tier-card {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid var(--bordeaux);
-  padding: clamp(28px, 3vw, 40px);
-  text-decoration: none;
-  transition:
-    background 0.15s,
-    color 0.15s;
-}
-.tier-card:hover {
-  background: var(--crimson);
-  border-color: var(--crimson);
-  color: var(--cream);
-}
+/* Service labels on the home cards */
 .tier-card__label {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
@@ -451,9 +745,6 @@ svg {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 1rem;
-}
-.tier-card p:last-child {
-  margin-bottom: 0;
 }
 
 .cta-band {
@@ -601,4 +892,41 @@ fieldset.field {
   .checks {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------- Utilities ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Homepage hero colors (Cream Paper) ----------
+   --p-bg background · --p-ink headline · --p-text body copy · --p-script
+   handwritten scribble · --p-btn-* primary button · --p-line dividers */
+:root {
+  --p-bg: var(--cream);
+  --p-ink: var(--bordeaux);
+  --p-text: var(--bordeaux);
+  --p-script: var(--red);
+  --p-btn-bg: var(--crimson);
+  --p-btn-fg: var(--cream);
+  --p-line: rgba(62, 25, 33, 0.2);
+}
+
+/* Primary button on a homepage hero, in the palette's colors */
+.button--hero {
+  background: var(--p-btn-bg);
+  border-color: var(--p-btn-bg);
+  color: var(--p-btn-fg);
+}
+.button--hero:hover {
+  background: transparent;
+  color: var(--p-btn-bg);
 }

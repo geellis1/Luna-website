@@ -1,38 +1,13 @@
-import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { navLinks } from '../content'
+import { useLocation } from 'react-router-dom'
+import EditorialMenu from './EditorialMenu'
 
+// Pages whose first section is light (cream), so the see-through nav needs
+// dark text
+const lightTopPages = ['/', '/contact']
+
+// Logo and crescent-moon menu button on the page; the button opens the menu
+// as a drawer from the right (src/components/EditorialMenu.tsx)
 export default function Nav() {
-  const [open, setOpen] = useState(false)
-  const close = () => setOpen(false)
-
-  return (
-    <header className="nav">
-      <div className="container nav__inner">
-        <Link to="/" className="logo" onClick={close}>
-          <img src="/logo-white.png" alt="Luna Civic Strategies" width="900" height="300" />
-        </Link>
-        <button
-          className="nav__toggle"
-          aria-expanded={open}
-          aria-controls="nav-links"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-        <ul id="nav-links" className={`nav__links${open ? ' open' : ''}`}>
-          {navLinks.map((l) => (
-            <li key={l.to}>
-              <NavLink to={l.to} end onClick={close}>
-                {l.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </header>
-  )
+  const { pathname } = useLocation()
+  return <EditorialMenu light={lightTopPages.includes(pathname)} />
 }
