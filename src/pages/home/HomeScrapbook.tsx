@@ -52,7 +52,7 @@ export default function HomeScrapbook() {
           </div>
 
           <div className="hero-foot scrap-hero__foot">
-            <Link to="/contact" className="button button--cream">
+            <Link to="/contact" className="button button--hero">
               Let's Work Together
             </Link>
             <p>

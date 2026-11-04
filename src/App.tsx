@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
 import DesignDrawer from './components/DesignDrawer'
 import Nav from './components/Nav'
+import SharedNote from './components/SharedNote'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Home from './pages/home/Home'
@@ -45,6 +46,7 @@ export default function App() {
       </main>
       <Footer />
       <DesignDrawer />
+      <SharedNote />
     </>
   )
 }

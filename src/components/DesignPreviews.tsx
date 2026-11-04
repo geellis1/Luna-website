@@ -2,7 +2,7 @@
 // each homepage, navigation style and color combination, drawn in the brand
 // palette so the client can compare them at a glance.
 
-import type { HomeOption, OptionValue } from '../options'
+import type { HomeOption, OptionValue, PaletteId } from '../options'
 
 const C = {
   crimson: '#741734',
@@ -94,15 +94,15 @@ export function HomePreview({ kind }: { kind: HomeOption }) {
     case 'handwritten':
       return (
         <svg {...frame}>
-          <rect width="160" height="100" fill={C.cream} />
-          <g fill="none" stroke={C.red} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 40c6-16 10-22 12-10s-6 18 2 6 10-20 14-8-4 14 4 4 8-16 14-6" />
-            <path d="M84 72c6-18 12-22 13-10s-6 16 2 4 9-18 13-6-3 12 5 2 9-16 14-6 6 10 14 4" />
+          <rect width="160" height="100" fill={C.bordeaux} />
+          <g fill="none" stroke="#F0301F" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M10 40c6-16 10-22 12-10s-6 18 2 6 10-20 14-8-4 14 4 4 8-16 14-6" />
+            <path d="M80 72c6-18 12-22 13-10s-6 16 2 4 9-18 13-6-3 12 5 2 9-16 14-6 6 10 14 4" />
           </g>
-          <rect x="66" y="30" width="28" height="2.5" rx="1" fill={C.bordeaux} />
-          <Lines x={44} y={38} widths={[72, 64, 52]} h={6} gap={3} color={C.bordeaux} />
-          <rect x="12" y="80" width="136" height="0.6" fill={C.bordeaux} opacity="0.3" />
-          <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.crimson} />
+          <rect x="66" y="30" width="28" height="2.5" rx="1" fill={C.cream} />
+          <Lines x={44} y={38} widths={[72, 64, 52]} h={6} gap={3} color={C.cream} />
+          <rect x="12" y="80" width="136" height="0.6" fill={C.cream} opacity="0.35" />
+          <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.cream} />
         </svg>
       )
     case 'capsules':
@@ -165,39 +165,82 @@ export function NavPreview({ kind }: { kind: OptionValue<'nav'> }) {
       return (
         <svg {...navFrame}>
           <rect width="120" height="40" fill={C.bordeaux} />
-          <rect x="44" y="4" width="72" height="34" fill={C.cream} />
           <Logo x={8} y={6} color={C.cream} />
-          {[0, 1, 2, 3].map((i) => (
-            <g key={i}>
-              <rect x="50" y={9 + i * 7} width={[26, 22, 30, 28][i]} height="4.5" fill={C.bordeaux} />
-              <rect x="50" y={15 + i * 7} width="60" height="0.4" fill={C.bordeaux} />
-              <path d={`M103 ${11.2 + i * 7}h7m-2-2 2 2-2 2`} fill="none" stroke={C.bordeaux} strokeWidth="0.6" />
-            </g>
-          ))}
+          <Crescent cx={107} cy={10} r={6} />
         </svg>
       )
   }
 }
 
-// Color combination: headline color on burgundy, with its accent
-const combos: Record<OptionValue<'headline'>, { headline: string; accent: string }> = {
-  cream: { headline: C.cream, accent: C.chartreuse },
-  chartreuse: { headline: C.chartreuse, accent: C.cream },
-  powder: { headline: C.powder, accent: C.chartreuse },
-  red: { headline: C.red, accent: C.cream },
+// The Moon Menu's crescent button: a thin ring around a crescent
+function Crescent({ cx, cy, r, lines = false }: { cx: number; cy: number; r: number; lines?: boolean }) {
+  const k = r / 21
+  return (
+    <g transform={`translate(${cx - 22 * k} ${cy - 22 * k}) scale(${k})`}>
+      <circle cx="22" cy="22" r="21" fill="none" stroke={C.cream} strokeWidth={1.6 / k / 2} />
+      <path
+        d="M22 10.5a11.5 11.5 0 1 0 9.5 18A10 10 0 0 1 22 10.5z"
+        fill={C.cream}
+        transform={lines ? 'translate(-5 0)' : undefined}
+      />
+      {lines && (
+        <g stroke={C.cream} strokeWidth="2.2" strokeLinecap="round">
+          <path d="M28 18h8M28 26h8" />
+        </g>
+      )}
+    </g>
+  )
 }
 
-export function ComboPreview({ kind }: { kind: OptionValue<'headline'> }) {
-  const { headline, accent } = combos[kind]
+export function MenuLayoutPreview({ kind }: { kind: OptionValue<'menuLayout'> }) {
+  const rows = (x: number, w: number) =>
+    [0, 1, 2, 3].map((i) => (
+      <g key={i}>
+        <rect x={x} y={9 + i * 7} width={[26, 22, 30, 28][i] * (w / 60)} height="4.5" fill={C.bordeaux} />
+        <rect x={x} y={15 + i * 7} width={w} height="0.4" fill={C.bordeaux} />
+      </g>
+    ))
   return (
-    <svg viewBox="0 0 120 56" aria-hidden="true" className="preview">
-      <rect width="120" height="56" fill={C.bordeaux} />
-      <text x="10" y="36" fontFamily="Georgia, serif" fontWeight="700" fontSize="26" fill={headline}>
+    <svg {...navFrame}>
+      <rect width="120" height="40" fill={C.bordeaux} />
+      {kind === 'takeover' ? (
+        <>
+          <rect x="4" y="3" width="112" height="34" rx="3" fill={C.cream} />
+          {rows(12, 96)}
+        </>
+      ) : (
+        <>
+          <rect width="64" height="40" fill={C.bordeaux} opacity="0.6" />
+          <path d="M64 0H120V40H64a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" fill={C.cream} />
+          {rows(66, 48)}
+        </>
+      )}
+    </svg>
+  )
+}
+
+export function TriggerPreview({ kind }: { kind: OptionValue<'menuTrigger'> }) {
+  return (
+    <svg {...navFrame}>
+      <rect width="120" height="40" fill={C.bordeaux} />
+      <Crescent cx={60} cy={20} r={13} lines={kind === 'moon-lines'} />
+    </svg>
+  )
+}
+
+// Color palette: the palette's own tokens (index.css), so the swatch always
+// matches the site: background, headline, accent and button colors
+export function PalettePreview({ kind }: { kind: PaletteId }) {
+  const v = (token: string) => ({ fill: `var(--p-${token})` })
+  return (
+    <svg viewBox="0 0 120 56" aria-hidden="true" className="preview" data-palette={kind}>
+      <rect width="120" height="56" style={v('bg')} />
+      <text x="10" y="36" fontFamily="Georgia, serif" fontWeight="700" fontSize="26" style={v('ink')}>
         Aa
       </text>
-      <rect x="10" y="42" width="34" height="2" fill={accent} />
-      <circle cx="78" cy="28" r="9" fill={headline} />
-      <circle cx="100" cy="28" r="9" fill={accent} />
+      <rect x="10" y="42" width="34" height="2" style={v('accent')} />
+      <circle cx="78" cy="28" r="9" style={v('accent')} />
+      <rect x="92" y="21" width="20" height="14" rx="7" style={v('btn-bg')} />
     </svg>
   )
 }

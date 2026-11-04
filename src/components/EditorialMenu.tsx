@@ -22,11 +22,11 @@ function MoonMark({ closing = false }: { closing?: boolean }) {
       <defs>
         <mask id={`cut${uid}`}>
           <rect width="44" height="44" fill="#fff" />
-          <circle cx="26" cy="18.5" r="8.4" fill="#000" />
+          <circle cx="27" cy="17.8" r="9.8" fill="#000" />
         </mask>
       </defs>
       <circle className="moon-mark__ring" cx="22" cy="22" r="21" />
-      <circle className="moon-mark__crescent" cx="21" cy="22" r="9.5" mask={`url(#cut${uid})`} />
+      <circle className="moon-mark__crescent" cx="20.5" cy="22.5" r="11" mask={`url(#cut${uid})`} />
       <path className="moon-mark__x" d="M16 16l12 12M28 16 16 28" />
     </svg>
   )

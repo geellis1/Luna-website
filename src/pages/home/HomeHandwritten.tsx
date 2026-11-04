@@ -23,8 +23,8 @@ export default function HomeHandwritten() {
             </h1>
           </div>
 
-          <div className="hero-foot hero-foot--light hand-hero__foot">
-            <Link to="/contact" className="button button--crimson">
+          <div className="hero-foot hand-hero__foot">
+            <Link to="/contact" className="button button--hero">
               Let's Work Together
             </Link>
             <p>

@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
+import NoteStatement from './NoteStatement'
 import CtaBand from '../../components/CtaBand'
 import Capsules from '../../components/Capsules'
 import { moons } from '../../components/moons'
@@ -95,7 +96,7 @@ export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
             </div>
           )}
           <div className="hero-foot lunar-hero__foot">
-            <Link to="/contact" className="button button--cream">
+            <Link to="/contact" className="button button--hero">
               Let's Work Together
             </Link>
             <p>
@@ -107,17 +108,7 @@ export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
         </div>
       </section>
 
-      <section className="section section--cream">
-        <div className="container bold-statement">
-          <h2>Your mission has policy implications. We help you do something about it.</h2>
-          <p className="lede">
-            Progress is possible in even the most unlikely places, but it requires more than good
-            intentions. It takes unwavering vision. It takes strategy grounded in lived experience.
-            It takes technology to modernize movements. It takes commitment to the long game. And
-            it takes someone who has been inside this work, not advising from a distance.
-          </p>
-        </div>
-      </section>
+      <NoteStatement />
 
       <section className="section section--cream bold-why">
         <div className="container">

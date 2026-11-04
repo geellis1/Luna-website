@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { navLinks } from '../content'
-import { useOptions } from '../options'
+import { lightPalettes, resolvePalette, useOptions } from '../options'
 import EditorialMenu from './EditorialMenu'
 
 // Pages whose first section is light, so a see-through nav needs dark text
-// (plus the homepage when the Handwritten design, on cream, is showing)
+// (plus the homepage when its color palette is a light one)
 const lightTopPages = ['/contact']
 
 // Nav bar in the style picked in the options bar:
@@ -16,13 +16,14 @@ const lightTopPages = ['/contact']
 //   italic serif inside a drawn circle
 // menu: logo + MENU button; opens a near-fullscreen editorial panel
 export default function Nav() {
-  const { nav, home } = useOptions()
+  const options = useOptions()
+  const { nav } = options
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
   const pill = nav === 'pill'
   const masked = pill || nav === 'circled'
-  const lightTop = lightTopPages.includes(pathname) || (pathname === '/' && home === 'handwritten')
+  const lightTop = lightTopPages.includes(pathname) || (pathname === '/' && lightPalettes.includes(resolvePalette(options)))
   const light = (nav === 'circled' || nav === 'menu') && lightTop
 
   if (nav === 'menu') return <EditorialMenu light={light} />

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
 import Pillars from '../../components/Pillars'
+import NoteStatement from './NoteStatement'
 import { tiers } from '../../content'
 
 // Option A: Editorial. Text only: a huge bold headline across the full width.
@@ -27,7 +28,7 @@ function Marked({ kind, children }: { kind: 'underline' | 'circle'; children: Re
 export default function HomeEditorial() {
   return (
     <>
-      <section className="section--crimson hero">
+      <section className="hero ed-hero">
         <div className="container">
           <div className="ed-hero__title-wrap">
             <h1 className="ed-hero__title">
@@ -48,7 +49,7 @@ export default function HomeEditorial() {
             </h1>
           </div>
           <div className="hero-foot editorial-hero__foot">
-            <Link to="/contact" className="button button--cream">
+            <Link to="/contact" className="button button--hero">
               Let's Work Together
             </Link>
             <p>
@@ -60,21 +61,7 @@ export default function HomeEditorial() {
         </div>
       </section>
 
-      <section className="section section--cream statement">
-        <div className="container">
-          <h2>Your mission has policy implications. We help you do something about it.</h2>
-          <div className="statement__body">
-            <div className="statement__rule" aria-hidden="true" />
-            <p className="lede">
-              Progress is possible in even the most unlikely places, but it requires more than good
-              intentions. It takes unwavering vision. It takes strategy grounded in lived
-              experience. It takes technology to modernize movements. It takes commitment to the
-              long game. And it takes someone who has been inside this work, not advising from a
-              distance.
-            </p>
-          </div>
-        </div>
-      </section>
+      <NoteStatement />
 
       <section className="section section--bordeaux">
         <div className="container">

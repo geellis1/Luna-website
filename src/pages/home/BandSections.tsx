@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { pillars, tiers } from '../../content'
+import NoteStatement from './NoteStatement'
 
 // The sections below the hero on home options C (Scrapbook) and E
 // (Handwritten): statement band, Why Luna list, service cards, CTA.
@@ -8,17 +9,7 @@ const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
 export default function BandSections() {
   return (
     <>
-      <section className="section section--crimson moon-statement">
-        <div className="container">
-          <h2>Your mission has policy implications. We help you do something about it.</h2>
-          <p className="lede">
-            Progress is possible in even the most unlikely places, but it requires more than good
-            intentions. It takes unwavering vision. It takes strategy grounded in lived experience.
-            It takes technology to modernize movements. It takes commitment to the long game. And
-            it takes someone who has been inside this work, not advising from a distance.
-          </p>
-        </div>
-      </section>
+      <NoteStatement />
 
       <section className="section section--bordeaux">
         <div className="container moon-why">
