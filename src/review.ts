@@ -4,7 +4,7 @@ import { readDesign, sectionDesigns, type SectionKey } from './sectionDesigns'
 // Round 2 design review: what the client can review, by page, and her
 // favorites and comments.
 //
-// Every design has a stable key, "<section>:<design>" (e.g. "intro:micsA",
+// Every design has a stable key, "<section>:<design>" (e.g. "intro:a1",
 // "howWeWork:a1"). Favorites and comments are stored under those keys in this
 // browser (localStorage), so they survive refreshes and page changes. To
 // share them, the whole review is packed into a link (/review?r=…) that opens
@@ -26,7 +26,6 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
-  'intro:micsA': 'Microphones — Image A',
   'whyLuna:b': 'Editorial Typography',
   'whyLuna:c': 'Editorial Collage',
   'howWeWork:a1': 'Auto-Expanding Capsules',

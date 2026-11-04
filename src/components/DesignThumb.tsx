@@ -113,21 +113,6 @@ function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
-  if (id === 'micsA') {
-    return (
-      <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-        <rect width="120" height="64" fill={C.powder} />
-        <rect x="34" y="4" width="52" height="4" fill={C.bordeaux} />
-        <circle cx="60" cy="36" r="22" fill={C.crimson} />
-        <rect x="48" y="24" width="24" height="3" fill={C.cream} />
-        <rect x="51" y="30" width="18" height="3" fill={C.cream} />
-        <rect x="52" y="36" width="16" height="3" fill={C.chartreuse} />
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <rect key={i} x={34 + i * 7.5} y={46 - (i % 3) * 3} width="4" height="22" rx="2" fill="#444" transform={`rotate(${(i - 3) * 6} ${36 + i * 7.5} 60)`} />
-        ))}
-      </svg>
-    )
-  }
   const a1 = id === 'a1'
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">

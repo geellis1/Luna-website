@@ -67,6 +67,6 @@ export const navLinks = [
 ]
 
 // The full intro paragraph (the homepage intro's original long copy), kept
-// for future use; the Microphones intro uses a shorter statement
+// for future use
 export const introLongCopy =
   'Progress is possible in even the most unlikely places, but it requires more than good intentions. It takes unwavering vision. It takes strategy grounded in lived experience. It takes technology to modernize movements. It takes commitment to the long game. And it takes someone who has been inside this work, not advising from a distance.'

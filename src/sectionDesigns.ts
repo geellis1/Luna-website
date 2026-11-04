@@ -32,7 +32,6 @@ export const sectionDesigns = {
     choices: [
       { id: 'a1', label: 'Poster Collage A1 — Cream / Deep Crimson', note: 'A crimson poster with layered paper on cream' },
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
-      { id: 'micsA', label: 'Microphones — Image A', note: 'Press microphones rising over a crimson circle, on powder blue' },
     ],
   },
   whyLuna: {
