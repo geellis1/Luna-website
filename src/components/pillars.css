@@ -1,0 +1,103 @@
+/* ---------- Why Luna pillars (About page): color boxes ----------
+   Four rounded boxes with gaps between them, square-ish on desktop, two
+   across on tablets and stacked on phones. Box 04 is cream rather than
+   Night Bordeaux so it shows on the hero's Night Bordeaux background. */
+.pillar-boxes {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 1.4vw, 20px);
+}
+.pillar-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  aspect-ratio: 1;
+  padding: clamp(22px, 2.4vw, 36px);
+  border-radius: 20px;
+  color: var(--bordeaux);
+  /* Build in: each box wipes up into place, one after another */
+  clip-path: inset(100% 0 0 0 round 20px);
+  translate: 0 24px;
+  transition:
+    clip-path 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
+    translate 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s);
+}
+.pillar-box--1 {
+  background: var(--powder);
+}
+.pillar-box--2 {
+  background: var(--chartreuse);
+}
+.pillar-box--3 {
+  color: var(--cream);
+  background: var(--crimson);
+}
+.pillar-box--4 {
+  background: var(--cream);
+}
+.pillar-box__num,
+.pillar-box__text {
+  opacity: 0;
+  translate: 0 14px;
+  transition:
+    opacity 0.7s ease calc(0.6s + var(--i) * 0.14s),
+    translate 0.8s var(--ease-out) calc(0.6s + var(--i) * 0.14s);
+}
+.pillar-box__text {
+  transition-delay: calc(0.72s + var(--i) * 0.14s);
+}
+.pillar-box__num {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+}
+.pillar-box__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.pillar-box__desc {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.pillar-boxes.is-in .pillar-box {
+  clip-path: inset(0 0 0 0 round 20px);
+  translate: none;
+}
+.pillar-boxes.is-in .pillar-box__num,
+.pillar-boxes.is-in .pillar-box__text {
+  opacity: 1;
+  translate: none;
+}
+
+@media (max-width: 960px) {
+  .pillar-boxes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .pillar-boxes {
+    grid-template-columns: 1fr;
+  }
+  .pillar-box {
+    aspect-ratio: auto;
+    min-height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pillar-box,
+  .pillar-box__num,
+  .pillar-box__text {
+    clip-path: none;
+    translate: none;
+    opacity: 1;
+    transition: none;
+  }
+}
