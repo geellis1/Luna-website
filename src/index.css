@@ -895,8 +895,8 @@ fieldset.field {
 }
 
 /* ---------- About hero ----------
-   Big bold centered headline; its letters rise into place one by one, then
-   the collage moons fade up beneath it, left to right, and float gently. The
+   Big bold centered headline; its letters rise into place one by one (then
+   stay still), then the collage moons fade up beneath it, left to right, and float gently. The
    outline of the moon nearest the current phase turns chartreuse. Intro and
    pillars follow. */
 .about-hero__center {
@@ -916,9 +916,7 @@ fieldset.field {
 }
 .about-hero__char {
   display: inline-block;
-  animation:
-    about-char 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(0.3s + var(--i) * 0.06s) both,
-    about-tide 8s ease-in-out calc(4s + var(--i) * 0.05s) infinite;
+  animation: about-char 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(0.3s + var(--i) * 0.06s) both;
 }
 .about-hero__moons {
   display: block;
@@ -955,17 +953,6 @@ fieldset.field {
     opacity: 1;
     transform: none;
     filter: blur(0);
-  }
-}
-/* Every 8s a gentle wave (a tide pulled by the moon) lifts each letter */
-@keyframes about-tide {
-  0%,
-  14%,
-  100% {
-    translate: 0 0;
-  }
-  7% {
-    translate: 0 -0.08em;
   }
 }
 @keyframes collage-in {
