@@ -868,8 +868,3 @@
     transition-delay: 0s !important;
   }
 }
-
-/* Option C ends with a little cream breathing room below the panels */
-.section.hww-wide.hww--c {
-  padding-bottom: clamp(48px, 4.5vw, 64px);
-}
