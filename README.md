@@ -40,26 +40,13 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
    `RESEND_API_KEY`, `CONTACT_TO_EMAIL` (Kelli's inbox), `CONTACT_FROM_EMAIL`.
 4. Add the custom domain `lunacivicstrategies.com` in Vercel → Settings → Domains.
 
-## Design options (review mode)
+## Design
 
-An **Explore Designs** button (bottom-right) opens a panel with five sections:
-Homepage Design, Color Palette, Navigation Style, Menu Layout and Menu Button.
-Every choice updates the site immediately and is written into the URL.
-**Reset to default** returns to the original choices.
+The site uses the design Kelli chose in review: the **Scrapbook** homepage in
+the **Cream Paper** colors, with the **Moon Menu** (crescent moon + menu lines)
+opening as a **right-side drawer**.
 
-- **Color palettes** apply to every homepage hero through the `--p-*` tokens in
-  `src/index.css` (`html[data-palette]`). Each homepage has a recommended
-  palette (`recommendedPalette` in `src/options.ts`), used until the client
-  picks one herself.
-- **Save to Favorites** keeps the whole combination with an optional name and
-  note. Favorites live in that browser's localStorage (`luna-favorites`), so
-  they don't follow the client to another device.
-- **Review & Share Selections** saves the design and copies a link that opens it
-  anywhere, with her name, feedback and preferred flag shown in a small card.
-  The design travels as the usual URL params; the note is a versioned,
-  base64url-encoded `review` param (`src/favorites.ts`). No database needed.
-- Choices are defined in `optionGroups` in `src/options.ts`; the panel is
-  `src/components/DesignDrawer.tsx` with previews in `DesignPreviews.tsx`.
-- Not offered to the client but kept in the code: the Classic navigation bar,
-  the Floating Pill nav and the Moon Halo illustration.
-- At launch, set `VITE_HIDE_OPTIONS=true` in Vercel to hide the button and drawer.
+The full design explorer she reviewed (five homepages, color palettes, nav and
+menu options, favorites and shareable review links) is kept on the
+`brainstorm` branch and frozen at the tag `design-explorer-v1`, as a reference
+for future projects.

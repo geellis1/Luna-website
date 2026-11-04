@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { pillars, tiers } from '../../content'
 import NoteStatement from './NoteStatement'
 
-// The sections below the hero on home options C (Scrapbook) and E
-// (Handwritten): statement band, Why Luna list, service cards, CTA.
+// The sections below the homepage hero: statement (notebook page), Why Luna
+// list, service cards, CTA.
 const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
 
 export default function BandSections() {

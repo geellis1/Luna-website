@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-// The statement right under every homepage hero. Half of it is handwritten on
+// The statement right under the homepage hero. Half of it is handwritten on
 // a torn notebook page; the rest sits beside it, monochrome: one deep tone of
 // the section's own background color (powder blue, so it breaks from the
-// burgundy hero). The page settles into place as it scrolls into view.
+// cream hero). The page settles into place as it scrolls into view.
 // Styles: "Note statement" in home.css.
 
 export default function NoteStatement() {

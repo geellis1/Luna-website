@@ -2,15 +2,13 @@ import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, NavLink } from 'react-router-dom'
 import { navLinks } from '../content'
-import { useOptions } from '../options'
 
-// Nav option: Editorial menu. Closed, it's the logo and a crescent-moon
-// trigger sitting on the page (like the circled nav). Open, the same editorial
-// rows show either as a rounded fullscreen takeover or as a right-side half
-// panel (Menu Layout option). Rendered into <body> so it sits above every page
-// element, including the Explore Designs drawer.
+// The site nav. Closed, it's the logo and a crescent-moon button (with two
+// menu lines) sitting on the page. Open, large editorial rows slide in as a
+// drawer attached to the right edge. Rendered into <body> so it sits above
+// every page element.
 
-const CLOSE_MS = 340 // covers both layouts' closing animations
+const CLOSE_MS = 340 // covers the closing animation
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -33,7 +31,6 @@ function MoonMark({ closing = false }: { closing?: boolean }) {
 }
 
 export default function EditorialMenu({ light }: { light: boolean }) {
-  const { menuLayout, menuTrigger } = useOptions()
   const [open, setOpen] = useState(false)
   const [closing, setClosing] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
@@ -104,18 +101,16 @@ export default function EditorialMenu({ light }: { light: boolean }) {
           onClick={() => setOpen(true)}
         >
           <MoonMark closing={open} />
-          {menuTrigger === 'moon-lines' && (
-            <span className="moon-trigger__lines" aria-hidden="true">
-              <span />
-              <span />
-            </span>
-          )}
+          <span className="moon-trigger__lines" aria-hidden="true">
+            <span />
+            <span />
+          </span>
         </button>
       </div>
 
       {open &&
         createPortal(
-          <div className={`ed-menu ed-menu--${menuLayout}${closing ? ' is-closing' : ''}`}>
+          <div className={`ed-menu ed-menu--drawer${closing ? ' is-closing' : ''}`}>
             <div className="ed-menu__backdrop" onClick={close} />
             <div
               ref={panel}

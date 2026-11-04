@@ -1,6 +1,6 @@
 // Placeholder advocacy photos, free under the Unsplash license and loaded from
 // Unsplash for now; to be swapped for final images and saved into /public.
-// Shared by home options B (Capsules) and C (Scrapbook).
+// Used by the homepage hero (Scrapbook).
 
 export const unsplash = (id: string, width = 640) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&q=70`

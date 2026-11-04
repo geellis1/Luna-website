@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom'
 import { photos, unsplash } from '../../photos'
 import BandSections from './BandSections'
 
-// Option C: Scrapbook. A huge condensed serif headline on cream, with advocacy
+// Homepage: Scrapbook. A huge condensed serif headline on cream, with advocacy
 // photos tucked behind the letters, each peeking out from a gap: past a line's
 // end, past the left edge, or between lines. A handwritten note writes itself
 // on. Deep color bands follow (BandSections). Hero styles live in home.css
-// under "Option C".
+// under "Hero: Scrapbook".
 const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.']
 
 // Placeholder photos (src/photos.ts), in the order they're placed
