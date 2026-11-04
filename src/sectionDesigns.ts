@@ -63,6 +63,18 @@ export const sectionDesigns = {
       { id: 'c', label: 'C — Split-Panel Graphic', note: 'Burgundy and powder halves with a moving moon' },
     ],
   },
+  contact: {
+    title: 'Contact Page — Three Directions',
+    param: 'contact',
+    anchor: 'contact-page',
+    path: '/contact',
+    choices: [
+      { id: 'a', label: 'Option A: Editorial Letter', note: 'The form as a letter on framed stationery' },
+      { id: 'b', label: 'Option B: Letter + Collage', note: 'Layered paper pieces beside the letter' },
+      { id: 'c', label: 'Option C: Split Editorial', note: 'A huge statement on crimson beside the letter' },
+      { id: 'current', label: 'Current page (fallback)', note: 'The contact page as it is today' },
+    ],
+  },
   aboutHeadshot: {
     title: 'About · Kelli’s Headshot',
     param: 'photo',

@@ -39,7 +39,63 @@ function Preview({ section, id }: { section: SectionKey; id: string }) {
   if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
   if (section === 'cta') return <CtaPreview id={id as SectionDesign<'cta'>} />
+  if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
   return <WorkPreview id={id as SectionDesign<'howWeWork'>} />
+}
+
+function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
+  // Letter lines with blanks, drawn at a position and width
+  const letter = (x: number, w: number) => (
+    <>
+      {[0, 1, 2, 3, 4].map((i) => (
+        <g key={i}>
+          <rect x={x} y={18 + i * 7} width={w * 0.5} height="2" fill={C.bordeaux} opacity="0.7" />
+          <rect x={x + w * 0.55} y={19.5 + i * 7} width={w * 0.35} height="0.7" fill={C.crimson} />
+        </g>
+      ))}
+      <rect x={x} y="54" width="16" height="4" rx="2" fill={C.crimson} />
+    </>
+  )
+  return (
+    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+      <rect width="120" height="64" fill={C.cream} />
+      {id === 'a' && (
+        <>
+          <rect x="30" y="4" width="60" height="5" fill={C.bordeaux} />
+          <rect x="22" y="12" width="76" height="48" rx="5" fill="none" stroke={C.bordeaux} strokeWidth="0.8" />
+          {letter(28, 64)}
+        </>
+      )}
+      {id === 'b' && (
+        <>
+          <rect x="6" y="6" width="38" height="8" fill={C.bordeaux} />
+          <circle cx="30" cy="40" r="12" fill={C.powder} />
+          <rect x="8" y="30" width="22" height="16" fill={C.crimson} transform="rotate(-4 19 38)" />
+          <rect x="24" y="44" width="20" height="10" fill="#fff" transform="rotate(5 34 49)" />
+          <rect x="52" y="8" width="62" height="52" rx="5" fill="#fff" stroke={C.bordeaux} strokeWidth="0.6" />
+          {letter(58, 50)}
+        </>
+      )}
+      {id === 'c' && (
+        <>
+          <rect width="48" height="64" fill={C.crimson} />
+          {[0, 1, 2, 3].map((i) => (
+            <rect key={i} x="7" y={12 + i * 10} width={[30, 36, 16, 34][i]} height="7" fill={C.cream} />
+          ))}
+          {letter(56, 56)}
+        </>
+      )}
+      {id === 'current' && (
+        <>
+          <rect x="8" y="14" width="34" height="8" fill={C.bordeaux} />
+          {[0, 1, 2, 3].map((i) => (
+            <rect key={i} x="56" y={10 + i * 11} width="56" height="7" fill="#fff" stroke={C.bordeaux} strokeWidth="0.5" />
+          ))}
+          <rect x="56" y="55" width="18" height="5" rx="2.5" fill={C.crimson} />
+        </>
+      )}
+    </svg>
+  )
 }
 
 function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
