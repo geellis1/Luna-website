@@ -426,9 +426,3 @@
     transition-delay: 0s !important;
   }
 }
-
-/* The shared CTA band, Night Bordeaux here so it doesn't run into
-   Sustain's Deep Crimson */
-.svc .cta-band {
-  background: var(--bordeaux);
-}

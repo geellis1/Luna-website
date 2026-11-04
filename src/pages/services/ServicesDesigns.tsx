@@ -1,8 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Copy from '../../components/Copy'
-import CtaBand from '../../components/CtaBand'
 import { tiers } from '../../content'
+import CtaSection from '../home/CtaSection'
 import './services.css'
 
 // Services page, two Round 2 layouts that borrow the homepage panels' look
@@ -12,7 +12,8 @@ import './services.css'
 //   B · Editorial Color Blocks: three full-bleed blocks, all open, the
 //       composition alternating from band to band
 // Both show the same content and keep the #begin / #build / #sustain anchors
-// the homepage links to. Styles: services.css.
+// the homepage links to. The Let's Work Together section at the end is
+// picked separately in the panel (home/CtaSection.tsx). Styles: services.css.
 
 const tones = ['powder', 'chartreuse', 'crimson'] as const
 const services = tiers.map((t, i) => ({ ...t, num: `0${i + 1}`, tone: tones[i] }))
@@ -125,7 +126,7 @@ export function ServicesAccordion() {
           )
         })}
       </div>
-      <CtaBand />
+      <CtaSection section="ctaServices" />
     </div>
   )
 }
@@ -161,7 +162,7 @@ export function ServicesBlocks() {
           </div>
         </section>
       ))}
-      <CtaBand />
+      <CtaSection section="ctaServices" />
     </div>
   )
 }

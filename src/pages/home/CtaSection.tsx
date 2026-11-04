@@ -6,15 +6,19 @@ import './cta.css'
 
 // Homepage "Let's Work Together" invitation, in the Round 2 design picked in
 // the Explore Section Designs panel: A Rounded Invitation, B Editorial
-// Typography or C Split-Panel Graphic. All lead to the contact page.
+// Typography or C Split-Panel Graphic. All lead to the contact page. About
+// and Services show it too, each with its own pick (`section`).
 // Styles: cta.css.
 
 const support = 'Every engagement begins with a conversation. Tell us about your work and your goals.'
 
-export default function CtaSection() {
-  const [design] = useSectionDesign('cta')
+type CtaKey = 'cta' | 'ctaAbout' | 'ctaServices'
+const backgrounds = { cta: 'ctaC', ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
+
+export default function CtaSection({ section = 'cta' }: { section?: CtaKey }) {
+  const [design] = useSectionDesign(section)
   if (design === 'b') return <TypeInvitation />
-  if (design === 'c') return <SplitInvitation />
+  if (design === 'c') return <SplitInvitation bgKey={backgrounds[section]} />
   return <RoundedInvitation />
 }
 
@@ -38,7 +42,7 @@ function Section({ variant, className = '', children }: { variant: string; class
     return () => io.disconnect()
   }, [])
   return (
-    <section ref={ref} id="cta" className={`cta cta--${variant} ${className}${shown ? ' is-in' : ''}`}>
+    <section ref={ref} id="cta" className={`cta cta--${variant}${className ? ` ${className}` : ''}${shown ? ' is-in' : ''}`}>
       {children}
     </section>
   )
@@ -115,8 +119,8 @@ function TypeInvitation() {
 // brand-colored rays) and the button on the right. The halves slide in
 // toward each other and the burst opens out. The section around it is
 // Night Bordeaux or Powder Blue (picked in the panel), edge to edge.
-function SplitInvitation() {
-  const [bg] = useSectionDesign('ctaC')
+function SplitInvitation({ bgKey }: { bgKey: (typeof backgrounds)[CtaKey] }) {
+  const [bg] = useSectionDesign(bgKey)
   return (
     <Section variant="c" className={`cta--on-${bg}`}>
       <div className="cta-c">

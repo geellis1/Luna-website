@@ -24,7 +24,7 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   }
   if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'cta') {
+  if (section.startsWith('cta')) {
     // Option C's backgrounds: "c" (Night Bordeaux) and "c-powder"
     if (id.startsWith('c')) return <CtaPreview id="c" bg={id === 'c-powder' ? C.powder : C.bordeaux} />
     return <CtaPreview id={id as SectionDesign<'cta'>} />

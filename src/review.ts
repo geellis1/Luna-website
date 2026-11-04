@@ -50,10 +50,17 @@ const names: Record<string, string> = {
 }
 const sectionTitles: Partial<Record<SectionKey, string>> = {
   cta: 'Let’s Work Together',
+  ctaAbout: 'Let’s Work Together',
+  ctaServices: 'Let’s Work Together',
   aboutHeadshot: 'Kelli’s Headshot',
   contact: 'Contact Page',
   services: 'Page Layout',
 }
+
+// Let's Work Together on each page, and the group holding its Option C
+// backgrounds
+const ctaBackgrounds = { cta: 'ctaC', ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
+const isCta = (key: SectionKey): key is keyof typeof ctaBackgrounds => key in ctaBackgrounds
 
 // A section's designs; How we work together's Option A is listed as its two
 // versions (A1 / A2), each setting both the design and the version
@@ -80,14 +87,15 @@ function designsOf(key: SectionKey): Design[] {
   }
   // Let's Work Together's Option C is listed as its two section backgrounds;
   // Night Bordeaux keeps C's original key, so earlier notes on C carry over
-  if (key === 'cta') {
+  if (isCta(key)) {
+    const bgKey = ctaBackgrounds[key]
     return [
-      ...sectionDesigns.cta.choices
+      ...sectionDesigns[key].choices
         .filter((c) => c.id !== 'c')
-        .map((c) => ({ key: `cta:${c.id}`, section: key, id: c.id, name: names[`cta:${c.id}`], picks: { cta: c.id } })),
-      ...sectionDesigns.ctaC.choices.map((v) => {
+        .map((c) => ({ key: `${key}:${c.id}`, section: key, id: c.id, name: names[`cta:${c.id}`], picks: { [key]: c.id } })),
+      ...sectionDesigns[bgKey].choices.map((v) => {
         const id = v.id === 'bordeaux' ? 'c' : `c-${v.id}`
-        return { key: `cta:${id}`, section: key, id, name: names[`cta:${id}`], picks: { cta: 'c', ctaC: v.id } }
+        return { key: `${key}:${id}`, section: key, id, name: names[`cta:${id}`], picks: { [key]: 'c', [bgKey]: v.id } }
       }),
     ]
   }
@@ -109,8 +117,8 @@ const section = (key: SectionKey): Section => ({
 // The hero and navigation are final (Round 1) and not offered here
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: (['intro', 'whyLuna', 'howWeWork', 'cta'] as const).map(section) },
-  { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot')] },
-  { id: 'services', title: 'Services', path: '/services', sections: [section('services')] },
+  { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot'), section('ctaAbout')] },
+  { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
   // On every page: previewing stays on the page being viewed (path '')
   { id: 'everywhere', title: 'Every Page', path: '', sections: [section('footer')] },
@@ -125,7 +133,7 @@ export const findDesign = (key: string) => allDesigns.find((d) => d.design.key =
 export function currentDesignKey(key: SectionKey, search: string) {
   const value = readDesign(key, search)
   if (key === 'howWeWork' && value === 'a') return `howWeWork:${readDesign('howWeWorkA', search)}`
-  if (key === 'cta' && value === 'c') return readDesign('ctaC', search) === 'powder' ? 'cta:c-powder' : 'cta:c'
+  if (isCta(key) && value === 'c') return readDesign(ctaBackgrounds[key], search) === 'powder' ? `${key}:c-powder` : `${key}:c`
   return `${key}:${value}`
 }
 

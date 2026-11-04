@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
-import CtaBand from '../components/CtaBand'
 import MoonCollage from '../components/moons/MoonCollage'
 import Pillars from '../components/Pillars'
+import CtaSection from './home/CtaSection'
 import KelliBio from './KelliBio'
 
 // Hero: a big centered headline whose letters rise into place, with a row of
@@ -42,7 +42,7 @@ export default function About() {
 
       <KelliBio />
 
-      <CtaBand />
+      <CtaSection section="ctaAbout" />
     </>
   )
 }

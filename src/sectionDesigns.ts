@@ -23,6 +23,18 @@ type Group = {
   parent?: { key: string; choice: string }
 }
 
+// Let's Work Together: the same three designs (and Option C's two section
+// backgrounds) on Home, About and Services, each page picking its own
+const ctaChoices = [
+  { id: 'a', label: 'A — Rounded Invitation', note: 'A large burgundy panel with an orbital moon' },
+  { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type and a big circular arrow' },
+  { id: 'c', label: 'C — Split-Panel Graphic', note: 'Burgundy and powder halves with a moving moon' },
+] as const
+const ctaBgChoices = [
+  { id: 'bordeaux', label: 'A — Night Bordeaux Background', note: 'The card framed on Night Bordeaux' },
+  { id: 'powder', label: 'B — Powder Blue Background', note: 'The card on Powder Blue' },
+] as const
+
 export const sectionDesigns = {
   // The statement right under the hero ("We help you do something about it")
   intro: {
@@ -57,11 +69,21 @@ export const sectionDesigns = {
     title: 'Let’s Work Together — CTA',
     param: 'cta',
     anchor: 'cta',
-    choices: [
-      { id: 'a', label: 'A — Rounded Invitation', note: 'A large burgundy panel with an orbital moon' },
-      { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type and a big circular arrow' },
-      { id: 'c', label: 'C — Split-Panel Graphic', note: 'Burgundy and powder halves with a moving moon' },
-    ],
+    choices: ctaChoices,
+  },
+  ctaAbout: {
+    title: 'About · Let’s Work Together',
+    param: 'ctaAbout',
+    anchor: 'cta',
+    path: '/about',
+    choices: ctaChoices,
+  },
+  ctaServices: {
+    title: 'Services · Let’s Work Together',
+    param: 'ctaServices',
+    anchor: 'cta',
+    path: '/services',
+    choices: ctaChoices,
   },
   contact: {
     title: 'Contact Page — Three Directions',
@@ -106,16 +128,29 @@ export const sectionDesigns = {
       { id: 'cardigan', label: 'C — Green Cardigan', note: 'Big smile, dark backdrop' },
     ],
   },
-  // CTA Option C's section backgrounds
+  // CTA Option C's section backgrounds (per page)
   ctaC: {
     title: 'Option C · Background',
     param: 'ctaBg',
     anchor: 'cta',
     parent: { key: 'cta', choice: 'c' },
-    choices: [
-      { id: 'bordeaux', label: 'A — Night Bordeaux Background', note: 'The card framed on Night Bordeaux' },
-      { id: 'powder', label: 'B — Powder Blue Background', note: 'The card on Powder Blue' },
-    ],
+    choices: ctaBgChoices,
+  },
+  ctaAboutC: {
+    title: 'Option C · Background',
+    param: 'ctaAboutBg',
+    anchor: 'cta',
+    path: '/about',
+    parent: { key: 'ctaAbout', choice: 'c' },
+    choices: ctaBgChoices,
+  },
+  ctaServicesC: {
+    title: 'Option C · Background',
+    param: 'ctaServicesBg',
+    anchor: 'cta',
+    path: '/services',
+    parent: { key: 'ctaServices', choice: 'c' },
+    choices: ctaBgChoices,
   },
   // Option A's two versions
   howWeWorkA: {
