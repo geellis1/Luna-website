@@ -79,8 +79,9 @@ export default function SectionExplorer() {
 
   // Show a design (opening its page if she's elsewhere), then glide to it
   const preview = (page: Page, design: Design) => {
-    const otherPage = page.path !== pathname
-    apply(design.picks, page.path)
+    const path = page.path || pathname
+    const otherPage = path !== pathname
+    apply(design.picks, path)
     window.setTimeout(
       () =>
         document

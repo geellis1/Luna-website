@@ -17,7 +17,7 @@ function hrefFor(path: string, picks: Partial<Record<SectionKey, string>>) {
 
 const openDesign = (d: Design) => {
   const found = findDesign(d.key)
-  return hrefFor(found?.page.path ?? '/', d.picks)
+  return hrefFor(found?.page.path || '/', d.picks)
 }
 
 export default function ReviewPage() {

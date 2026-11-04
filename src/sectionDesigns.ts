@@ -84,6 +84,17 @@ export const sectionDesigns = {
       { id: 'b', label: 'Option B — Editorial Color Blocks', note: 'Three full-width color blocks, all open, alternating' },
     ],
   },
+  // On every page
+  footer: {
+    title: 'Footer',
+    param: 'footer',
+    anchor: 'site-footer',
+    choices: [
+      { id: 'a', label: 'Option A — Editorial Colophon', note: 'Cream; the closing line set large over ruled columns' },
+      { id: 'b', label: 'Option B — Service Bands', note: 'Begin / Build / Sustain color bands over Night Bordeaux' },
+      { id: 'c', label: 'Option C — Moon Wordmark', note: 'Tonight’s moon and an oversized LUNA' },
+    ],
+  },
   aboutHeadshot: {
     title: 'About · Kelli’s Headshot',
     param: 'photo',

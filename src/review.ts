@@ -40,6 +40,9 @@ const names: Record<string, string> = {
   'aboutHeadshot:cardigan': 'Green Cardigan',
   'services:a': 'Option A — Horizontal Accordion',
   'services:b': 'Option B — Editorial Color Blocks',
+  'footer:a': 'Option A — Editorial Colophon',
+  'footer:b': 'Option B — Service Bands',
+  'footer:c': 'Option C — Moon Wordmark',
   'contact:a': 'Editorial Letter',
   'contact:b': 'Letter + Collage',
   'contact:c': 'Split Editorial',
@@ -95,6 +98,8 @@ export const pages: Page[] = [
   { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot')] },
   { id: 'services', title: 'Services', path: '/services', sections: [section('services')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
+  // On every page: previewing stays on the page being viewed (path '')
+  { id: 'everywhere', title: 'Every Page', path: '', sections: [section('footer')] },
 ]
 
 export const pageForPath = (pathname: string) => pages.find((p) => p.path === pathname) ?? pages[0]
