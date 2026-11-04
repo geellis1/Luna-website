@@ -1,142 +1,147 @@
-/* ---------- Intro Section: Press Conference (microphones) ----------
-   Headline, then a stage holding a Night Bordeaux circle (top) and the
-   microphones (bottom, standing on the section's edge), overlapping. Sizes
-   are in % of the stage width (W): circle 66% of W, microphones the full W
-   (image ratio 736 × 424), stage 1.05 W tall, so the microphones cover
-   about the bottom quarter of the circle. */
+/* ---------- Intro Section: Microphones ----------
+   Powder Blue section: headline, then a stage with a Deep Crimson circle
+   (diameter --d) and the microphones (width --mw, height from the photo's
+   --ratio) standing on the section's bottom edge, overlapping the circle's
+   lower ~22%. The stage is exactly as tall as that arrangement, so the
+   whole composition fits in about 700px on desktop. */
 .mics {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --d: 420px;
+  --mw: 620px;
+  --overlap: 0.22;
   overflow: hidden;
   color: var(--bordeaux);
-  background: var(--cream);
+  background: var(--powder);
 }
 .section.mics {
-  padding: clamp(56px, 6vw, 96px) 0 0;
+  padding: clamp(48px, 5.5vw, 76px) var(--gutter) 0;
 }
 .mics__title {
-  margin: 0 auto clamp(20px, 2.5vw, 40px);
-  padding-inline: var(--gutter);
+  margin: 0 auto clamp(22px, 2.6vw, 34px);
+  max-width: 22ch;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.8rem, 6.4vw, 7rem);
-  line-height: 0.88;
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+  line-height: 1;
   text-align: center;
   text-transform: uppercase;
+  opacity: 0;
+  translate: 0 14px;
+  transition:
+    opacity 0.9s ease,
+    translate 1s var(--ease-out);
 }
-.mics__mask {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.05em;
-}
-.mics__mask > span {
-  display: block;
-  translate: 0 105%;
-  transition: translate 1.1s var(--ease-out);
-}
-.mics__mask + .mics__mask > span {
-  transition-delay: 0.12s;
-}
-.mics.is-in .mics__mask > span {
-  translate: none;
+@media (min-width: 900px) {
+  .mics__title {
+    max-width: none;
+  }
 }
 
 .mics__stage {
-  container-type: inline-size;
   position: relative;
-  width: min(100% - 2 * var(--gutter), 880px);
-  aspect-ratio: 1 / 1.05;
+  height: calc(var(--d) + var(--mw) * var(--ratio) - var(--d) * var(--overlap));
   margin-inline: auto;
 }
-/* The circle comes up like a moon */
 .mics__circle {
   position: absolute;
   top: 0;
-  left: 17%;
-  width: 66%;
-  aspect-ratio: 1;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Text sits in the part of the circle the microphones leave clear */
+  justify-content: center;
+  width: var(--d);
+  height: var(--d);
+  margin-left: calc(var(--d) / -2);
+  padding: calc(var(--d) * 0.08) calc(var(--d) * 0.13) calc(var(--d) * (var(--overlap) + 0.05));
   border-radius: 50%;
-  background: var(--bordeaux);
+  background: var(--crimson);
   opacity: 0;
-  translate: 0 12%;
+  scale: 0.94;
   transition:
-    opacity 0.9s ease 0.25s,
-    translate 1.3s var(--ease-out) 0.25s;
+    opacity 0.9s ease 0.2s,
+    scale 1.2s var(--ease-out) 0.2s;
 }
-/* The paragraph inside the circle, above the microphones */
-.mics__lede {
-  position: absolute;
-  top: 16%;
-  left: 29%;
-  width: 42%;
+.mics__text {
+  display: grid;
+  gap: calc(var(--d) * 0.012);
   margin: 0;
-  font-size: max(14px, 1.65cqi);
-  line-height: 1.55;
   text-align: center;
   color: var(--cream);
   opacity: 0;
-  transition: opacity 0.9s ease 1.3s;
+  translate: 0 8px;
+  transition:
+    opacity 0.9s ease 0.75s,
+    translate 0.9s var(--ease-out) 0.75s;
 }
-/* The microphones slide up and stand on the section's bottom edge; their
-   outer sides (cropped in the source picture) fade out instead of ending in
-   a straight line */
+.mics__small {
+  margin-bottom: calc(var(--d) * 0.02);
+  font-family: var(--font-serif);
+  font-size: calc(var(--d) * 0.047);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.mics__small--accent {
+  margin: calc(var(--d) * 0.02) 0 0;
+  color: var(--chartreuse);
+}
+.mics__big {
+  font-family: var(--font-display);
+  font-size: calc(var(--d) * 0.1);
+  line-height: 1;
+}
+.mics__big em {
+  font-style: italic;
+}
+/* The microphones rise from the bottom edge */
 .mics__img {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  width: var(--mw);
   height: auto;
+  margin-left: calc(var(--mw) / -2);
   opacity: 0;
-  translate: 0 18%;
+  translate: 0 12%;
   transition:
-    opacity 0.8s ease 0.7s,
-    translate 1.2s var(--ease-out) 0.7s;
+    opacity 0.8s ease 1.05s,
+    translate 1.2s var(--ease-out) 1.05s;
 }
-.mics.is-in .mics__circle,
+.mics.is-in .mics__title,
+.mics.is-in .mics__text,
 .mics.is-in .mics__img {
   opacity: 1;
   translate: none;
 }
-.mics.is-in .mics__lede {
-  opacity: 0.9;
+.mics.is-in .mics__circle {
+  opacity: 1;
+  scale: none;
 }
 
-/* Phones: the paragraph moves above the circle; the microphones run edge
-   to edge */
-@media (max-width: 700px) {
-  .mics__lede {
-    position: static;
-    width: auto;
-    max-width: 46ch;
-    margin: 0 auto 28px;
-    padding-inline: var(--gutter);
-    font-size: 1rem;
-    color: var(--bordeaux);
+/* Tablet */
+@media (max-width: 900px) {
+  .mics {
+    --d: 380px;
+    --mw: 540px;
   }
-  .mics__stage {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    aspect-ratio: auto;
-  }
-  .mics__stage::after {
-    content: '';
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1.2;
+}
+/* Phones: the circle fills most of the width; the microphones run a little
+   wider than it, and the statement stays readable */
+@media (max-width: 560px) {
+  .mics {
+    --d: min(86vw, 360px);
+    --mw: min(108vw, 470px);
+    --overlap: 0.2;
   }
   .mics__circle {
-    top: auto;
-    /* Raised so the microphones (118vw wide, ratio 736 × 424) cover about
-       its bottom third */
-    bottom: calc(118vw * 424 / 736 - 33vw);
-    left: 10%;
-    width: 80%;
+    padding-inline: calc(var(--d) * 0.12);
   }
-  .mics__img {
-    width: 118%;
-    left: -9%;
+  .mics__small {
+    font-size: max(14px, calc(var(--d) * 0.048));
+  }
+  .mics__big {
+    font-size: max(26px, calc(var(--d) * 0.1));
   }
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { litPath, useMoonPhase } from '../../components/moons/phase'
+import { litPath } from '../../components/moons/phase'
 import { useSectionDesign } from '../../sectionDesigns'
 import './cta.css'
 
@@ -111,24 +111,9 @@ function TypeInvitation() {
 
 // ---------- C · Split-Panel Graphic ----------
 // One rounded container split in two: burgundy with the headline and support
-// on the left; powder blue with a large moon whose phase slowly drifts, an
-// orbit, and the button on the right. The halves slide in toward each other.
-function DriftingMoon() {
-  const lit = useRef<SVGPathElement>(null)
-  // A gentle sway around a waxing gibbous, so the moon never goes dark
-  useMoonPhase((p) => {
-    lit.current?.setAttribute('d', litPath(0.36 + 0.05 * Math.sin(2 * Math.PI * p), 120))
-  })
-  return (
-    <svg className="cta-c__moon" viewBox="-200 -200 400 400" aria-hidden="true">
-      <circle className="cta-c__orbit" r="170" />
-      <circle className="cta-c__shadow" r="120" />
-      <path ref={lit} className="cta-c__lit" d={litPath(0.36, 120)} />
-      <circle className="cta-c__sat" cx="148" cy="-84" r="8" />
-    </svg>
-  )
-}
-
+// on the left; powder blue with an advocacy collage burst (photos within
+// brand-colored rays) and the button on the right. The halves slide in
+// toward each other and the burst opens out.
 function SplitInvitation() {
   return (
     <Section variant="c">
@@ -145,7 +130,14 @@ function SplitInvitation() {
           <p className="cta-c__support">{support}</p>
         </div>
         <div className="cta-c__right">
-          <DriftingMoon />
+          <img
+            className="cta-c__burst"
+            src="/cta-burst.png"
+            alt="A burst of brand-colored rays framing photos of an advocate with a megaphone, the Capitol, a sign reading “Policy creates possibility” and hands writing notes"
+            width="1200"
+            height="797"
+            loading="lazy"
+          />
           <Link to="/contact" className="button cta-c__button">
             Let’s Chat
           </Link>

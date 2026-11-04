@@ -6,6 +6,7 @@ import SectionExplorer from './components/SectionExplorer'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Home from './pages/home/Home'
+import ReviewPage from './pages/review/ReviewPage'
 import Services from './pages/Services'
 
 const titles: Record<string, string> = {
@@ -13,6 +14,7 @@ const titles: Record<string, string> = {
   '/about': 'About | Luna Civic Strategies',
   '/services': 'Services | Luna Civic Strategies',
   '/contact': 'Contact | Luna Civic Strategies',
+  '/review': 'Design Review | Luna Civic Strategies',
 }
 
 // Scroll to top (or to #anchor) and set the tab title on each page change
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/review" element={<ReviewPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

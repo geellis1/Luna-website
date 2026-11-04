@@ -323,24 +323,24 @@
   line-height: 1.55;
   opacity: 0.85;
 }
-.cta-c__moon {
-  width: min(78%, 300px);
-  overflow: visible;
+.cta-c__burst {
+  display: block;
+  width: 112%;
+  max-width: none;
+  height: auto;
+  margin-inline: -6%;
+  opacity: 0;
+  scale: 0.9;
+  rotate: -4deg;
+  transition:
+    opacity 0.8s ease 0.3s,
+    scale 1.2s var(--ease-out) 0.3s,
+    rotate 1.2s var(--ease-out) 0.3s;
 }
-.cta-c__orbit {
-  fill: none;
-  stroke: var(--bordeaux);
-  stroke-width: 1;
-  opacity: 0.35;
-}
-.cta-c__shadow {
-  fill: #86a3c3;
-}
-.cta-c__lit {
-  fill: var(--cream);
-}
-.cta-c__sat {
-  fill: var(--crimson);
+.cta--c.is-in .cta-c__burst {
+  opacity: 1;
+  scale: 1;
+  rotate: 0deg;
 }
 .button.cta-c__button {
   white-space: nowrap;
@@ -398,12 +398,11 @@
     translate: 0 -24px;
   }
   .cta-c__right {
-    flex-direction: row;
-    justify-content: space-between;
     translate: 0 24px;
   }
-  .cta-c__moon {
-    width: min(46%, 200px);
+  .cta-c__burst {
+    width: 100%;
+    margin-inline: 0;
   }
 }
 

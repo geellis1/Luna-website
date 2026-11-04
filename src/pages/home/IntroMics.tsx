@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
 import './intro-mics.css'
 
-// Intro Section, "Press Conference": the headline above a large Night
-// Bordeaux circle, with a bank of microphones rising over the circle's lower
-// edge and standing on the section's bottom edge; the intro paragraph sits
-// inside the circle. On first view the headline rises, the circle comes up
-// like a moon, then the microphones slide up into place.
-// The image is public/intro-mics.png: the microphones cut out of the
-// reference poster (circle and background removed, white outlines kept).
+// Intro Section, "Microphones": on Powder Blue, an editorial headline above
+// a Deep Crimson circle holding a short statement, with a cluster of press
+// microphones rising from the section's bottom edge over the circle's lower
+// fifth. On first view the headline fades in, the circle settles, the
+// statement appears, then the microphones rise into place.
+// Image A is public/intro-mics-a.webp (Adobe Stock 76367953, cut out of its
+// white background). A second photo (Image B) can be added to `images`.
+// The original long paragraph is kept in content.ts (introLongCopy).
 // Styles: intro-mics.css.
 
-const lede =
-  'Progress is possible in even the most unlikely places, but it requires more than good intentions. It takes unwavering vision. It takes strategy grounded in lived experience. It takes technology to modernize movements. It takes commitment to the long game. And it takes someone who has been inside this work, not advising from a distance.'
+const images = {
+  a: { src: '/intro-mics-a.webp', width: 1240, height: 594 },
+}
 
-export default function IntroMics() {
+export default function IntroMics({ image }: { image: keyof typeof images }) {
   const ref = useRef<HTMLElement>(null)
   const [shown, setShown] = useState(false)
+  const img = images[image]
 
   useEffect(() => {
     const el = ref.current
@@ -27,7 +30,7 @@ export default function IntroMics() {
           io.disconnect()
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.25 },
     )
     io.observe(el)
     return () => io.disconnect()
@@ -35,23 +38,30 @@ export default function IntroMics() {
 
   return (
     <section ref={ref} id="intro-statement" className={`section mics${shown ? ' is-in' : ''}`}>
-      <h2 className="mics__title">
-        <span className="mics__mask">
-          <span>We help you do</span>
-        </span>
-        <span className="mics__mask">
-          <span>something about it.</span>
-        </span>
-      </h2>
-      <div className="mics__stage">
-        <span className="mics__circle" aria-hidden="true" />
-        <p className="mics__lede">{lede}</p>
+      <h2 className="mics__title">We help you do something about it.</h2>
+      <div className="mics__stage" style={{ '--ratio': img.height / img.width } as React.CSSProperties}>
+        <div className="mics__circle">
+          <p className="mics__text">
+            <span className="mics__small">
+              Progress takes more than <br />
+              good intentions.
+            </span>
+            <span className="mics__big">
+              It takes <em>vision.</em>
+            </span>
+            <span className="mics__big">Experience.</span>
+            <span className="mics__big">
+              <em>Commitment.</em>
+            </span>
+            <span className="mics__small mics__small--accent">And people who know the work.</span>
+          </p>
+        </div>
         <img
           className="mics__img"
-          src="/intro-mics.png"
-          alt="A bank of press microphones"
-          width="736"
-          height="424"
+          src={img.src}
+          alt="A cluster of press microphones on stands"
+          width={img.width}
+          height={img.height}
           loading="lazy"
         />
       </div>

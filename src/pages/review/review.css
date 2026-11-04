@@ -1,0 +1,70 @@
+/* Shared design review (/review): the summary on a cream page; the list
+   itself is styled with the panel's (section-explorer.css) */
+.section.review-page {
+  min-height: 70vh;
+  padding: clamp(120px, 14vw, 170px) var(--gutter) clamp(64px, 8vw, 110px);
+  color: var(--bordeaux);
+  background: var(--cream);
+}
+.review-page__inner {
+  max-width: 640px;
+  margin-inline: auto;
+}
+.review-page__kicker {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.review-page__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1;
+}
+.review-page__lede {
+  margin: 14px 0 18px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.review-page__lede a {
+  color: inherit;
+}
+.review-page .sx-group__title {
+  font-size: 1.6rem;
+}
+.review-page .sx-sum__thumb {
+  width: 120px;
+}
+.review-page .sx-sum__name {
+  font-size: 1rem;
+}
+.review-page .sx-quote {
+  font-size: 0.95rem;
+}
+.review-page__foot {
+  margin: 28px 0 0;
+}
+.review-page__btn {
+  display: inline-block;
+  padding: 13px 22px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+  background: var(--bordeaux);
+  border-radius: 999px;
+}
+.review-page__btn:hover {
+  background: var(--crimson);
+}
+@media (max-width: 520px) {
+  .review-page .sx-sum__thumb {
+    width: 84px;
+  }
+}

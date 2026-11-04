@@ -1,317 +1,55 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { sectionDesigns, showSectionDesigns, useApplyDesigns } from '../sectionDesigns'
 import {
-  sectionDesigns,
-  pathOf,
-  sectionKeys,
-  showSectionDesigns,
-  subGroupsOf,
-  useSectionDesign,
-  type SectionDesign,
-  type SectionKey,
-} from '../sectionDesigns'
-import { headshots } from '../pages/headshots'
+  buildSummary,
+  currentDesignKey,
+  pageForPath,
+  pages,
+  previewingNow,
+  setComment,
+  shareLink,
+  summaryText,
+  toggleFavorite,
+  useReview,
+  type Design,
+  type Page,
+  type Review,
+  type Section,
+  type SummaryPage,
+} from '../review'
+import DesignThumb from './DesignThumb'
 import './section-explorer.css'
 
-// Round 2 review panel: "Explore Section Designs". A small button bottom-right
-// opens a drawer listing each homepage section under review and its designs.
-// Choosing one updates the live section immediately; "View Section" closes
-// the drawer and glides to it so nothing covers it while she looks.
+// Round 2 client review: the "Explore Designs" drawer. Designs are listed by
+// page (one page open at a time, starting with the page she's on), then by
+// section. Clicking a design previews it on the site and glides to it; the
+// heart saves it as a favorite and the speech bubble opens a note on it,
+// both separate from what's being previewed. My Favorites and Review & Share
+// gather it all up; sharing packs the review into a link (see src/review.ts).
 // Hidden at launch with VITE_HIDE_OPTIONS=true.
 
-const C = {
-  powder: '#9AB7D5',
-  chartreuse: '#D5E272',
-  crimson: '#741734',
-  red: '#DA1A10',
-  bordeaux: '#3E1921',
-  cream: '#F5F0E8',
-}
-const tones = [C.powder, C.chartreuse, C.crimson]
+type View = 'browse' | 'favorites' | 'review'
 
-// Small pictures of each design, drawn in the brand colors (headshots show
-// the photo itself)
-function Preview({ section, id }: { section: SectionKey; id: string }) {
-  if (section === 'aboutHeadshot') {
-    const photo = headshots[id as SectionDesign<'aboutHeadshot'>]
-    return <img className="sx-preview sx-preview--photo" src={photo.src} alt="" />
-  }
-  if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
-  if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'cta') return <CtaPreview id={id as SectionDesign<'cta'>} />
-  if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
-  return <WorkPreview id={id as SectionDesign<'howWeWork'>} />
-}
-
-function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
-  // Letter lines with blanks, drawn at a position and width
-  const letter = (x: number, w: number) => (
-    <>
-      {[0, 1, 2, 3, 4].map((i) => (
-        <g key={i}>
-          <rect x={x} y={18 + i * 7} width={w * 0.5} height="2" fill={C.bordeaux} opacity="0.7" />
-          <rect x={x + w * 0.55} y={19.5 + i * 7} width={w * 0.35} height="0.7" fill={C.crimson} />
-        </g>
-      ))}
-      <rect x={x} y="54" width="16" height="4" rx="2" fill={C.crimson} />
-    </>
-  )
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      {id === 'a' && (
-        <>
-          <rect x="30" y="4" width="60" height="5" fill={C.bordeaux} />
-          <rect x="22" y="12" width="76" height="48" rx="5" fill="none" stroke={C.bordeaux} strokeWidth="0.8" />
-          {letter(28, 64)}
-        </>
-      )}
-      {id === 'b' && (
-        <>
-          <rect x="6" y="6" width="38" height="8" fill={C.bordeaux} />
-          <circle cx="30" cy="40" r="12" fill={C.powder} />
-          <rect x="8" y="30" width="22" height="16" fill={C.crimson} transform="rotate(-4 19 38)" />
-          <rect x="24" y="44" width="20" height="10" fill="#fff" transform="rotate(5 34 49)" />
-          <rect x="52" y="8" width="62" height="52" rx="5" fill="#fff" stroke={C.bordeaux} strokeWidth="0.6" />
-          {letter(58, 50)}
-        </>
-      )}
-      {id === 'c' && (
-        <>
-          <rect width="48" height="64" fill={C.crimson} />
-          {[0, 1, 2, 3].map((i) => (
-            <rect key={i} x="7" y={12 + i * 10} width={[30, 36, 16, 34][i]} height="7" fill={C.cream} />
-          ))}
-          {letter(56, 56)}
-        </>
-      )}
-    </svg>
-  )
-}
-
-function CtaPreview({ id }: { id: SectionDesign<'cta'> }) {
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      {id === 'a' && (
-        <>
-          <rect x="8" y="8" width="104" height="48" rx="7" fill={C.crimson} />
-          <rect x="16" y="20" width="44" height="7" fill={C.cream} />
-          <rect x="16" y="30" width="34" height="7" fill={C.cream} />
-          <rect x="16" y="43" width="20" height="6" rx="3" fill={C.chartreuse} />
-          <circle cx="92" cy="32" r="16" fill="none" stroke={C.cream} strokeWidth="0.8" opacity="0.6" />
-          <circle cx="92" cy="32" r="8" fill={C.cream} />
-        </>
-      )}
-      {id === 'b' && (
-        <>
-          <rect x="10" y="16" width="62" height="10" fill={C.bordeaux} />
-          <rect x="30" y="30" width="54" height="10" fill={C.powder} />
-          <rect x="10" y="48" width="30" height="2" fill={C.bordeaux} opacity="0.6" />
-          <circle cx="100" cy="35" r="11" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
-          <path d="M96 39l8-8M99 31h5v5" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
-        </>
-      )}
-      {id === 'c' && (
-        <>
-          <path d="M15 8h45v48H15a7 7 0 0 1-7-7V15a7 7 0 0 1 7-7z" fill={C.crimson} />
-          <path d="M60 8h45a7 7 0 0 1 7 7v34a7 7 0 0 1-7 7H60z" fill={C.powder} />
-          <rect x="16" y="20" width="34" height="7" fill={C.cream} />
-          <rect x="16" y="30" width="26" height="7" fill={C.cream} />
-          <circle cx="86" cy="28" r="12" fill={C.cream} />
-          <rect x="72" y="45" width="26" height="6" rx="3" fill={C.bordeaux} />
-        </>
-      )}
-    </svg>
-  )
-}
-
-function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
-  if (id === 'mics') {
-    return (
-      <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-        <rect width="120" height="64" fill={C.cream} />
-        <rect x="30" y="5" width="60" height="6" fill={C.bordeaux} />
-        <circle cx="60" cy="44" r="24" fill={C.bordeaux} />
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <rect key={i} x={34 + i * 7.5} y={46 - (i % 3) * 3} width="4" height="22" rx="2" fill="#444" transform={`rotate(${(i - 3) * 6} ${36 + i * 7.5} 60)`} />
-        ))}
-      </svg>
-    )
-  }
-  if (id === 'notebook') {
-    return (
-      <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-        <rect width="120" height="64" fill={C.crimson} />
-        <rect x="10" y="8" width="38" height="48" fill={C.cream} transform="rotate(-3 29 32)" />
-        <rect x="16" y="26" width="24" height="3" fill={C.crimson} />
-        <rect x="16" y="32" width="18" height="3" fill={C.crimson} />
-        <rect x="58" y="14" width="52" height="8" fill={C.cream} />
-        <rect x="58" y="25" width="46" height="8" fill={C.cream} />
-        <rect x="58" y="36" width="50" height="8" fill={C.cream} />
-        <rect x="58" y="49" width="36" height="2" fill={C.cream} opacity="0.6" />
-      </svg>
-    )
-  }
-  const a1 = id === 'a1'
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={a1 ? C.cream : C.bordeaux} />
-      <rect x="8" y="7" width="74" height="52" fill={a1 ? C.crimson : C.powder} />
-      <rect x="14" y="22" width="50" height="8" fill={a1 ? C.cream : C.bordeaux} />
-      <rect x="14" y="32" width="38" height="8" fill={a1 ? C.cream : C.bordeaux} />
-      <rect x="14" y="42" width="46" height="8" fill={a1 ? C.cream : C.bordeaux} />
-      <rect x="76" y="3" width="30" height="46" fill={a1 ? C.powder : C.crimson} transform="rotate(-4 91 26)" />
-      <rect x="6" y="9" width="20" height="9" fill={a1 ? '#fff' : C.cream} transform="rotate(-8 16 13)" />
-      <rect x="40" y="50" width="30" height="11" fill={C.chartreuse} transform="rotate(-3 55 55)" />
-    </svg>
-  )
-}
-
-function WhyPreview({ id }: { id: SectionDesign<'whyLuna'> }) {
-  return id === 'b' ? (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.bordeaux} />
-      <rect x="8" y="9" width="70" height="11" fill={C.cream} />
-      <rect x="30" y="24" width="82" height="11" fill={C.powder} />
-      <rect x="8" y="39" width="56" height="11" fill={C.cream} />
-      <rect x="70" y="39" width="30" height="11" fill={C.chartreuse} />
-      <rect x="8" y="55" width="22" height="2" fill={C.cream} opacity="0.6" />
-      <rect x="86" y="55" width="26" height="2" fill={C.cream} opacity="0.6" />
-    </svg>
-  ) : (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <circle cx="84" cy="30" r="22" fill={C.powder} />
-      <rect x="62" y="12" width="30" height="36" fill="#8E7F78" transform="rotate(-4 77 30)" />
-      <rect x="18" y="34" width="26" height="22" fill="#6f6560" transform="rotate(5 31 45)" />
-      <rect x="40" y="8" width="16" height="16" fill={C.chartreuse} transform="rotate(10 48 16)" />
-      <rect x="8" y="10" width="34" height="7" fill={C.bordeaux} />
-      <rect x="8" y="20" width="26" height="7" fill={C.bordeaux} />
-      <rect x="96" y="48" width="18" height="4" fill={C.crimson} />
-    </svg>
-  )
-}
-
-function WorkPreview({ id }: { id: SectionDesign<'howWeWork'> }) {
-  const frame = (children: ReactNode) => (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <rect x="8" y="12" width="28" height="5" rx="1" fill={C.bordeaux} />
-      <rect x="8" y="20" width="22" height="5" rx="1" fill={C.bordeaux} />
-      <rect x="8" y="28" width="26" height="5" rx="1" fill={C.bordeaux} />
-      {children}
-    </svg>
-  )
-  switch (id) {
-    case 'a':
-      return frame(
-        <>
-          <path d="M42 58V27a17 17 0 0 1 34 0v31z" fill={tones[0]} />
-          <path d="M79 58V22a7.5 7.5 0 0 1 15 0v36z" fill={tones[1]} />
-          <path d="M97 58V22a7.5 7.5 0 0 1 15 0v36z" fill={tones[2]} />
-          <rect x="47" y="40" width="18" height="4" fill={C.bordeaux} />
-          <rect x="47" y="47" width="22" height="2" fill={C.bordeaux} opacity="0.6" />
-        </>,
-      )
-    case 'b':
-      return frame(
-        <>
-          {[0, 1, 2].map((i) => (
-            <rect key={i} x={50 + i * 20} y={i === 0 ? 4 : 9} width="16" height="40" rx="8" fill={tones[i]} />
-          ))}
-          <rect x="50" y="50" width="22" height="3" fill={C.bordeaux} />
-          <rect x="50" y="56" width="34" height="2" fill={C.bordeaux} opacity="0.6" />
-        </>,
-      )
-    case 'c':
-      return frame(
-        <>
-          <rect x="44" y="10" width="44" height="46" fill={tones[0]} />
-          <rect x="89" y="10" width="10" height="46" fill={tones[1]} />
-          <rect x="100" y="10" width="10" height="46" fill={tones[2]} />
-          <rect x="48" y="16" width="26" height="6" fill={C.bordeaux} />
-          <rect x="60" y="42" width="24" height="2" fill={C.bordeaux} opacity="0.6" />
-          <rect x="60" y="46" width="20" height="2" fill={C.bordeaux} opacity="0.6" />
-        </>,
-      )
-  }
-}
-
-// Versions of one design (e.g. A1 / A2), as a pair of text buttons
-function SubChoices<K extends SectionKey>({ id }: { id: K }) {
-  const group = sectionDesigns[id]
-  const [value, set] = useSectionDesign(id)
-  return (
-    <div className="sx-subchoices" role="group" aria-label={group.title}>
-      {group.choices.map((c) => (
-        <button
-          key={c.id}
-          type="button"
-          className="sx-subchoice"
-          aria-pressed={value === c.id}
-          title={c.note}
-          onClick={() => set(c.id as SectionDesign<K>)}
-        >
-          <span className="sx-subchoice__label">{c.label}</span>
-          <span className="sx-subchoice__note">{c.note}</span>
-        </button>
-      ))}
-    </div>
-  )
-}
-
-function SectionChoices<K extends SectionKey>({ id, index, onView }: { id: K; index: number; onView: (key: SectionKey) => void }) {
-  const section = sectionDesigns[id]
-  const [value, set] = useSectionDesign(id)
-  return (
-    <section className="sx-section">
-      <h3 className="sx-section__title">
-        <span>{String(index + 1).padStart(2, '0')}</span> {section.title}
-      </h3>
-      <div className="sx-options" role="group" aria-label={section.title}>
-        {section.choices.map((c) => (
-          <div key={c.id} className="sx-option-wrap">
-            <button
-              type="button"
-              className="sx-option"
-              aria-pressed={value === c.id}
-              onClick={() => set(c.id as SectionDesign<K>)}
-            >
-              <Preview section={id} id={c.id} />
-              <span className="sx-option__text">
-                <span className="sx-option__label">{c.label}</span>
-                <span className="sx-option__note">{c.note}</span>
-              </span>
-            </button>
-            {/* This design's own versions, opening beneath it while it's chosen */}
-            {subGroupsOf(id, c.id).map((k) => (
-              <div key={k} className={`sx-sub${value === c.id ? ' is-open' : ''}`}>
-                <div className="sx-sub__inner" inert={value !== c.id}>
-                  <SubChoices id={k} />
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <button type="button" className="sx-view" onClick={() => onView(id)}>
-        View Section
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" />
-        </svg>
-      </button>
-    </section>
-  )
-}
+const plural = (n: number, one: string) => `${n} ${n === 1 ? one : `${one}s`}`
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export default function SectionExplorer() {
   const [open, setOpen] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [view, setView] = useState<View>('browse')
+  const review = useReview()
   const { pathname, search } = useLocation()
-  const navigate = useNavigate()
+  const apply = useApplyDesigns()
   const opener = useRef<HTMLButtonElement>(null)
   const closer = useRef<HTMLButtonElement>(null)
+  const body = useRef<HTMLDivElement>(null)
+
+  // The open page: the one she's viewing, unless she's opened (or closed)
+  // another while on this page
+  const routePage = pageForPath(pathname)
+  const [pageChoice, setPageChoice] = useState<{ path: string; id: string } | null>(null)
+  const openPage = pageChoice?.path === pathname ? pageChoice.id : routePage.id
+  const togglePage = (id: string) => setPageChoice({ path: pathname, id: openPage === id ? '' : id })
 
   // Focus the close button on open; Escape closes; focus returns on close
   useEffect(() => {
@@ -328,41 +66,28 @@ export default function SectionExplorer() {
     }
   }, [open])
 
-  if (!showSectionDesigns) return null
+  // Each view starts at the top
+  useEffect(() => {
+    body.current?.scrollTo(0, 0)
+  }, [view])
 
-  // Close the drawer, then glide to the section (opening its page first)
-  const view = (key: SectionKey) => {
-    setOpen(false)
-    const path = pathOf(key)
-    const go = () =>
-      document
-        .getElementById(sectionDesigns[key].anchor)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    if (pathname === path) {
-      go()
-    } else {
-      navigate(path + search)
-      window.setTimeout(go, 350)
-    }
-  }
+  // The shared review page is read-only
+  if (!showSectionDesigns || pathname === '/review') return null
 
-  const copy = async () => {
-    // Every section's pick, so the link reproduces this review
-    const q = new URLSearchParams()
-    const current = new URLSearchParams(search)
-    ;(Object.keys(sectionDesigns) as SectionKey[]).forEach((k) => {
-      const { param } = sectionDesigns[k]
-      const v = current.get(param) ?? localStorage.getItem(`luna-section-${k}`)
-      if (v) q.set(param, v)
-    })
-    const url = `${window.location.origin}/?${q}`
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2200)
-    } catch {
-      window.prompt('Copy this link to share:', url)
-    }
+  const favoriteCount = review.favorites.length
+  const commentCount = Object.keys(review.comments).length
+
+  // Show a design (opening its page if she's elsewhere), then glide to it
+  const preview = (page: Page, design: Design) => {
+    const otherPage = page.path !== pathname
+    apply(design.picks, page.path)
+    window.setTimeout(
+      () =>
+        document
+          .getElementById(sectionDesigns[design.section].anchor)
+          ?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' }),
+      otherPage ? 350 : 60,
+    )
   }
 
   return (
@@ -376,19 +101,40 @@ export default function SectionExplorer() {
         onClick={() => setOpen(true)}
       >
         Explore Designs
+        {favoriteCount > 0 && (
+          <span className="sx-btn__count" aria-label={`, ${plural(favoriteCount, 'favorite')}`}>
+            <Heart filled /> {favoriteCount}
+          </span>
+        )}
       </button>
 
       <aside
         id="section-explorer"
         className={`sx-drawer${open ? ' is-open' : ''}`}
-        aria-label="Explore section designs"
+        aria-label="Explore designs"
         aria-hidden={!open}
         inert={!open}
       >
         <header className="sx-head">
-          <div>
-            <h2 className="sx-title">Explore Section Designs</h2>
-            <p className="sx-subtitle">Round 2 · Interactive Section Concepts</p>
+          <div className="sx-head__text">
+            {view !== 'browse' && (
+              <button type="button" className="sx-back" onClick={() => setView('browse')}>
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M10 3 5 8l5 5" />
+                </svg>
+                All designs
+              </button>
+            )}
+            <h2 className="sx-title">
+              {view === 'browse' ? 'Explore Designs' : view === 'favorites' ? 'My Favorites' : 'Review & Share'}
+            </h2>
+            <p className="sx-subtitle">
+              {view === 'browse'
+                ? 'Explore the options, save what you love, and share your thoughts.'
+                : view === 'favorites'
+                  ? 'Everything you’ve saved, by page and section.'
+                  : 'Your favorites and comments, ready to send.'}
+            </p>
           </div>
           <button ref={closer} type="button" className="sx-close" aria-label="Close" onClick={() => setOpen(false)}>
             <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -397,21 +143,441 @@ export default function SectionExplorer() {
           </button>
         </header>
 
-        <div className="sx-body">
-          {sectionKeys.map((k, i) => (
-            <SectionChoices key={k} id={k} index={i} onView={view} />
-          ))}
-        </div>
+        {view === 'browse' && (
+          <div className="sx-tools">
+            <p className="sx-progress" aria-live="polite">
+              <span className="sx-progress__label">Design Review</span>
+              {plural(favoriteCount, 'favorite')} saved · {plural(commentCount, 'comment')}
+            </p>
+            <div className="sx-actions">
+              <button type="button" className="sx-action" onClick={() => setView('favorites')}>
+                <Heart filled={favoriteCount > 0} />
+                My Favorites ({favoriteCount})
+              </button>
+              <button type="button" className="sx-action sx-action--solid" onClick={() => setView('review')}>
+                Review &amp; Share
+              </button>
+            </div>
+          </div>
+        )}
 
-        <footer className="sx-foot">
-          <button type="button" className="sx-link" onClick={copy}>
-            {copied ? 'Link copied' : 'Copy a link to these designs'}
-          </button>
-          <span className="sr-only" aria-live="polite">
-            {copied ? 'Link copied to clipboard' : ''}
-          </span>
-        </footer>
+        <div className="sx-body" ref={body}>
+          {view === 'browse' &&
+            pages.map((page) => (
+              <PageGroup
+                key={page.id}
+                page={page}
+                open={openPage === page.id}
+                onToggle={() => togglePage(page.id)}
+                search={search}
+                review={review}
+                onPreview={(d) => preview(page, d)}
+              />
+            ))}
+          {view === 'favorites' && <Favorites review={review} search={search} onPreview={preview} />}
+          {view === 'review' && <ReviewShare review={review} search={search} />}
+        </div>
       </aside>
     </>
+  )
+}
+
+// ---------- Browse: page → section → designs ----------
+
+function PageGroup({ page, open, onToggle, search, review, onPreview }: {
+  page: Page
+  open: boolean
+  onToggle: () => void
+  search: string
+  review: Review
+  onPreview: (d: Design) => void
+}) {
+  // A page with a single section shows its designs straight away
+  const [openSections, setOpenSections] = useState<Set<string>>(
+    () => new Set(page.sections.length === 1 ? [page.sections[0].key] : []),
+  )
+  const toggle = (key: string) =>
+    setOpenSections((s) => {
+      const next = new Set(s)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      return next
+    })
+  const favs = page.sections.reduce((n, s) => n + s.designs.filter((d) => review.favorites.includes(d.key)).length, 0)
+
+  return (
+    <section className={`sx-page${open ? ' is-open' : ''}`}>
+      <h3 className="sx-page__heading">
+        <button type="button" className="sx-page__toggle" aria-expanded={open} onClick={onToggle}>
+          <span className="sx-page__title">{page.title}</span>
+          <span className="sx-page__meta">
+            {page.sections.length ? plural(page.sections.length, 'section') : 'Final'}
+            {favs > 0 && (
+              <span className="sx-page__favs" aria-label={`, ${plural(favs, 'favorite')}`}>
+                <Heart filled /> {favs}
+              </span>
+            )}
+          </span>
+          <Chevron />
+        </button>
+      </h3>
+      <div className="sx-collapse">
+        <div className="sx-collapse__inner" inert={!open}>
+          {page.sections.length === 0 ? (
+            <p className="sx-empty sx-empty--page">No new options for this page in Round 2.</p>
+          ) : (
+            page.sections.map((s) => (
+              <SectionGroup
+                key={s.key}
+                section={s}
+                open={openSections.has(s.key)}
+                onToggle={() => toggle(s.key)}
+                current={currentDesignKey(s.key, search)}
+                review={review}
+                onPreview={onPreview}
+              />
+            ))
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SectionGroup({ section, open, onToggle, current, review, onPreview }: {
+  section: Section
+  open: boolean
+  onToggle: () => void
+  current: string
+  review: Review
+  onPreview: (d: Design) => void
+}) {
+  const showing = section.designs.find((d) => d.key === current)
+  return (
+    <div className={`sx-sec${open ? ' is-open' : ''}`}>
+      <button type="button" className="sx-sec__toggle" aria-expanded={open} onClick={onToggle}>
+        <span className="sx-sec__text">
+          <span className="sx-sec__title">{section.title}</span>
+          {showing && <span className="sx-sec__showing">Showing {showing.name}</span>}
+        </span>
+        <span className="sx-sec__count">{section.designs.length}</span>
+        <Chevron />
+      </button>
+      <div className="sx-collapse">
+        <div className="sx-collapse__inner" inert={!open}>
+          <ul className="sx-opts">
+            {section.designs.map((d) => (
+              <DesignOption
+                key={d.key}
+                design={d}
+                selected={d.key === current}
+                favorite={review.favorites.includes(d.key)}
+                comment={review.comments[d.key]}
+                onPreview={() => onPreview(d)}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// One design: thumbnail + name (click to preview), heart, comment
+function DesignOption({ design, selected, favorite, comment, onPreview }: {
+  design: Design
+  selected: boolean
+  favorite: boolean
+  comment?: string
+  onPreview: () => void
+}) {
+  const [editing, setEditing] = useState(false)
+  return (
+    <li className={`sx-opt${selected ? ' is-selected' : ''}`}>
+      <div className="sx-opt__row">
+        <button type="button" className="sx-opt__main" aria-pressed={selected} onClick={onPreview}>
+          <span className="sx-opt__thumb">
+            <DesignThumb section={design.section} id={design.id} />
+            {selected && <span className="sx-opt__check" aria-hidden="true" />}
+          </span>
+          <span className="sx-opt__name">
+            {design.name}
+            <span className="sx-opt__state">{selected ? 'Showing now' : 'Preview'}</span>
+          </span>
+        </button>
+        <div className="sx-opt__icons">
+          <HeartButton designKey={design.key} name={design.name} on={favorite} />
+          <button
+            type="button"
+            className={`sx-icon sx-comment${comment ? ' has-note' : ''}`}
+            aria-expanded={editing}
+            aria-label={comment ? `Edit your comment on ${design.name}` : `Comment on ${design.name}`}
+            title={comment ? 'Edit comment' : 'Add a comment'}
+            onClick={() => setEditing((e) => !e)}
+          >
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 4.5h12a1.5 1.5 0 0 1 1.5 1.5v6.5a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3v-3H4a1.5 1.5 0 0 1-1.5-1.5V6A1.5 1.5 0 0 1 4 4.5z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      {editing && <CommentBox designKey={design.key} name={design.name} onDone={() => setEditing(false)} />}
+    </li>
+  )
+}
+
+function HeartButton({ designKey, name, on }: { designKey: string; name: string; on: boolean }) {
+  return (
+    <button
+      type="button"
+      className={`sx-icon sx-heart${on ? ' is-on' : ''}`}
+      aria-pressed={on}
+      aria-label={`Favorite ${name}`}
+      title={on ? 'Remove from favorites' : 'Add to favorites'}
+      onClick={() => toggleFavorite(designKey)}
+    >
+      <Heart filled={on} />
+    </button>
+  )
+}
+
+// A note on one design, saved as she types
+function CommentBox({ designKey, name, onDone }: { designKey: string; name: string; onDone: () => void }) {
+  const review = useReview()
+  const [text, setText] = useState(review.comments[designKey] ?? '')
+  return (
+    <div className="sx-note">
+      <label className="sr-only" htmlFor={`note-${designKey}`}>
+        Your comment on {name}
+      </label>
+      <textarea
+        id={`note-${designKey}`}
+        value={text}
+        rows={3}
+        maxLength={2000}
+        autoFocus
+        placeholder="Tell us what you like, what you’d change, or what you’d like to combine with another option..."
+        onChange={(e) => {
+          setText(e.target.value)
+          setComment(designKey, e.target.value)
+        }}
+      />
+      <div className="sx-note__foot">
+        <span className="sx-note__status" aria-live="polite">
+          {text.trim() ? 'Saved' : ''}
+        </span>
+        {text.trim() && (
+          <button
+            type="button"
+            className="sx-link"
+            onClick={() => {
+              setText('')
+              setComment(designKey, '')
+            }}
+          >
+            Remove
+          </button>
+        )}
+        <button type="button" className="sx-link" onClick={onDone}>
+          Done
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ---------- My Favorites ----------
+
+function Favorites({ review, search, onPreview }: {
+  review: Review
+  search: string
+  onPreview: (page: Page, d: Design) => void
+}) {
+  const [editing, setEditing] = useState<string | null>(null)
+  const groups = buildSummary({ favorites: review.favorites, comments: {} })
+  if (!groups.length) {
+    return (
+      <p className="sx-empty">
+        Tap the heart on any design to save it here. Save as many as you like, even several in the same section.
+      </p>
+    )
+  }
+  return (
+    <div className="sx-group-list">
+      {groups.map(({ page, sections }) => (
+        <section key={page.id} className="sx-group">
+          <h3 className="sx-group__title">{page.title}</h3>
+          {sections.map((s) => (
+            <div key={s.section.key} className="sx-group__sec">
+              <p className="sx-group__sec-title">{s.section.title}</p>
+              <ul className="sx-favs">
+                {s.items.map(({ design }) => {
+                  const comment = review.comments[design.key]
+                  const showing = currentDesignKey(design.section, search) === design.key
+                  return (
+                    <li key={design.key} className="sx-fav">
+                      <div className="sx-fav__row">
+                        <span className="sx-fav__thumb">
+                          <DesignThumb section={design.section} id={design.id} />
+                        </span>
+                        <p className="sx-fav__name">{design.name}</p>
+                        <button
+                          type="button"
+                          className="sx-link sx-fav__remove"
+                          aria-label={`Remove ${design.name} from favorites`}
+                          onClick={() => toggleFavorite(design.key)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      {editing === design.key ? (
+                        <CommentBox designKey={design.key} name={design.name} onDone={() => setEditing(null)} />
+                      ) : (
+                        comment && <p className="sx-quote">“{comment}”</p>
+                      )}
+                      <div className="sx-fav__actions">
+                        <button
+                          type="button"
+                          className="sx-chip sx-chip--solid"
+                          disabled={showing}
+                          onClick={() => onPreview(page, design)}
+                        >
+                          {showing ? 'Showing now' : 'Preview'}
+                        </button>
+                        {editing !== design.key && (
+                          <button type="button" className="sx-chip" onClick={() => setEditing(design.key)}>
+                            {comment ? 'Edit comment' : 'Add comment'}
+                          </button>
+                        )}
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  )
+}
+
+// ---------- Review & Share ----------
+
+function ReviewShare({ review, search }: { review: Review; search: string }) {
+  const [copied, setCopied] = useState<'' | 'link' | 'text'>('')
+  const [fallback, setFallback] = useState<{ kind: 'link' | 'text'; value: string } | null>(null)
+  const previewing = previewingNow(search)
+  const summary = buildSummary(review, previewing)
+
+  const copy = async (kind: 'link' | 'text') => {
+    const value = kind === 'link' ? shareLink(review, previewing) : summaryText(summary)
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopied(kind)
+      setFallback(null)
+      window.setTimeout(() => setCopied(''), 2400)
+    } catch {
+      // No clipboard access: show it to copy by hand
+      setFallback({ kind, value })
+    }
+  }
+
+  if (!summary.length) {
+    return (
+      <p className="sx-empty">
+        Nothing to share yet. Save favorites with the heart, or leave a comment on any design, and they’ll be gathered
+        here.
+      </p>
+    )
+  }
+
+  return (
+    <div className="sx-review">
+      <SummaryList summary={summary} />
+      <div className="sx-share">
+        <button type="button" className="sx-action sx-action--solid" onClick={() => copy('link')}>
+          {copied === 'link' ? 'Link copied' : 'Share Feedback'}
+        </button>
+        <button type="button" className="sx-action" onClick={() => copy('text')}>
+          {copied === 'text' ? 'Summary copied' : 'Copy Feedback Summary'}
+        </button>
+        <p className="sx-share__note">
+          Share Feedback copies a link to a read-only summary of your favorites and comments that opens on any device.
+          Paste it into an email or text.
+        </p>
+        {fallback && (
+          <label className="sx-share__fallback">
+            <span>Copy this {fallback.kind === 'link' ? 'link' : 'summary'}:</span>
+            {fallback.kind === 'link' ? (
+              <input readOnly value={fallback.value} onFocus={(e) => e.currentTarget.select()} autoFocus />
+            ) : (
+              <textarea readOnly rows={8} value={fallback.value} onFocus={(e) => e.currentTarget.select()} autoFocus />
+            )}
+          </label>
+        )}
+        <span className="sr-only" aria-live="polite">
+          {copied ? 'Copied to clipboard' : ''}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// The summary by page and section (also the shared review page's content);
+// `linkTo` makes each design a link that opens it on the site
+export function SummaryList({ summary, linkTo }: { summary: SummaryPage[]; linkTo?: (d: Design) => string }) {
+  return (
+    <div className="sx-group-list">
+      {summary.map(({ page, sections }) => (
+        <section key={page.id} className="sx-group">
+          <h3 className="sx-group__title">{page.title}</h3>
+          {sections.map((s) => (
+            <div key={s.section.key} className="sx-group__sec">
+              <p className="sx-group__sec-title">{s.section.title}</p>
+              <ul className="sx-sum">
+                {s.items.map(({ design, favorite, comment }) => (
+                  <li key={design.key} className="sx-sum__item">
+                    <span className="sx-sum__thumb">
+                      <DesignThumb section={design.section} id={design.id} />
+                    </span>
+                    <div className="sx-sum__text">
+                      <p className="sx-sum__name">
+                        {linkTo ? <a href={linkTo(design)}>{design.name}</a> : design.name}
+                        {favorite && (
+                          <span className="sx-sum__fav">
+                            <Heart filled /> Favorite
+                          </span>
+                        )}
+                      </p>
+                      {comment && <p className="sx-quote">“{comment}”</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {s.previewing && <p className="sx-sum__showing">Was previewing: {s.previewing.name}</p>}
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  )
+}
+
+// ---------- Small pieces ----------
+
+export function Heart({ filled = false }: { filled?: boolean }) {
+  return (
+    <svg className={`sx-heart-icon${filled ? ' is-filled' : ''}`} viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 16.5S3 12.4 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.8-7 8.9-7 8.9z" />
+    </svg>
+  )
+}
+
+function Chevron() {
+  return (
+    <svg className="sx-chevron" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3.5 6 8 10.5 12.5 6" />
+    </svg>
   )
 }
