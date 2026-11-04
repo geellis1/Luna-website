@@ -18,6 +18,8 @@
   --gutter: clamp(16px, 4vw, 48px);
   --section-y: clamp(72px, 10vw, 144px);
   --nav-h: 84px;
+  /* Extra room between the nav and the first content on every page */
+  --below-nav: clamp(24px, 4vw, 48px);
 }
 
 *,
@@ -323,6 +325,42 @@ svg {
   margin-bottom: calc(-1 * var(--nav-h));
   pointer-events: none;
 }
+/* Pill colors (html[data-pill]) and corners (html[data-corners]) are review
+   options; each color just sets these variables. */
+.nav--pill {
+  --pill-bg: var(--cream);
+  --pill-fg: var(--bordeaux);
+  --pill-accent: var(--crimson);
+  --pill-border: rgba(62, 25, 33, 0.12);
+  --pill-radius: 999px;
+  color: var(--pill-fg);
+}
+:root[data-pill='powder'] .nav--pill {
+  --pill-bg: var(--powder);
+}
+:root[data-pill='chartreuse'] .nav--pill {
+  --pill-bg: var(--chartreuse);
+}
+:root[data-pill='crimson'] .nav--pill {
+  --pill-bg: var(--crimson);
+  --pill-fg: var(--cream);
+  --pill-accent: var(--chartreuse);
+  --pill-border: rgba(245, 240, 232, 0.18);
+}
+:root[data-pill='smoked'] .nav--pill {
+  --pill-bg: rgba(62, 25, 33, 0.72);
+  --pill-fg: var(--cream);
+  --pill-accent: var(--chartreuse);
+  --pill-border: rgba(245, 240, 232, 0.22);
+}
+:root[data-pill='smoked'] .nav--pill .nav__inner,
+:root[data-pill='smoked'] .nav--pill .nav__links {
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+:root[data-corners='square'] .nav--pill {
+  --pill-radius: 0;
+}
 .nav--pill .nav__inner {
   position: relative;
   width: min(100% - 2 * var(--gutter), 1120px);
@@ -330,16 +368,16 @@ svg {
   margin: 0 auto;
   padding: 0 8px 0 22px;
   gap: 24px;
-  background: var(--cream);
-  border: 1px solid rgba(62, 25, 33, 0.12);
-  border-radius: 999px;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
+  border-radius: var(--pill-radius);
   pointer-events: auto;
 }
 .logo__mark {
   display: block;
   height: 44px;
   aspect-ratio: 3 / 1;
-  background: var(--bordeaux);
+  background: currentColor;
   -webkit-mask: url('/logo-white.png') center / contain no-repeat;
   mask: url('/logo-white.png') center / contain no-repeat;
 }
@@ -352,13 +390,13 @@ svg {
 }
 .nav--pill .nav__links a:hover,
 .nav--pill .nav__links a.active {
-  border-bottom-color: var(--crimson);
+  border-bottom-color: var(--pill-accent);
 }
 .nav__cta {
   flex: none;
   padding: 11px 22px;
-  border: 1.5px solid var(--bordeaux);
-  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  border-radius: var(--pill-radius);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -369,15 +407,24 @@ svg {
     color 0.15s;
 }
 .nav__cta:hover {
-  background: var(--bordeaux);
+  background: var(--pill-fg);
+  color: var(--bordeaux);
+}
+:root[data-pill='cream'] .nav__cta:hover,
+:root[data-pill='powder'] .nav__cta:hover,
+:root[data-pill='chartreuse'] .nav__cta:hover {
   color: var(--cream);
 }
 
-/* The first section on each page runs up behind the pill. A transparent top
-   border adds the room without changing the section's own padding, and its
-   background still paints underneath. */
+/* Extra room below the nav on every page. A transparent top border on the
+   first section adds the space without touching the section's own padding,
+   and the section's background still paints underneath it. With the floating
+   pill, the first section also runs up behind the pill. */
+main > section:first-child {
+  border-top: var(--below-nav) solid transparent;
+}
 :root[data-nav='pill'] main > section:first-child {
-  border-top: var(--nav-h) solid transparent;
+  border-top-width: calc(var(--nav-h) + var(--below-nav));
 }
 
 @media (max-width: 960px) {
@@ -394,9 +441,9 @@ svg {
   }
   .nav--pill .nav__links {
     top: calc(100% + 8px);
-    background: var(--cream);
-    border: 1px solid rgba(62, 25, 33, 0.12);
-    border-radius: 24px;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    border-radius: min(var(--pill-radius), 24px);
     padding: 8px 24px 16px;
   }
 }

@@ -43,11 +43,12 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 ## Design options (review mode)
 
 A **Design options** button in the bottom-right corner opens a panel for switching
-between home page options, moon styles (home option B) and nav bar styles. It floats
+between home page options, moon styles (home option B), headline color (B and C),
+nav bar styles, and the floating pill's color and corners. It floats
 over the page, so the real layout is never pushed down. Each combination has a
 shareable link (e.g. `/?home=bold&moon=collage&nav=pill`); **Copy link** copies it.
 
-- Options are listed in `src/options.ts`. Home options are components in
+- Options are listed in `optionGroups` in `src/options.ts`. Home options are components in
   `src/pages/home/`, moon styles in `src/components/moons/`, nav styles in
   `src/components/Nav.tsx` plus `.nav--<style>` rules in `src/index.css`.
 - At launch, set `VITE_HIDE_OPTIONS=true` in Vercel (or delete the unused options) to hide it.

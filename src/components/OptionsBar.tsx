@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
-  homeOptions,
-  moonStyles,
-  navStyles,
+  optionGroups,
   optionsQuery,
+  relevant,
   showOptions,
   useOptions,
-  type HomeOption,
-  type MoonStyle,
-  type NavStyle,
+  type OptionKey,
+  type Options,
+  type OptionValue,
 } from '../options'
 
-type Choice<T> = { id: T; label: string; note: string }
+type Choice = { readonly id: string; readonly label: string; readonly note: string }
 
 // One labeled row of toggle buttons
-function Group<T extends string>({
+function Group({
   title,
   hint,
   choices,
@@ -24,9 +23,9 @@ function Group<T extends string>({
 }: {
   title: string
   hint?: string
-  choices: readonly Choice<T>[]
-  value: T
-  onChoose: (id: T) => void
+  choices: readonly Choice[]
+  value: string
+  onChoose: (id: string) => void
 }) {
   return (
     <div className="options-bar__group">
@@ -53,12 +52,13 @@ function Group<T extends string>({
 }
 
 const OPEN_KEY = 'luna-options-open'
+const keys = Object.keys(optionGroups) as OptionKey[]
 
-// Review-only panel for switching between design options: home page, moon
-// style (while option B is showing) and nav bar (on every page). It floats
-// over the page from a corner button, so the real layout is never pushed down.
+// Review-only panel for switching between design options (home page, moon
+// style, headline color, nav bar and its color/corners). It floats over the
+// page from a corner button, so the real layout is never pushed down.
 export default function OptionsBar() {
-  const { home, setHome, moon, setMoon, nav, setNav } = useOptions()
+  const { set, ...options } = useOptions()
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const [copied, setCopied] = useState(false)
@@ -83,23 +83,20 @@ export default function OptionsBar() {
 
   const onHome = pathname === '/'
 
-  const chooseHome = (id: HomeOption) => {
-    setHome(id)
-    navigate('/' + optionsQuery(id, moon, nav))
-    window.scrollTo(0, 0)
-  }
-  const chooseMoon = (id: MoonStyle) => {
-    setMoon(id)
-    navigate('/' + optionsQuery(home, id, nav), { replace: true })
-  }
-  // Nav applies to every page, so stay where we are
-  const chooseNav = (id: NavStyle) => {
-    setNav(id)
-    navigate(pathname + optionsQuery(home, moon, id), { replace: true })
+  const choose = <K extends OptionKey>(key: K, value: OptionValue<K>) => {
+    set(key, value)
+    const next: Options = { ...options, [key]: value }
+    if (key === 'home') {
+      // Picking a home option always opens Home
+      navigate('/' + optionsQuery(next, true))
+      window.scrollTo(0, 0)
+    } else {
+      navigate(pathname + optionsQuery(next, onHome), { replace: true })
+    }
   }
 
   const copyLink = async () => {
-    const url = window.location.origin + pathname + optionsQuery(home, moon, nav)
+    const url = window.location.origin + pathname + optionsQuery(options, onHome)
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
@@ -123,17 +120,18 @@ export default function OptionsBar() {
       {open && (
         <div id="design-options" className="options-bar" role="region" aria-label="Design options (preview only)">
           <div className="options-bar__inner">
-            <Group
-              title="Home"
-              hint={onHome ? undefined : '(opens Home)'}
-              choices={homeOptions}
-              value={home}
-              onChoose={chooseHome}
-            />
-            {onHome && home === 'bold' && (
-              <Group title="Moon" choices={moonStyles} value={moon} onChoose={chooseMoon} />
-            )}
-            <Group title="Nav" choices={navStyles} value={nav} onChoose={chooseNav} />
+            {keys
+              .filter((key) => relevant(key, options, onHome))
+              .map((key) => (
+                <Group
+                  key={key}
+                  title={optionGroups[key].title}
+                  hint={key === 'home' && !onHome ? '(opens Home)' : undefined}
+                  choices={optionGroups[key].choices}
+                  value={options[key]}
+                  onChoose={(id) => choose(key, id as OptionValue<typeof key>)}
+                />
+              ))}
             <button type="button" className="options-bar__copy" onClick={copyLink}>
               {copied ? 'Link copied' : 'Copy link'}
             </button>

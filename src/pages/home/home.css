@@ -11,7 +11,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100svh - var(--nav-h));
+  height: calc(100svh - var(--nav-h) - var(--below-nav));
   min-height: 520px;
   max-height: 1000px;
   padding-top: clamp(24px, 4vh, 56px);
@@ -151,7 +151,7 @@
 @media (max-width: 760px) {
   .lunar-hero__stage {
     height: auto;
-    min-height: calc(100svh - var(--nav-h));
+    min-height: calc(100svh - var(--nav-h) - var(--below-nav));
     max-height: none;
     justify-content: flex-start;
     gap: 48px;
@@ -478,7 +478,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: calc(100svh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h) - var(--below-nav));
   padding-top: clamp(24px, 4vh, 48px);
 }
 /* Bottom room inside the hero. Doubled class so it beats .container's
@@ -713,4 +713,24 @@
     clip-path: none;
     stroke-dashoffset: 0;
   }
+}
+
+/* Review option: big hero headline color on home B and C (html[data-headline]).
+   Default stays cream. */
+:root[data-headline='chartreuse'] {
+  --headline-color: var(--chartreuse);
+}
+:root[data-headline='powder'] {
+  --headline-color: var(--powder);
+}
+:root[data-headline='red'] {
+  --headline-color: var(--red);
+}
+.lunar-hero__title,
+.scrap-hero__title {
+  color: var(--headline-color, var(--cream));
+}
+/* Keep "audacious" standing out when the headline itself turns chartreuse */
+:root[data-headline='chartreuse'] .lunar-hero__title em {
+  color: var(--cream);
 }
