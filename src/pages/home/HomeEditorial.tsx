@@ -8,19 +8,21 @@ export default function HomeEditorial() {
   return (
     <>
       <section className="section--crimson hero">
-        <div className="container split">
-          <div>
+        <div className="container">
+          <div className="split">
             <h1>Equity-centered advocacy strategy for audacious change.</h1>
-            <p className="lede">
+            <MoonPlaceholder />
+          </div>
+          <div className="hero-foot editorial-hero__foot">
+            <Link to="/contact" className="button button--cream">
+              Let's Work Together
+            </Link>
+            <p>
               Working alongside nonprofits and coalitions ready to move from mission to movement:
               building advocacy programs that are strategic, values-driven, and built for the
               current political reality.
             </p>
-            <Link to="/contact" className="button button--cream">
-              Let's Work Together
-            </Link>
           </div>
-          <MoonPlaceholder />
         </div>
       </section>
 
@@ -52,7 +54,7 @@ export default function HomeEditorial() {
           <div className="section-head">
             <h2>How we work together</h2>
             <Link to="/services" className="text-link">
-              Explore services →
+              Explore services
             </Link>
           </div>
           <div className="grid-3">

@@ -55,7 +55,7 @@ const OPEN_KEY = 'luna-options-open'
 const keys = Object.keys(optionGroups) as OptionKey[]
 
 // Review-only panel for switching between design options (home page, moon
-// style, headline color, nav bar and its color/corners). It floats over the
+// style, headline color, nav bar and its color). It floats over the
 // page from a corner button, so the real layout is never pushed down.
 export default function OptionsBar() {
   const { set, ...options } = useOptions()

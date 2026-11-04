@@ -52,7 +52,7 @@ export const optionGroups = {
       { id: 'circled', label: 'C · Circled hover', note: 'No bar; hovered links turn italic serif inside a drawn circle' },
     ],
   },
-  // Floating pill only (html[data-pill], html[data-corners])
+  // Floating pill only (html[data-pill])
   pill: {
     title: 'Pill color',
     param: 'pill',
@@ -62,14 +62,6 @@ export const optionGroups = {
       { id: 'chartreuse', label: 'Chartreuse', note: 'Chartreuse with burgundy text' },
       { id: 'crimson', label: 'Crimson', note: 'Deep Crimson with cream text' },
       { id: 'smoked', label: 'Smoked', note: 'See-through Night Bordeaux with cream text' },
-    ],
-  },
-  corners: {
-    title: 'Corners',
-    param: 'corners',
-    choices: [
-      { id: 'rounded', label: 'Rounded', note: 'Fully rounded ends' },
-      { id: 'square', label: 'Square', note: 'Square corners' },
     ],
   },
 } as const satisfies Record<string, { title: string; param: string; choices: readonly Choice[] }>
@@ -115,7 +107,6 @@ export function relevant(key: OptionKey, o: Options, onHome: boolean) {
     case 'headline':
       return onHome && (o.home === 'bold' || o.home === 'scrapbook')
     case 'pill':
-    case 'corners':
       return o.nav === 'pill'
     default:
       return true

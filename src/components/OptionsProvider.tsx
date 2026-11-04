@@ -5,14 +5,13 @@ export default function OptionsProvider({ children }: { children: ReactNode }) {
   const [options, setOptions] = useState<Options>(initialOptions)
 
   // Page-wide styles key off these (e.g. the floating nav overlaps the first
-  // section; pill color, corners and headline color are pure CSS)
+  // section; pill color and headline color are pure CSS)
   useEffect(() => {
     const d = document.documentElement.dataset
     d.nav = options.nav
     d.pill = options.pill
-    d.corners = options.corners
     d.headline = options.headline
-  }, [options.nav, options.pill, options.corners, options.headline])
+  }, [options.nav, options.pill, options.headline])
 
   const set = <K extends OptionKey>(key: K, value: OptionValue<K>) => {
     setOptions((o) => ({ ...o, [key]: value }))

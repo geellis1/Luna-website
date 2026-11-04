@@ -58,7 +58,7 @@ export default function HomeScrapbook() {
             </p>
           </div>
 
-          <div className="scrap-hero__foot">
+          <div className="hero-foot scrap-hero__foot">
             <Link to="/contact" className="button button--cream">
               Let's Work Together
             </Link>
@@ -102,7 +102,7 @@ export default function HomeScrapbook() {
           <div className="section-head">
             <h2>How we work together</h2>
             <Link to="/services" className="text-link">
-              Explore services →
+              Explore services
             </Link>
           </div>
           <div className="grid-3">

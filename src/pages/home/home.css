@@ -1,3 +1,40 @@
+/* ---------- Shared: hero bottom row (all home options) ----------
+   Button left, paragraph right, centered on one line, under a thin divider
+   that spans the content container. Each hero adds its own spacing and
+   entrance animation. */
+.hero-foot {
+  display: grid;
+  grid-template-columns: auto minmax(0, 500px);
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  padding-top: clamp(28px, 4vh, 40px);
+  border-top: 1px solid rgba(245, 240, 232, 0.2);
+  color: var(--cream);
+}
+.hero-foot .button {
+  justify-self: start;
+  white-space: nowrap;
+}
+.hero-foot p {
+  margin: 0;
+  max-width: 500px;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+}
+@media (max-width: 760px) {
+  .hero-foot {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 28px;
+  }
+  .hero-foot p {
+    order: -1;
+    font-size: 1.0625rem;
+  }
+}
+
 /* ---------- Option B: Moon phases ---------- */
 .lunar-hero {
   position: relative;
@@ -11,9 +48,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100svh - var(--nav-h) - var(--below-nav));
-  min-height: 520px;
-  max-height: 1000px;
+  min-height: max(520px, calc(100svh - var(--nav-h) - var(--below-nav)));
   padding-top: clamp(24px, 4vh, 56px);
   padding-bottom: clamp(32px, 6vh, 72px);
 }
@@ -100,21 +135,15 @@
     lunar-tide 8s ease-in-out calc(4s + var(--line) * 0.18s + var(--i) * 0.05s) infinite;
 }
 
+/* Bottom row (shared .hero-foot styles), with room below it inside the hero.
+   Doubled class so the padding beats .container's shorthand, which loads later. */
 .lunar-hero__foot {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 46ch);
-  align-items: end;
-  gap: 32px;
+  margin-top: clamp(48px, 7vh, 80px);
   animation: lunar-fade 1.6s ease 2.2s both;
 }
-.lunar-hero__foot .button {
-  justify-self: start;
-}
-.lunar-hero__foot p {
-  margin: 0;
-  font-size: 1rem;
-  opacity: 0.85;
+.lunar-hero .lunar-hero__stage {
+  padding-bottom: 100px;
 }
 
 @keyframes lunar-char {
@@ -174,11 +203,10 @@
     padding-left: 0.5em;
   }
   .lunar-hero__foot {
-    grid-template-columns: 1fr;
     margin-top: auto;
   }
-  .lunar-hero__foot p {
-    order: -1;
+  .lunar-hero .lunar-hero__stage {
+    padding-bottom: 72px;
   }
 }
 
@@ -479,11 +507,11 @@
   flex-direction: column;
   align-items: center;
   min-height: calc(100svh - var(--nav-h) - var(--below-nav));
-  padding-top: clamp(24px, 4vh, 48px);
 }
 /* Bottom room inside the hero. Doubled class so it beats .container's
    padding shorthand, which loads after this file. */
 .scrap-hero .scrap-hero__stage {
+  padding-top: clamp(48px, 9vh, 112px);
   padding-bottom: 100px;
 }
 /* The board is the headline's box; cut-outs and the note are placed on it */
@@ -603,31 +631,11 @@
   animation: scrap-underline 0.9s ease-out 5.1s forwards;
 }
 
-/* Bottom row: button left, paragraph right, centered on one line, under a
-   thin divider that spans the content container */
+/* Bottom row (shared .hero-foot styles) */
 .scrap-hero__foot {
-  display: grid;
-  grid-template-columns: auto minmax(0, 500px);
-  justify-content: space-between;
-  align-items: center;
-  gap: 32px;
-  width: 100%;
   /* Clears the handwritten note, which hangs below the headline */
   margin-top: clamp(88px, 13vh, 136px);
-  padding-top: clamp(28px, 4vh, 40px);
-  border-top: 1px solid rgba(245, 240, 232, 0.2);
-  color: var(--cream);
   animation: scrap-fade 1.4s ease 3s both;
-}
-.scrap-hero__foot .button {
-  justify-self: start;
-  white-space: nowrap;
-}
-.scrap-hero__foot p {
-  margin: 0;
-  max-width: 500px;
-  font-size: 1.1875rem;
-  line-height: 1.5;
 }
 
 @keyframes scrap-rise {
@@ -701,14 +709,7 @@
     width: max-content;
   }
   .scrap-hero__foot {
-    grid-template-columns: 1fr;
-    gap: 24px;
     margin-top: 32px;
-    padding-top: 28px;
-  }
-  .scrap-hero__foot p {
-    order: -1;
-    font-size: 1.0625rem;
   }
 }
 

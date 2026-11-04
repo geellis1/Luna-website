@@ -77,7 +77,7 @@ export default function HomeBold() {
           ) : (
             title
           )}
-          <div className="lunar-hero__foot">
+          <div className="hero-foot lunar-hero__foot">
             <Link to="/contact" className="button button--cream">
               Let's Work Together
             </Link>
@@ -121,7 +121,7 @@ export default function HomeBold() {
           <div className="section-head">
             <h2>How we work together</h2>
             <Link to="/services" className="text-link">
-              Explore services →
+              Explore services
             </Link>
           </div>
           {tiers.map((t) => (

@@ -44,7 +44,7 @@ Open http://localhost:5173. Note: `npm run dev` serves the pages only; the conta
 
 A **Design options** button in the bottom-right corner opens a panel for switching
 between home page options, moon styles (home option B), headline color (B and C),
-nav bar styles, and the floating pill's color and corners. It floats
+nav bar styles, and the floating pill's color. It floats
 over the page, so the real layout is never pushed down. Each combination has a
 shareable link (e.g. `/?home=bold&moon=collage&nav=pill`); **Copy link** copies it.
 

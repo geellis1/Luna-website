@@ -33,13 +33,16 @@ export default function Nav() {
           )}
         </Link>
         <ul id="nav-links" className={`nav__links${open ? ' open' : ''}`}>
-          {navLinks.map((l) => (
-            <li key={l.to}>
-              <NavLink to={l.to} end onClick={close}>
-                {l.label}
-              </NavLink>
-            </li>
-          ))}
+          {/* No Home link: the logo takes you home */}
+          {navLinks
+            .filter((l) => l.to !== '/')
+            .map((l) => (
+              <li key={l.to}>
+                <NavLink to={l.to} end onClick={close}>
+                  {l.label}
+                </NavLink>
+              </li>
+            ))}
         </ul>
         {pill && (
           <Link to="/contact" className="nav__cta" onClick={close}>
