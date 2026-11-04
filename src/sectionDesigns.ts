@@ -73,7 +73,6 @@ export const sectionDesigns = {
       { id: 'a', label: 'Option A: Editorial Letter', note: 'The form as a letter on framed stationery' },
       { id: 'b', label: 'Option B: Letter + Collage', note: 'Layered paper pieces beside the letter' },
       { id: 'c', label: 'Option C: Split Editorial', note: 'A huge statement on crimson beside the letter' },
-      { id: 'current', label: 'Current page (fallback)', note: 'The contact page as it is today' },
     ],
   },
   aboutHeadshot: {

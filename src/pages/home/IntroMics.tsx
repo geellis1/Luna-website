@@ -6,7 +6,8 @@ import './intro-mics.css'
 // edge and standing on the section's bottom edge; the intro paragraph sits
 // inside the circle. On first view the headline rises, the circle comes up
 // like a moon, then the microphones slide up into place.
-// The image is public/intro-mics.webp (cut-out, transparent background).
+// The image is public/intro-mics.png: the microphones cut out of the
+// reference poster (circle and background removed, white outlines kept).
 // Styles: intro-mics.css.
 
 const lede =
@@ -47,10 +48,10 @@ export default function IntroMics() {
         <p className="mics__lede">{lede}</p>
         <img
           className="mics__img"
-          src="/intro-mics.webp"
+          src="/intro-mics.png"
           alt="A bank of press microphones"
-          width="1884"
-          height="835"
+          width="736"
+          height="424"
           loading="lazy"
         />
       </div>

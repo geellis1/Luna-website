@@ -1,8 +1,9 @@
 /* ---------- Intro Section: Press Conference (microphones) ----------
    Headline, then a stage holding a Night Bordeaux circle (top) and the
    microphones (bottom, standing on the section's edge), overlapping. Sizes
-   are in % of the stage width (W): circle 62% of W, microphones the full W
-   (image ratio 1884 × 835), stage 0.9 W tall. */
+   are in % of the stage width (W): circle 66% of W, microphones the full W
+   (image ratio 736 × 424), stage 1.05 W tall, so the microphones cover
+   about the bottom quarter of the circle. */
 .mics {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   overflow: hidden;
@@ -42,16 +43,16 @@
 .mics__stage {
   container-type: inline-size;
   position: relative;
-  width: min(100% - 2 * var(--gutter), 1000px);
-  aspect-ratio: 1 / 0.9;
+  width: min(100% - 2 * var(--gutter), 880px);
+  aspect-ratio: 1 / 1.05;
   margin-inline: auto;
 }
 /* The circle comes up like a moon */
 .mics__circle {
   position: absolute;
   top: 0;
-  left: 19%;
-  width: 62%;
+  left: 17%;
+  width: 66%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--bordeaux);
@@ -64,9 +65,9 @@
 /* The paragraph inside the circle, above the microphones */
 .mics__lede {
   position: absolute;
-  top: 19%;
-  left: 31%;
-  width: 38%;
+  top: 16%;
+  left: 29%;
+  width: 42%;
   margin: 0;
   font-size: max(14px, 1.65cqi);
   line-height: 1.55;
@@ -75,8 +76,12 @@
   opacity: 0;
   transition: opacity 0.9s ease 1.3s;
 }
-/* The microphones slide up and stand on the section's bottom edge */
+/* The microphones slide up and stand on the section's bottom edge; their
+   outer sides (cropped in the source picture) fade out instead of ending in
+   a straight line */
 .mics__img {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -119,11 +124,13 @@
     content: '';
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1.05;
+    aspect-ratio: 1 / 1.2;
   }
   .mics__circle {
     top: auto;
-    bottom: 8%;
+    /* Raised so the microphones (118vw wide, ratio 736 × 424) cover about
+       its bottom third */
+    bottom: calc(118vw * 424 / 736 - 33vw);
     left: 10%;
     width: 80%;
   }

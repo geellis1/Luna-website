@@ -85,15 +85,6 @@ function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
           {letter(56, 56)}
         </>
       )}
-      {id === 'current' && (
-        <>
-          <rect x="8" y="14" width="34" height="8" fill={C.bordeaux} />
-          {[0, 1, 2, 3].map((i) => (
-            <rect key={i} x="56" y={10 + i * 11} width="56" height="7" fill="#fff" stroke={C.bordeaux} strokeWidth="0.5" />
-          ))}
-          <rect x="56" y="55" width="18" height="5" rx="2.5" fill={C.crimson} />
-        </>
-      )}
     </svg>
   )
 }
