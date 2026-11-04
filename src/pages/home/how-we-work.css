@@ -43,24 +43,43 @@
 }
 
 /* ===== C · Editorial Accordion =====
-   Full-height color blocks with 4px gaps. The open panel takes 70% of the
-   width and the closed two share the rest; widths change over 0.75s while
-   the total stays fixed. The open panel's content is laid out at its final
-   width (so it never re-wraps) and fades in once there's room. */
+   Split screen: cream text on the left; on the right three color blocks,
+   flush together, running the section's full height and out to the screen's
+   right edge. The open panel takes 70% of the width and the closed two share
+   the rest; widths change over 0.75s while the total stays fixed. The open
+   panel's content is laid out at its final width (so it never re-wraps) and
+   fades in once there's room. */
 .hww--c {
+  /* The section is at least this tall; the panels fill it either way */
   --panel-h: clamp(460px, 34vw, 540px);
 }
 .section.hww-wide.hww--c {
-  padding-block: clamp(40px, 4vw, 60px);
+  padding-block: 0;
 }
 .hww--c .hww-wide__layout {
   grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+  align-items: stretch;
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+}
+/* The text keeps the site's left margin (the 1720px frame's edge on very
+   wide screens) and is centered top to bottom */
+.hww--c .hww-wide__intro {
+  align-self: center;
+  max-width: none;
+  padding-right: clamp(32px, 4vw, 72px);
+  padding-block: clamp(48px, 5vw, 72px);
+  padding-left: max(var(--gutter), calc((100vw - 1720px) / 2 + var(--gutter)));
+}
+.hww--c .hww-wide__stage {
+  display: flex;
 }
 .panels-c {
   container-type: inline-size;
   display: flex;
-  gap: 4px;
-  height: var(--panel-h);
+  flex: 1;
+  min-height: var(--panel-h);
 }
 .panel-c {
   position: relative;
@@ -145,7 +164,7 @@
   z-index: 1;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  width: calc((100cqi - 8px) * 0.7);
+  width: calc(100cqi * 0.7);
   padding: clamp(28px, 2.6vw, 40px);
   opacity: 0;
   pointer-events: none;
@@ -666,8 +685,11 @@
   .hww--c {
     --panel-h: clamp(420px, 56vw, 520px);
   }
-  .section.hww-wide.hww--c {
-    padding-block: clamp(56px, 7vw, 80px);
+  .hww--c .hww-wide__layout {
+    row-gap: 0;
+  }
+  .hww--c .hww-wide__intro {
+    padding: clamp(56px, 7vw, 80px) var(--gutter) 48px;
   }
 }
 
@@ -781,6 +803,7 @@
     container-type: normal;
     flex-direction: column;
     height: auto;
+    min-height: 0;
   }
   .panel-c,
   .panel-c.is-open {

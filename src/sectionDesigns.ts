@@ -17,6 +17,7 @@ type Group = {
   title: string
   param: string
   anchor: string
+  path?: string // the page the section is on (default: the homepage)
   choices: readonly Choice[]
   parent?: { key: string; choice: string }
 }
@@ -31,6 +32,26 @@ export const sectionDesigns = {
       { id: 'b', label: 'B — Rising Capsules', note: 'Equal capsules with a symbol each; the one you choose rises' },
       { id: 'c', label: 'C — Sliding Editorial Panels', note: 'Architectural panels that slide open like a folder' },
       { id: 'd', label: 'D — Original Cards', note: 'The current three cards, for comparison' },
+    ],
+  },
+  whyLuna: {
+    title: 'Why Luna',
+    param: 'why',
+    anchor: 'why-luna',
+    choices: [
+      { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type set like a magazine spread' },
+      { id: 'c', label: 'C — Editorial Collage', note: 'Layered paper, photos and type that assemble' },
+    ],
+  },
+  aboutHeadshot: {
+    title: 'About · Kelli’s Headshot',
+    param: 'photo',
+    anchor: 'kelli',
+    path: '/about',
+    choices: [
+      { id: 'blazer', label: 'A — Houndstooth Blazer', note: 'The current photo' },
+      { id: 'glasses', label: 'B — Red Glasses', note: 'Warm, outdoors, red cat-eye glasses' },
+      { id: 'cardigan', label: 'C — Green Cardigan', note: 'Big smile, dark backdrop' },
     ],
   },
   // Option A's two versions
@@ -55,6 +76,8 @@ export const showSectionDesigns = import.meta.env.VITE_HIDE_OPTIONS !== 'true'
 const storageKey = (key: SectionKey) => `luna-section-${key}`
 
 // Top-level sections, and the sub-designs that belong to a section's choice
+export const pathOf = (key: SectionKey) => (sectionDesigns[key] as Group).path ?? '/'
+
 export const sectionKeys = (Object.keys(sectionDesigns) as SectionKey[]).filter(
   (k) => !(sectionDesigns[k] as Group).parent,
 )

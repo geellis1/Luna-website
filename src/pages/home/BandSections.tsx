@@ -1,30 +1,17 @@
 import { Link } from 'react-router-dom'
-import { pillars } from '../../content'
 import HowWeWork from './HowWeWork'
 import NoteStatement from './NoteStatement'
+import WhyLuna from './WhyLuna'
 
 // The sections below the homepage hero: statement (notebook page), Why Luna
-// list, How we work together (HowWeWork, in the Round 2 design under
-// review), CTA.
+// and How we work together (both in the Round 2 design under review), CTA.
 
 export default function BandSections() {
   return (
     <>
       <NoteStatement />
 
-      <section className="section section--bordeaux">
-        <div className="container moon-why">
-          <h2>Why Luna</h2>
-          <ol className="moon-list">
-            {pillars.map((p, i) => (
-              <li key={p.title}>
-                <span className="moon-list__num">0{i + 1}</span>
-                <span className="moon-list__title">{p.title}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <WhyLuna />
 
       <HowWeWork />
 

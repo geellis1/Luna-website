@@ -225,6 +225,12 @@
   height: auto;
   border-radius: 6px;
 }
+/* Headshot options: the photo itself, cropped to the preview's shape */
+.sx-preview--photo {
+  aspect-ratio: 120 / 64;
+  object-fit: cover;
+  object-position: 50% 22%;
+}
 .sx-option__text {
   display: grid;
   gap: 3px;

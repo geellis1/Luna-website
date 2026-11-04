@@ -1027,6 +1027,10 @@ fieldset.field {
   margin: 0 auto;
 }
 .kelli__photo {
+  /* Her lower edge fades into the cream, so it reads as intentional whether
+     she stands on the section's edge or the bio runs a little past her */
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
   position: absolute;
   top: 0;
   left: 50%;
@@ -1062,9 +1066,8 @@ fieldset.field {
 }
 /* Invisible halves of her silhouette for the text to flow around. Each is
    exactly half the photo (reaching the center line through the column's
-   gutter), with her outline traced into a polygon in percentages, so it
-   scales with the photo. Traced from the cut-out (64 rows, a little extra at
-   the center line so the columns never touch above her head). */
+   gutter); its shape-outside is the headshot's traced outline, set inline
+   from src/pages/headshots.ts, in percentages so it scales with the photo. */
 .kelli__wrap {
   width: calc(var(--photo-w) / 2);
   height: var(--photo-h);
@@ -1073,38 +1076,14 @@ fieldset.field {
 .kelli__wrap--left {
   float: right;
   margin-right: calc(-1 * var(--gutter));
-  shape-outside: polygon(
-    100% 0%, 94.0% 0.0%, 94.0% 1.6%, 82.8% 3.1%, 76.8% 4.7%, 72.9% 6.3%,
-    69.7% 7.8%, 67.4% 9.4%, 64.5% 10.9%, 61.9% 12.5%, 60.0% 14.1%, 58.4% 15.6%,
-    57.6% 17.2%, 57.0% 18.8%, 56.2% 20.3%, 56.1% 21.9%, 56.4% 23.5%, 56.4% 25.0%,
-    56.4% 26.6%, 57.4% 28.1%, 55.7% 29.7%, 53.7% 31.3%, 53.7% 32.8%, 53.7% 34.4%,
-    54.1% 36.0%, 54.1% 37.5%, 54.1% 39.1%, 54.9% 40.7%, 55.5% 42.2%, 56.1% 43.8%,
-    56.6% 45.3%, 57.0% 46.9%, 58.0% 48.5%, 56.1% 50.0%, 53.7% 51.6%, 52.3% 53.2%,
-    51.2% 54.7%, 50.4% 56.3%, 49.8% 57.9%, 49.0% 59.4%, 47.9% 61.0%, 46.3% 62.5%,
-    44.7% 64.1%, 43.2% 65.7%, 41.6% 67.2%, 40.4% 68.8%, 39.3% 70.4%, 38.1% 71.9%,
-    37.1% 73.5%, 34.6% 75.1%, 32.8% 76.6%, 32.6% 78.2%, 33.0% 79.7%, 29.3% 81.3%,
-    28.7% 82.9%, 29.1% 84.4%, 32.0% 86.0%, 31.1% 87.6%, 27.9% 89.1%, 23.6% 90.7%,
-    22.5% 92.3%, 21.9% 93.8%, 21.7% 95.4%, 21.3% 97.0%, 20.9% 98.5%, 20.9% 100.0%,
-    100% 100%
-  ) border-box;
+  /* Room outside the photo for shape-margin (it can't reach past the
+     float's margin box), so text keeps clear even where she fills the frame */
+  margin-left: 18px;
 }
 .kelli__wrap--right {
   float: left;
   margin-left: calc(-1 * var(--gutter));
-  shape-outside: polygon(
-    0% 0%, 6.0% 0.0%, 9.8% 1.6%, 20.5% 3.1%, 26.6% 4.7%, 30.9% 6.3%,
-    34.4% 7.8%, 37.5% 9.4%, 40.8% 10.9%, 42.4% 12.5%, 44.1% 14.1%, 46.7% 15.6%,
-    47.7% 17.2%, 48.4% 18.8%, 49.2% 20.3%, 50.6% 21.9%, 51.8% 23.5%, 53.1% 25.0%,
-    54.1% 26.6%, 55.1% 28.1%, 55.9% 29.7%, 56.6% 31.3%, 57.4% 32.8%, 57.8% 34.4%,
-    58.2% 36.0%, 59.2% 37.5%, 60.5% 39.1%, 61.1% 40.7%, 61.1% 42.2%, 60.5% 43.8%,
-    59.6% 45.3%, 58.4% 46.9%, 59.4% 48.5%, 61.9% 50.0%, 64.1% 51.6%, 65.6% 53.2%,
-    67.2% 54.7%, 68.6% 56.3%, 69.9% 57.9%, 71.1% 59.4%, 72.1% 61.0%, 72.7% 62.5%,
-    73.0% 64.1%, 73.0% 65.7%, 73.8% 67.2%, 75.4% 68.8%, 77.0% 70.4%, 78.5% 71.9%,
-    78.5% 73.5%, 79.3% 75.1%, 79.9% 76.6%, 80.1% 78.2%, 80.1% 79.7%, 80.7% 81.3%,
-    81.6% 82.9%, 82.6% 84.4%, 85.9% 86.0%, 88.9% 87.6%, 89.8% 89.1%, 90.2% 90.7%,
-    89.6% 92.3%, 87.5% 93.8%, 88.3% 95.4%, 88.3% 97.0%, 89.1% 98.5%, 89.8% 100.0%,
-    0% 100%
-  ) border-box;
+  margin-right: 18px;
 }
 
 /* Drop cap on the first paragraph */

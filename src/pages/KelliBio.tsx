@@ -5,23 +5,29 @@
 // On phones it's photo, then text.
 // Styles: "Kelli" in index.css.
 
+import { useSectionDesign } from '../sectionDesigns'
+import { headshots } from './headshots'
+
 export default function KelliBio() {
+  // Which headshot (Round 2 review: About · Kelli's Headshot)
+  const [photoId] = useSectionDesign('aboutHeadshot')
+  const photo = headshots[photoId]
   return (
-    <section className="section kelli">
+    <section className="section kelli" id="kelli">
       <div className="container">
         <h2 className="kelli__title">Hi, I’m Kelli.</h2>
 
         <div className="kelli__spread">
           <img
             className="kelli__photo"
-            src="/kelli.jpg"
-            alt="Kelli, founder of Luna Civic Strategies, smiling in a houndstooth blazer"
+            src={photo.src}
+            alt={photo.alt}
             width="960"
             height="1200"
           />
 
           <div className="kelli__col kelli__col--left">
-            <span className="kelli__wrap kelli__wrap--left" aria-hidden="true" />
+            <span className="kelli__wrap kelli__wrap--left" aria-hidden="true" style={{ shapeOutside: `${photo.left} border-box` }} />
             <p className="kelli__lead">
               For better or for worse, I am an optimist, a visionary, and I believe wholeheartedly in
               the radical power of imagination.
@@ -50,7 +56,7 @@ export default function KelliBio() {
           </div>
 
           <div className="kelli__col kelli__col--right">
-            <span className="kelli__wrap kelli__wrap--right" aria-hidden="true" />
+            <span className="kelli__wrap kelli__wrap--right" aria-hidden="true" style={{ shapeOutside: `${photo.right} border-box` }} />
             <p>
               My approach is grounded in intersectional feminist theory, collective action
               frameworks, and a deep commitment to centering the people most impacted by policy in
