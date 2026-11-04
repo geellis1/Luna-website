@@ -1,0 +1,696 @@
+/* ---------- How we work together (Round 2 designs A–C) ----------
+   Shared: big burgundy headline + Explore services on the left (~36%), the
+   interactive panels on the right (~64%). Each design has its own shape and
+   motion; all transitions are 350–600ms with no bounce, and the panels keep a
+   fixed height so nothing below the section moves. Option D reuses the
+   original .moon-card styles in home.css. */
+.hww {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-slide: cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hww__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+  column-gap: clamp(40px, 5vw, 88px);
+  align-items: stretch;
+}
+.hww__head {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+.hww__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(3rem, 5.4vw, 5.75rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--bordeaux);
+}
+
+/* Brand color per engagement, and the text color that sits on it */
+.tone--powder {
+  --tone: var(--powder);
+  --on: var(--bordeaux);
+}
+.tone--chartreuse {
+  --tone: var(--chartreuse);
+  --on: var(--bordeaux);
+}
+.tone--crimson {
+  --tone: var(--crimson);
+  --on: var(--cream);
+}
+
+/* ===== A · Expanding Capsules ===== */
+.caps-a {
+  container-type: inline-size;
+  display: flex;
+  gap: 14px;
+  height: clamp(440px, 40vw, 540px);
+}
+.caps-a__item {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--on);
+  background: var(--tone);
+  /* A tall arch: half the width across, 150px down, so narrow capsules are
+     slender and the open one gets a wide dome */
+  border-radius: 50% 50% 28px 28px / 150px 150px 28px 28px;
+  transition: flex-grow 0.55s var(--ease-out);
+}
+.caps-a__item.is-open {
+  flex-grow: 3.4;
+}
+@media (hover: hover) {
+  .caps-a__item:not(.is-open):hover {
+    flex-grow: 1.18;
+  }
+}
+.caps-a__toggle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.caps-a__toggle:focus-visible {
+  outline: 2px solid var(--on);
+  outline-offset: -8px;
+}
+.caps-a__num {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.caps-a__vtitle {
+  position: absolute;
+  bottom: 92px;
+  left: 50%;
+  translate: -50% 0;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6cqi, 3.75rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* Closed: number and vertical title come back after the content has gone */
+.caps-a__num,
+.caps-a__vtitle {
+  transition: opacity 0.3s ease 0.3s;
+}
+.caps-a__item.is-open .caps-a__num,
+.caps-a__item.is-open .caps-a__vtitle {
+  opacity: 0;
+  transition-delay: 0s;
+  transition-duration: 0.18s;
+}
+/* + that becomes a −, sliding from the center to the bottom-right corner */
+.caps-a__icon {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  translate: -50% 0;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  transition:
+    left 0.55s var(--ease-out),
+    translate 0.55s var(--ease-out);
+}
+.caps-a__icon::before,
+.caps-a__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  translate: -50% -50%;
+  background: currentColor;
+  transition: rotate 0.45s var(--ease-out);
+}
+.caps-a__icon::after {
+  rotate: 90deg;
+}
+.caps-a__item.is-open .caps-a__icon {
+  left: calc(100% - 26px);
+  translate: -100% 0;
+}
+.caps-a__item.is-open .caps-a__icon::after {
+  rotate: 0deg;
+}
+/* The open capsule's story: laid out at the open width from the start (so it
+   never re-wraps while the capsule grows), rising in once there's room */
+.caps-a__content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: calc((100cqi - 28px) * 3.4 / 5.4);
+  padding: 0 84px 30px 34px;
+  opacity: 0;
+  translate: 0 18px;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    translate 0.2s ease;
+}
+.caps-a__item.is-open .caps-a__content {
+  opacity: 1;
+  translate: none;
+  pointer-events: auto;
+  transition:
+    opacity 0.4s ease 0.25s,
+    translate 0.5s var(--ease-out) 0.25s;
+}
+.caps-a__kind {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.caps-a__title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 13cqi, 6.5rem);
+  line-height: 0.86;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.caps-a__text {
+  margin: 0 0 18px;
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+.caps-a__more,
+.caps-b__more,
+.panel-c__more {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-underline-offset: 4px;
+}
+
+/* ===== B · Rising Capsules ===== */
+.caps-b__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  /* Room above for the rise, so the section never changes height */
+  padding-top: 32px;
+  height: calc(clamp(360px, 33vw, 480px) + 32px);
+}
+.caps-b__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: clamp(30px, 3.6vw, 48px) 10px clamp(34px, 3.8vw, 52px);
+  font: inherit;
+  color: var(--on);
+  background: var(--tone);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    translate 0.5s var(--ease-out),
+    box-shadow 0.4s ease;
+}
+/* Chosen: rises and gets a burgundy ring with a cream gap */
+.caps-b__item.is-active {
+  translate: 0 -30px;
+  box-shadow:
+    0 0 0 4px var(--cream),
+    0 0 0 6px var(--bordeaux);
+}
+@media (hover: hover) {
+  .caps-b__item:not(.is-active):hover {
+    translate: 0 -8px;
+  }
+}
+.caps-b__item:focus-visible {
+  outline: 2px solid var(--bordeaux);
+  outline-offset: 10px;
+}
+.caps-b__label {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+.caps-b__num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.caps-b__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+/* Symbols: drawn in the capsule's text color; each moves once on choosing */
+.sym {
+  width: clamp(56px, 6vw, 84px);
+  overflow: visible;
+  fill: currentColor;
+}
+.sym__ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.sym--seed .sym__ring,
+.sym--seed .sym__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    scale 0.6s var(--ease-out),
+    opacity 0.6s ease;
+}
+.sym--seed .sym__ring {
+  scale: 0.55;
+  opacity: 0.45;
+}
+.caps-b__item.is-active .sym--seed .sym__ring {
+  scale: 1;
+  opacity: 1;
+}
+.caps-b__item.is-active .sym--seed .sym__dot {
+  scale: 1.25;
+}
+.sym__block {
+  translate: calc((var(--n) - 1) * 5px) calc(var(--n) * -5px);
+  opacity: 0.55;
+  transition:
+    translate 0.5s var(--ease-out) calc(var(--n) * 70ms),
+    opacity 0.5s ease calc(var(--n) * 70ms);
+}
+.caps-b__item.is-active .sym__block {
+  translate: 0 0;
+  opacity: 1;
+}
+.sym__orbiter {
+  transform-box: view-box;
+  transform-origin: 32px 32px;
+  rotate: -40deg;
+  transition: rotate 0.9s var(--ease-slide);
+}
+.caps-b__item.is-active .sym__orbiter {
+  rotate: 140deg;
+}
+/* Description: all three stacked in one spot and cross-faded */
+.caps-b__detail {
+  display: grid;
+  margin-top: 28px;
+}
+.caps-b__copy {
+  grid-area: 1 / 1;
+  max-width: 560px;
+  opacity: 0;
+  translate: 0 10px;
+  transition:
+    opacity 0.25s ease,
+    translate 0.25s ease;
+}
+.caps-b__copy.is-active {
+  opacity: 1;
+  translate: none;
+  transition:
+    opacity 0.4s ease 0.15s,
+    translate 0.45s var(--ease-out) 0.15s;
+}
+.caps-b__kind {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.caps-b__text {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  line-height: 1.4;
+}
+
+/* ===== C · Sliding Editorial Panels ===== */
+.panels-c {
+  --spine: 92px;
+  container-type: inline-size;
+  display: flex;
+  gap: 4px;
+  height: clamp(440px, 40vw, 540px);
+}
+.panel-c {
+  position: relative;
+  flex: 0 0 var(--spine);
+  min-width: 0;
+  overflow: hidden;
+  color: var(--on);
+  background: var(--tone);
+  border-radius: 3px;
+  transition:
+    flex-grow 0.6s var(--ease-slide),
+    flex-basis 0.35s var(--ease-out);
+}
+.panel-c.is-open {
+  flex-grow: 1;
+}
+/* A closed panel peeks out a little on hover */
+@media (hover: hover) {
+  .panel-c:not(.is-open):hover {
+    flex-basis: calc(var(--spine) + 20px);
+  }
+}
+.panel-c__spine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 26px 0 30px;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.panel-c__spine:focus-visible {
+  outline: 2px solid var(--on);
+  outline-offset: -8px;
+}
+.panel-c__num {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.panel-c__arrow {
+  width: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: rotate 0.5s var(--ease-slide);
+}
+.panel-c__vtitle {
+  margin-top: auto;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.panel-c__spine > * {
+  transition: opacity 0.3s ease 0.3s;
+}
+.panel-c.is-open .panel-c__spine > * {
+  opacity: 0;
+  transition-delay: 0s;
+  transition-duration: 0.15s;
+}
+/* The open sheet: laid out at its final width and swept in from the left */
+.panel-c__sheet {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  width: calc(100cqi - 2 * var(--spine) - 8px);
+  padding: clamp(26px, 4cqi, 44px);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  transition: clip-path 0.3s var(--ease-slide);
+}
+.panel-c.is-open .panel-c__sheet {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+  transition: clip-path 0.6s var(--ease-slide) 0.1s;
+}
+.panel-c__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panel-c__meta {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.panel-c__sheet .panel-c__arrow {
+  rotate: 90deg;
+}
+.panel-c__title {
+  margin: clamp(14px, 3cqi, 28px) 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(4rem, 21cqi, 11rem);
+  line-height: 0.82;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  translate: -28px 0;
+  opacity: 0;
+  transition:
+    translate 0.3s ease,
+    opacity 0.2s ease;
+}
+.panel-c.is-open .panel-c__title {
+  translate: none;
+  opacity: 1;
+  transition:
+    translate 0.6s var(--ease-out) 0.25s,
+    opacity 0.5s ease 0.25s;
+}
+.panel-c__body {
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 340px);
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+.panel-c__text {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+/* ===== Tablet: headline above, panels full width ===== */
+@media (max-width: 1024px) {
+  .hww__layout {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+  .hww__head {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .hww__title {
+    max-width: 11ch;
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+  }
+}
+
+/* ===== Phones: each design gets its own stacked form ===== */
+@media (max-width: 640px) {
+  .hww__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* A: stacked capsule bars; the open one grows downward like an accordion */
+  .caps-a {
+    container-type: normal;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+  }
+  .caps-a__item {
+    flex: none;
+    border-radius: 44px;
+  }
+  .caps-a__toggle {
+    position: relative;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 88px;
+    padding: 0 22px 0 28px;
+    text-align: left;
+  }
+  .caps-a__num,
+  .caps-a__vtitle,
+  .caps-a__icon {
+    position: static;
+    translate: none;
+  }
+  .caps-a__vtitle {
+    writing-mode: horizontal-tb;
+    rotate: none;
+    font-size: 2.1rem;
+  }
+  .caps-a__item.is-open .caps-a__num,
+  .caps-a__item.is-open .caps-a__vtitle {
+    opacity: 1;
+  }
+  .caps-a__icon {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    display: block;
+    flex: none;
+    margin-left: auto;
+  }
+  .caps-a__item.is-open .caps-a__icon {
+    left: auto;
+    translate: none;
+  }
+  .caps-a__content {
+    position: static;
+    width: auto;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 28px;
+    translate: none;
+    transition:
+      max-height 0.45s var(--ease-out),
+      padding 0.45s var(--ease-out),
+      opacity 0.25s ease;
+  }
+  .caps-a__item.is-open .caps-a__content {
+    max-height: 260px;
+    padding-bottom: 30px;
+    translate: none;
+    transition:
+      max-height 0.5s var(--ease-out),
+      padding 0.5s var(--ease-out),
+      opacity 0.4s ease 0.15s;
+  }
+  .caps-a__title {
+    display: none;
+  }
+
+  /* B: the capsules stay side by side, slimmer, with vertical titles */
+  .caps-b__row {
+    padding-top: 22px;
+    height: 320px;
+  }
+  .caps-b__item {
+    padding: 26px 4px 30px;
+  }
+  .caps-b__item.is-active {
+    translate: 0 -20px;
+  }
+  .caps-b__title {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+    font-size: 2.2rem;
+  }
+  .sym {
+    width: 46px;
+  }
+
+  /* C: horizontal bands like folder tabs; the open one slides down */
+  .panels-c {
+    container-type: normal;
+    flex-direction: column;
+    height: auto;
+  }
+  .panel-c {
+    flex: none;
+  }
+  @media (hover: hover) {
+    .panel-c:not(.is-open):hover {
+      flex-basis: auto;
+    }
+  }
+  .panel-c__spine {
+    position: relative;
+    inset: auto;
+    flex-direction: row;
+    height: 76px;
+    padding: 0 20px;
+  }
+  .panel-c__vtitle {
+    order: -1;
+    margin: 0 auto 0 0;
+    writing-mode: horizontal-tb;
+    rotate: none;
+    font-size: 2.1rem;
+  }
+  .panel-c.is-open .panel-c__spine > * {
+    opacity: 1;
+  }
+  .panel-c.is-open .panel-c__spine .panel-c__arrow {
+    rotate: 90deg;
+  }
+  .panel-c__sheet {
+    position: static;
+    width: auto;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    clip-path: none;
+    transition:
+      max-height 0.45s var(--ease-slide),
+      padding 0.45s var(--ease-slide);
+  }
+  .panel-c.is-open .panel-c__sheet {
+    max-height: 260px;
+    padding-bottom: 24px;
+    clip-path: none;
+    transition:
+      max-height 0.5s var(--ease-slide),
+      padding 0.5s var(--ease-slide);
+  }
+  .panel-c__top,
+  .panel-c__title {
+    display: none;
+  }
+  .panel-c__body {
+    justify-self: stretch;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hww *,
+  .hww *::before,
+  .hww *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

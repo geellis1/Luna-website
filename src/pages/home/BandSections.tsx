@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
-import { pillars, tiers } from '../../content'
+import { pillars } from '../../content'
+import HowWeWork from './HowWeWork'
 import NoteStatement from './NoteStatement'
 
 // The sections below the homepage hero: statement (notebook page), Why Luna
-// list, service cards, CTA.
-const tierAccents = ['card--powder', 'card--chartreuse', 'card--red']
+// list, How we work together (HowWeWork, in the Round 2 design under
+// review), CTA.
 
 export default function BandSections() {
   return (
@@ -25,28 +26,7 @@ export default function BandSections() {
         </div>
       </section>
 
-      <section className="section section--cream">
-        <div className="container">
-          <div className="section-head">
-            <h2>How we work together</h2>
-            <Link to="/services" className="text-link">
-              Explore services
-            </Link>
-          </div>
-          <div className="grid-3">
-            {tiers.map((t, i) => (
-              <Link to={`/services#${t.id}`} className={`moon-card ${tierAccents[i]}`} key={t.id}>
-                <div className="moon-card__band" />
-                <div className="moon-card__body">
-                  <div className="tier-card__kind">{t.kind}</div>
-                  <div className="tier-card__label">{t.label}</div>
-                  <p>{t.summary}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowWeWork />
 
       <section className="section section--cream moon-cta">
         <div className="container">
