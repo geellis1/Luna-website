@@ -90,6 +90,20 @@ export function HomePreview({ kind }: { kind: HomeOption }) {
           <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.cream} />
         </svg>
       )
+    case 'handwritten':
+      return (
+        <svg {...frame}>
+          <rect width="160" height="100" fill={C.cream} />
+          <g fill="none" stroke={C.red} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 40c6-16 10-22 12-10s-6 18 2 6 10-20 14-8-4 14 4 4 8-16 14-6" />
+            <path d="M84 72c6-18 12-22 13-10s-6 16 2 4 9-18 13-6-3 12 5 2 9-16 14-6 6 10 14 4" />
+          </g>
+          <rect x="66" y="30" width="28" height="2.5" rx="1" fill={C.bordeaux} />
+          <Lines x={44} y={38} widths={[72, 64, 52]} h={6} gap={3} color={C.bordeaux} />
+          <rect x="12" y="80" width="136" height="0.6" fill={C.bordeaux} opacity="0.3" />
+          <rect x="12" y="86" width="30" height="7" rx="3.5" fill={C.crimson} />
+        </svg>
+      )
     case 'capsules':
       return (
         <svg {...frame}>

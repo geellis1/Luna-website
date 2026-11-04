@@ -5,6 +5,7 @@ import { useOptions } from '../options'
 import EditorialMenu from './EditorialMenu'
 
 // Pages whose first section is light, so a see-through nav needs dark text
+// (plus the homepage when the Handwritten design, on cream, is showing)
 const lightTopPages = ['/contact']
 
 // Nav bar in the style picked in the options bar:
@@ -15,13 +16,14 @@ const lightTopPages = ['/contact']
 //   italic serif inside a drawn circle
 // menu: logo + MENU button; opens a near-fullscreen editorial panel
 export default function Nav() {
-  const { nav } = useOptions()
+  const { nav, home } = useOptions()
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
   const pill = nav === 'pill'
   const masked = pill || nav === 'circled'
-  const light = (nav === 'circled' || nav === 'menu') && lightTopPages.includes(pathname)
+  const lightTop = lightTopPages.includes(pathname) || (pathname === '/' && home === 'handwritten')
+  const light = (nav === 'circled' || nav === 'menu') && lightTop
 
   if (nav === 'menu') return <EditorialMenu light={light} />
 

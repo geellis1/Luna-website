@@ -20,6 +20,7 @@ export const optionGroups = {
       { id: 'bold', label: 'Moon Halo', note: 'Bold headline beside a softly glowing moon' },
       { id: 'scrapbook', label: 'Scrapbook', note: 'Tall serif headline with advocacy photos tucked behind' },
       { id: 'capsules', label: 'Capsules', note: 'Bold headline beside six photo and color capsules' },
+      { id: 'handwritten', label: 'Handwritten', note: 'Sprawling red script behind a centered serif statement' },
     ],
   },
   // Color combination = the big hero headline color on Moon Halo, Scrapbook

@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import { useOptions, type HomeOption } from '../../options'
 import HomeBold from './HomeBold'
 import HomeEditorial from './HomeEditorial'
+import HomeHandwritten from './HomeHandwritten'
 import HomeScrapbook from './HomeScrapbook'
 import './home.css'
 
@@ -13,6 +14,7 @@ const homes: Record<HomeOption, ComponentType> = {
   bold: HomeBold,
   scrapbook: HomeScrapbook,
   capsules: HomeCapsules,
+  handwritten: HomeHandwritten,
 }
 
 export default function Home() {
