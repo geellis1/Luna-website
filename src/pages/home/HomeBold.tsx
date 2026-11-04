@@ -1,70 +1,36 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
-import TypedHeadline from '../../components/TypedHeadline'
+import MoonPhases from '../../components/MoonPhases'
 import { pillars, tiers } from '../../content'
 
-// Option B: a press-conference hero. The microphones rise into view, then the
-// headline types out as if they're speaking it. Solid color tiles below.
-// Headline + mics are sized to fit the first screen (see .bold-hero in home.css).
+// Option B: editorial hero with a glowing moon cycling through its phases.
+// Headline lines are staggered like a magazine cover and slide up in turn.
+// The hero fills the first screen (see .lunar-hero in home.css).
 const tileColors = ['tile--powder', 'tile--chartreuse', 'tile--crimson', 'tile--bordeaux']
 
-const headline = [
-  { text: 'Equity-centered advocacy strategy for ' },
-  { text: 'audacious', em: true },
-  { text: ' change.' },
-]
-
 export default function HomeBold() {
-  const [micsReady, setMicsReady] = useState(false)
-  const [done, setDone] = useState(false)
-
-  // Don't wait forever on a slow image: start anyway after 2.5s
-  useEffect(() => {
-    const t = window.setTimeout(() => setMicsReady(true), 2500)
-    return () => window.clearTimeout(t)
-  }, [])
-
   return (
     <>
-      <section className="section--crimson bold-hero">
-        <div className="container bold-hero__stage">
-          <TypedHeadline
-            className="bold-hero__title"
-            segments={headline}
-            active={micsReady}
-            startDelay={700}
-            onDone={() => setDone(true)}
-          />
-          <div className={`bold-hero__mics${micsReady ? ' is-in' : ''}`}>
-            <img
-              src="/press-mics-960.webp"
-              srcSet="/press-mics-960.webp 960w, /press-mics-1884.webp 1884w"
-              sizes="(max-width: 1200px) 100vw, 1200px"
-              width="1884"
-              height="835"
-              alt=""
-              fetchPriority="high"
-              ref={(img) => {
-                if (img?.complete) setMicsReady(true)
-              }}
-              onLoad={() => setMicsReady(true)}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="section--crimson bold-intro">
-        <div className="container">
-          <div className={`bold-hero__foot${done ? ' is-in' : ''}`}>
-            <p className="lede">
+      <section className="lunar-hero">
+        <MoonPhases className="lunar-hero__moon" />
+        <div className="container lunar-hero__stage">
+          <h1 className="lunar-hero__title">
+            <span className="lunar-line lunar-line--1">Equity-centered</span>{' '}
+            <span className="lunar-line lunar-line--2">advocacy strategy</span>{' '}
+            <span className="lunar-line lunar-line--3">
+              for <em>audacious</em>
+            </span>{' '}
+            <span className="lunar-line lunar-line--4">change.</span>
+          </h1>
+          <div className="lunar-hero__foot">
+            <Link to="/contact" className="button button--cream">
+              Let's Work Together
+            </Link>
+            <p>
               Working alongside nonprofits and coalitions ready to move from mission to movement:
               building advocacy programs that are strategic, values-driven, and built for the
               current political reality.
             </p>
-            <Link to="/contact" className="button button--cream">
-              Let's Work Together
-            </Link>
           </div>
         </div>
       </section>
