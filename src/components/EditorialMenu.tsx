@@ -8,7 +8,7 @@ import { navLinks } from '../content'
 // panel shows four oversized numbered rows. Rendered into <body> so it sits
 // above every page element, including the design options panel.
 
-const CLOSE_MS = 320
+const CLOSE_MS = 300 // matches the closing animation (content 180ms, panel 60 + 240ms)
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 

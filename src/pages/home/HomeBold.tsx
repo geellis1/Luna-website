@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import CtaBand from '../../components/CtaBand'
+import Capsules from '../../components/Capsules'
 import { moons } from '../../components/moons'
 import { pillars, tiers } from '../../content'
 import { useOptions } from '../../options'
@@ -56,14 +57,16 @@ function Headline() {
   )
 }
 
-export default function HomeBold() {
+// Also renders home option D (Capsules), which shares this page with the
+// capsules beside the headline in place of a moon.
+export default function HomeBold({ capsules = false }: { capsules?: boolean }) {
   const { moon } = useOptions()
-  const Moon = moons[moon]
+  const Moon = capsules ? Capsules : moons[moon]
   // The collage moons run in a row under a big centered headline; the
   // capsules sit beside the headline, above the bottom row; the halo floats
   // behind on the right
-  const row = moon.startsWith('collage')
-  const beside = moon === 'capsules'
+  const row = !capsules && moon.startsWith('collage')
+  const beside = capsules
   const title = <Headline />
 
   return (

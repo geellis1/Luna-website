@@ -35,6 +35,113 @@
   }
 }
 
+/* ---------- Option A: Editorial (text only) ----------
+   One huge bold headline across the full width. The size follows the
+   container: the longest line ("advocacy strategy") is ~8.4em, so 11.6cqi
+   fills nearly the whole width without overflowing. */
+.ed-hero__title-wrap {
+  container-type: inline-size;
+}
+.hero .ed-hero__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 11.6cqi, 12rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.ed-hero__line {
+  display: block;
+  white-space: nowrap;
+  animation: ed-line-in 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.ed-hero__line:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.ed-hero__line:nth-child(3) {
+  animation-delay: 0.24s;
+}
+.ed-hero__line:nth-child(4) {
+  animation-delay: 0.36s;
+}
+.ed-hero__accent {
+  color: var(--chartreuse);
+}
+.ed-hero__powder {
+  color: var(--powder);
+}
+@keyframes ed-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hand-drawn marks: an SVG stretched over the word, drawn on after load */
+.ed-mark {
+  position: relative;
+  display: inline-block;
+}
+.ed-mark svg {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+}
+.ed-mark path {
+  /* Stroke width stays even however the SVG is stretched; the dash is longer
+     than any mark, so offsetting it hides the line until it draws on */
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  animation: ed-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.ed-mark--underline svg {
+  left: -1%;
+  right: -1%;
+  bottom: -0.1em;
+  width: 102%;
+  height: 0.16em;
+  stroke: var(--chartreuse);
+  stroke-width: clamp(4px, 0.6cqi, 9px);
+}
+.ed-mark--underline path {
+  animation-delay: 1.2s;
+}
+.ed-mark--circle svg {
+  left: -9%;
+  top: -14%;
+  width: 118%;
+  height: 128%;
+  stroke: var(--cream);
+  stroke-width: clamp(2.5px, 0.35cqi, 5px);
+}
+.ed-mark--circle path {
+  animation-delay: 1.7s;
+}
+@keyframes ed-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (max-width: 760px) {
+  .hero .ed-hero__title {
+    font-size: clamp(2.4rem, 11cqi, 4rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-hero__line,
+  .ed-mark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 /* ---------- Option B: Moon phases ---------- */
 .lunar-hero {
   position: relative;

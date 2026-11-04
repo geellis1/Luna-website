@@ -17,6 +17,7 @@ export const optionGroups = {
       { id: 'editorial', label: 'A · Editorial', note: 'Split hero, color-blocked sections' },
       { id: 'bold', label: 'B · Moon phases', note: 'Editorial type, animated moon phases' },
       { id: 'scrapbook', label: 'C · Scrapbook', note: 'Huge serif headline with photo cut-outs and a handwritten note' },
+      { id: 'capsules', label: 'D · Capsules', note: 'Bold headline beside six capsules of photos and brand colors' },
     ],
   },
   // Moon styles for option B (components in src/components/moons/)
@@ -24,14 +25,13 @@ export const optionGroups = {
     title: 'Moon',
     param: 'moon',
     choices: [
-      { id: 'capsules', label: '1 · Capsules', note: 'Six tall capsules of photos and brand colors' },
-      { id: 'halo', label: '2 · Halo', note: 'Soft layered light, cool shadow side' },
-      { id: 'collage', label: '3 · Collage cream', note: 'Cut-out moons in warm ivory' },
-      { id: 'collage-powder', label: '4 · Collage powder', note: 'Cut-out moons in powder blue' },
-      { id: 'collage-rose', label: '5 · Collage rose', note: 'Cut-out moons in rose' },
+      { id: 'halo', label: '1 · Halo', note: 'Soft layered light, cool shadow side' },
+      { id: 'collage', label: '2 · Collage cream', note: 'Cut-out moons in warm ivory' },
+      { id: 'collage-powder', label: '3 · Collage powder', note: 'Cut-out moons in powder blue' },
+      { id: 'collage-rose', label: '4 · Collage rose', note: 'Cut-out moons in rose' },
     ],
   },
-  // Big hero headline color on home options B and C (html[data-headline])
+  // Big hero headline color on home options B, C and D (html[data-headline])
   headline: {
     title: 'Headline',
     param: 'headline',
@@ -106,7 +106,7 @@ export function relevant(key: OptionKey, o: Options, onHome: boolean) {
     case 'moon':
       return onHome && o.home === 'bold'
     case 'headline':
-      return onHome && (o.home === 'bold' || o.home === 'scrapbook')
+      return onHome && (o.home === 'bold' || o.home === 'scrapbook' || o.home === 'capsules')
     case 'pill':
       return o.nav === 'pill'
     default:
