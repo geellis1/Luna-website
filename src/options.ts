@@ -50,6 +50,7 @@ export const optionGroups = {
       { id: 'classic', label: 'A · Classic', note: 'Full-width dark bar' },
       { id: 'pill', label: 'B · Floating pill', note: 'Rounded bar floating over the page' },
       { id: 'circled', label: 'C · Circled hover', note: 'No bar; hovered links turn italic serif inside a drawn circle' },
+      { id: 'menu', label: 'D · Editorial menu', note: 'MENU button opens a near-fullscreen editorial panel' },
     ],
   },
   // Floating pill only (html[data-pill])

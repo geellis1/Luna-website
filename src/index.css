@@ -349,15 +349,18 @@ svg {
    a wider content area so the logo sits further left and links further right.
    --nav-h grows by the same 20px so full-screen heroes still fit. */
 :root[data-nav='classic'],
-:root[data-nav='circled'] {
+:root[data-nav='circled'],
+:root[data-nav='menu'] {
   --nav-h: 104px;
 }
 .nav--classic,
-.nav--circled {
+.nav--circled,
+.nav--menu {
   padding-top: 20px;
 }
 .nav--classic .nav__inner,
-.nav--circled .nav__inner {
+.nav--circled .nav__inner,
+.nav--menu .nav__inner {
   max-width: 1600px;
   height: calc(var(--nav-h) - 20px);
 }
@@ -470,7 +473,8 @@ main > section:first-child {
   border-top: var(--below-nav) solid transparent;
 }
 :root[data-nav='pill'] main > section:first-child,
-:root[data-nav='circled'] main > section:first-child {
+:root[data-nav='circled'] main > section:first-child,
+:root[data-nav='menu'] main > section:first-child {
   border-top-width: calc(var(--nav-h) + var(--below-nav));
 }
 
@@ -478,17 +482,20 @@ main > section:first-child {
    first section (pulled up over it like the pill) and scroll away with the
    page. A hovered or focused link switches to italic serif inside a drawn
    oval; the current page is italic without the oval. */
-.nav--circled {
+.nav--circled,
+.nav--menu {
   position: relative;
   background: transparent;
   color: var(--cream);
   height: var(--nav-h);
   margin-bottom: calc(-1 * var(--nav-h));
 }
-.nav--circled.nav--on-light {
+.nav--circled.nav--on-light,
+.nav--menu.nav--on-light {
   color: var(--bordeaux);
 }
-.nav--circled .logo__mark {
+.nav--circled .logo__mark,
+.nav--menu .logo__mark {
   height: 56px;
 }
 .nav--circled .nav__links {
@@ -550,6 +557,256 @@ main > section:first-child {
     border: 1px solid var(--pill-border);
     border-radius: min(var(--pill-radius), 24px);
     padding: 8px 24px 16px;
+  }
+}
+
+/* Nav option D: Editorial menu. Closed: logo + MENU button (header styles
+   shared with the circled nav above). Open: a near-fullscreen cream panel with
+   oversized numbered rows, rendered into <body> above everything. */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.menu-toggle__icon {
+  display: grid;
+  gap: 6px;
+  width: 26px;
+}
+.menu-toggle__icon span {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s;
+}
+.menu-toggle:hover .menu-toggle__icon span:last-child {
+  transform: translateX(-6px);
+}
+
+.ed-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.ed-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(62, 25, 33, 0.6);
+  animation: ed-fade 0.4s ease both;
+}
+.ed-menu__panel {
+  position: absolute;
+  inset: clamp(8px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 64px) clamp(20px, 3vw, 36px);
+  overflow-y: auto;
+  background: var(--cream);
+  color: var(--bordeaux);
+  animation: ed-reveal 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.ed-menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ed-menu__top .logo__mark {
+  height: 48px;
+}
+.ed-menu__close {
+  padding: 8px 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.ed-menu__close:hover {
+  color: var(--red);
+}
+
+/* The rows sit centered between the top bar and the tagline */
+.ed-menu__panel > nav {
+  margin: auto 0;
+}
+.ed-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: clamp(16px, 4vh, 48px) 0;
+}
+.ed-menu__list li {
+  border-bottom: 1px solid var(--bordeaux);
+  animation: ed-row 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.18s + var(--i) * 0.07s);
+}
+/* The whole row is the link */
+.ed-menu__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(36px, 5vw, 72px) 1fr auto;
+  align-items: center;
+  padding: clamp(4px, 1.2vh, 14px) 0;
+  text-decoration: none;
+}
+.ed-menu__num {
+  align-self: start;
+  padding-top: 0.9em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.ed-menu__label {
+  position: relative;
+  justify-self: start;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, min(13vh, 10vw), 9.5rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.ed-menu__arrow {
+  width: clamp(52px, 7vw, 110px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+/* Hover/focus: label turns Bold Red, arrow slides right, a thin red line
+   draws across the row */
+.ed-menu__row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.ed-menu__row:hover .ed-menu__label,
+.ed-menu__row:focus-visible .ed-menu__label,
+.ed-menu__row:hover .ed-menu__arrow,
+.ed-menu__row:focus-visible .ed-menu__arrow {
+  color: var(--red);
+}
+.ed-menu__row:hover .ed-menu__arrow,
+.ed-menu__row:focus-visible .ed-menu__arrow {
+  transform: translateX(10px);
+}
+.ed-menu__row:hover::after,
+.ed-menu__row:focus-visible::after {
+  transform: scaleX(1);
+}
+.ed-menu__row:focus-visible {
+  outline: none;
+}
+/* Current page: a thin line struck through the label */
+.ed-menu__row.active .ed-menu__label::after {
+  content: '';
+  position: absolute;
+  left: -0.12em;
+  right: -0.12em;
+  top: 52%;
+  height: 2px;
+  background: currentColor;
+}
+
+.ed-menu__tagline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  text-align: right;
+}
+
+/* Closing plays the reveal in reverse */
+.ed-menu.is-closing .ed-menu__panel {
+  animation: ed-conceal 0.32s cubic-bezier(0.55, 0, 0.75, 0.4) both;
+}
+.ed-menu.is-closing .ed-menu__backdrop {
+  animation: ed-fade 0.32s ease reverse both;
+}
+@keyframes ed-reveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes ed-conceal {
+  from {
+    clip-path: inset(0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@keyframes ed-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ed-row {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .ed-menu__row {
+    grid-template-columns: 32px 1fr auto;
+    padding: clamp(8px, 2.4vh, 22px) 0;
+  }
+  .ed-menu__label {
+    font-size: clamp(2.4rem, min(11vh, 15vw), 5rem);
+  }
+  .ed-menu__top .logo__mark {
+    height: 38px;
+  }
+  .ed-menu__tagline {
+    text-align: left;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-menu__backdrop,
+  .ed-menu__panel,
+  .ed-menu__list li,
+  .ed-menu.is-closing .ed-menu__panel,
+  .ed-menu.is-closing .ed-menu__backdrop {
+    animation: none;
+  }
+  .ed-menu__label,
+  .ed-menu__arrow,
+  .ed-menu__row::after {
+    transition: none;
   }
 }
 

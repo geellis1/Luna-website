@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { navLinks } from '../content'
 import { useOptions } from '../options'
+import EditorialMenu from './EditorialMenu'
 
 // Pages whose first section is light, so a see-through nav needs dark text
 const lightTopPages = ['/contact']
@@ -12,6 +13,7 @@ const lightTopPages = ['/contact']
 //   links centered, outlined CTA on the right
 // circled: no bar, just logo and links on the page; a hovered link turns
 //   italic serif inside a drawn circle
+// menu: logo + MENU button; opens a near-fullscreen editorial panel
 export default function Nav() {
   const { nav } = useOptions()
   const { pathname } = useLocation()
@@ -19,7 +21,9 @@ export default function Nav() {
   const close = () => setOpen(false)
   const pill = nav === 'pill'
   const masked = pill || nav === 'circled'
-  const light = nav === 'circled' && lightTopPages.includes(pathname)
+  const light = (nav === 'circled' || nav === 'menu') && lightTopPages.includes(pathname)
+
+  if (nav === 'menu') return <EditorialMenu light={light} />
 
   return (
     <header className={`nav nav--${nav}${light ? ' nav--on-light' : ''}`}>
