@@ -27,27 +27,43 @@ export const tiers = [
     label: 'Begin',
     kind: 'Training',
     summary: 'Trainings built on a foundation of experience, evidence, and equity.',
-    description: '[Full BEGIN description from existing site]',
+    description:
+      'For organizations ready to learn how this works, your team gets the foundational knowledge and practical skills to engage in policy advocacy with confidence. Understanding the legislative process, knowing what your organization can and can’t do, developing organizational positions, crafting testimony, and building the relationships that actually matter.',
     listHeading: 'Signature offerings',
-    items: ['[Signature offering]', '[Signature offering]', '[Signature offering]'],
+    items: ['Mission to Movement', 'Inside the Capitol', 'Custom trainings available upon request'],
   },
   {
     id: 'build',
     label: 'Build',
     kind: 'Project-based',
     summary: 'Project-based engagements to design or bolster your advocacy.',
-    description: '[Full BUILD description from existing site]',
-    listHeading: 'Engagements include',
-    items: ['[Engagement]', '[Engagement]', '[Engagement]', '[Engagement]'],
+    description:
+      'For organizations ready to go deeper, we work alongside you to build or sharpen your advocacy strategy. We start with your specific context: your issue, your relationships, your political environment, and your capacity. Then we build something that fits.',
+    listHeading: 'This might look like',
+    items: [
+      'Advocacy program design from the ground up',
+      'Bill risk/reward analysis and campaign strategy',
+      'Power mapping and legislator landscape analysis',
+      'Coalition structure, facilitation, and shared agenda-setting',
+      'Constituent base activation',
+      'Data-to-action translation',
+    ],
   },
   {
     id: 'sustain',
     label: 'Sustain',
     kind: 'Retainer',
     summary: 'Retainer-based engagements for consistent thought partnership.',
-    description: '[Full SUSTAIN description from existing site]',
-    listHeading: 'Retainers include',
-    items: ['[Retainer offering]', '[Retainer offering]', '[Retainer offering]'],
+    description:
+      'For organizations that need a seasoned partner in their corner, not just at the start, but all the way through. You get consistent access, real-time guidance, and a strategist who knows your work well enough to move with you when things shift.',
+    listHeading: 'What’s included',
+    items: [
+      'Regular strategy sessions tailored to your priorities',
+      'Access to Luna Civic Strategies legislative intelligence tools',
+      'Strategic guidance and issue monitoring during active legislative periods',
+      'Committee analysis and lawmaker landscape briefings',
+      'Coaching and preparation for testimony, meetings, and public engagement',
+    ],
   },
 ]
 

@@ -458,3 +458,19 @@
     transition-delay: 0s !important;
   }
 }
+
+/* B with the full copy: on wider screens each chapter's name starts at the
+   top and stays in view (sticky) while its longer details scroll past */
+@media (min-width: 861px) {
+  .svc-block__head,
+  .svc-block--flip .svc-block__head {
+    position: sticky;
+    top: clamp(96px, 9vw, 132px);
+    align-self: start;
+    justify-content: flex-start;
+  }
+  .svc-block__body,
+  .svc-block--flip .svc-block__body {
+    align-self: start;
+  }
+}
