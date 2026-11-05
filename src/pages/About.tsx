@@ -1,6 +1,5 @@
 import MoonCollage from '../components/moons/MoonCollage'
 import Pillars from '../components/Pillars'
-import { useSectionDesign } from '../sectionDesigns'
 import CtaSection from './home/CtaSection'
 import KelliBio from './KelliBio'
 
@@ -8,7 +7,6 @@ import KelliBio from './KelliBio'
 // the left, intro on the right) in cream on Night Bordeaux, with a row of
 // collage moons beneath it (styles: "About header" in index.css)
 export default function About() {
-  const [cardsIn] = useSectionDesign('cardsIn')
   return (
     <>
       <section className="section section--bordeaux about-head">
@@ -27,8 +25,7 @@ export default function About() {
             <MoonCollage className="about-head__collage" />
           </div>
           <div className="about-head__pillars">
-            {/* Keyed so switching entrances plays the new one */}
-            <Pillars key={cardsIn} entrance={cardsIn} />
+            <Pillars />
           </div>
         </div>
       </section>

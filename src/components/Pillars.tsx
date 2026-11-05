@@ -4,14 +4,13 @@ import './pillars.css'
 
 // The four "Why Luna" pillars as color boxes (Powder Blue, Chartreuse, Deep
 // Crimson, cream) with soft corners and space between them. On first view
-// they build in left to right: each box wipes up into place, then its
-// number and title rise in. Each box is a card that turns over on click (or
+// they come in left to right: each card fades in while growing very
+// slightly, then its number and title rise in. Each box is a card that turns over on click (or
 // Enter / Space) to show its description; a turning-arrow mark in the corner
 // says so, and hovering tips the card slightly. Styles: pillars.css.
 const isPlaceholder = (text: string) => /^\[.*\]$/.test(text.trim())
 
-// `entrance`: how they come in (Round 2: Why Luna Cards · Entrance)
-export default function Pillars({ entrance = 'a' }: { entrance?: string }) {
+export default function Pillars() {
   const ref = useRef<HTMLDivElement>(null)
   const [shown, setShown] = useState(false)
   const [flipped, setFlipped] = useState<number[]>([])
@@ -35,7 +34,7 @@ export default function Pillars({ entrance = 'a' }: { entrance?: string }) {
   const toggle = (i: number) => setFlipped((f) => (f.includes(i) ? f.filter((n) => n !== i) : [...f, i]))
 
   return (
-    <div ref={ref} id="why-luna-cards" className={`pillar-boxes pillar-boxes--${entrance}${shown ? ' is-in' : ''}`}>
+    <div ref={ref} id="why-luna-cards" className={`pillar-boxes${shown ? ' is-in' : ''}`}>
       {pillars.map((p, i) => {
         const open = flipped.includes(i)
         return (

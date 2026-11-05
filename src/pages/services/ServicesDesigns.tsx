@@ -76,6 +76,28 @@ function Arrow(): ReactNode {
 // big name, its category and a +; open, it grows to show the details in two
 // columns. All closed at first (unless a link points to one); one open at a
 // time; clicking the open one closes it.
+// Phones: opening a band scrolls to its top, just under the sticky nav. The
+// band that was open closes at the same time, so if it sits above this one,
+// the target is where this band will be once that one has folded away.
+function settleAtTop(band: HTMLElement | null, wasOpen: string) {
+  if (!band || !window.matchMedia('(max-width: 760px)').matches) return
+  const navH = 80 // the sticky nav's height once the page has scrolled
+  let top = band.getBoundingClientRect().top + window.scrollY
+  const prev = wasOpen ? document.getElementById(wasOpen) : null
+  if (prev && prev.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING) {
+    top -= prev.querySelector('.svc-band__panel')?.getBoundingClientRect().height ?? 0
+  }
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const behavior = smooth ? 'smooth' : 'auto'
+  window.scrollTo({ top: top - navH, behavior })
+  // Once the bands have finished folding and growing, nudge the last few
+  // pixels (the closing band's name also shrinks)
+  window.setTimeout(() => {
+    const off = band.getBoundingClientRect().top - navH
+    if (Math.abs(off) > 2) window.scrollBy({ top: off, behavior })
+  }, 650)
+}
+
 export function ServicesAccordion() {
   const { hash } = useLocation()
   const fromHash = services.find((s) => `#${s.id}` === hash)?.id
@@ -103,7 +125,10 @@ export function ServicesAccordion() {
                   className="svc-band__toggle"
                   aria-expanded={isOpen}
                   aria-controls={`svc-${s.id}`}
-                  onClick={() => setChoice({ hash, id: isOpen ? '' : s.id })}
+                  onClick={(e) => {
+                    if (!isOpen) settleAtTop(e.currentTarget.closest('section'), open)
+                    setChoice({ hash, id: isOpen ? '' : s.id })
+                  }}
                 >
                   <span className="svc-band__num">{s.num}</span>
                   <span className="svc-band__name">{s.label}</span>

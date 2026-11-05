@@ -20,56 +20,17 @@
   border: 0;
   cursor: pointer;
   perspective: 1400px;
-  /* Build in: each box wipes up into place, one after another */
-  clip-path: inset(100% 0 0 0 round 20px);
-  translate: 0 24px;
-  transition:
-    clip-path 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
-    translate 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s);
-}
-.pillar-boxes.is-in .pillar-box {
-  /* Room around the card for its hover tilt */
-  clip-path: inset(-24px round 20px);
-  translate: none;
-}
-/* Other entrances (Round 2 options). Each keeps the room for the hover tilt
-   and starts from its own pose; the same stagger as the wipe. */
-.pillar-boxes--b .pillar-box,
-.pillar-boxes--c .pillar-box,
-.pillar-boxes--d .pillar-box {
-  clip-path: inset(-24px round 20px);
-  translate: none;
+  /* Come in: each card fades in while growing very slightly, one after
+     another */
   opacity: 0;
+  scale: 0.92;
   transition:
     opacity 0.7s ease calc(0.15s + var(--i) * 0.14s),
-    translate 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
-    rotate 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
-    scale 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
-    transform 1.1s var(--ease-out) calc(0.15s + var(--i) * 0.14s);
-}
-/* B — Deal In: up from below with a slight tilt */
-.pillar-boxes--b .pillar-box {
-  translate: 0 70px;
-  rotate: -6deg;
-}
-/* C — Soft Fade: grows very slightly as it fades in */
-.pillar-boxes--c .pillar-box {
-  scale: 0.92;
-}
-/* D — Turn In: swings in on its left edge */
-.pillar-boxes--d {
-  perspective: 1600px;
-}
-.pillar-boxes--d .pillar-box {
-  transform: rotateY(-70deg);
-  transform-origin: left center;
+    scale 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s);
 }
 .pillar-boxes.is-in .pillar-box {
   opacity: 1;
-  translate: none;
-  rotate: none;
   scale: none;
-  transform: none;
 }
 .pillar-box:focus-visible {
   outline: none;
