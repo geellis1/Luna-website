@@ -23,7 +23,7 @@
   padding-block: clamp(72px, 7vw, 104px);
 }
 .hww {
-  --cap-h: clamp(470px, 35.5vw, 570px);
+  --cap-h: clamp(400px, 30vw, 485px);
 }
 .hww__layout {
   display: grid;
@@ -66,7 +66,7 @@
   display: flex;
   gap: 16px;
   /* About 15% wider than two slim arches and one wide one would be */
-  width: min(100%, calc(1.15 * (2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h)) + 32px));
+  width: min(100%, calc(1.15 * (2 * clamp(120px, 10vw, 170px) + 1.08 * clamp(470px, 35.5vw, 570px)) + 32px));
   height: var(--cap-h);
 }
 .caps__item {
@@ -74,7 +74,7 @@
   min-width: 0;
   display: flex;
   align-items: flex-end;
-  padding: 0 clamp(20px, 1.8vw, 30px) clamp(28px, 2.4vw, 36px);
+  padding: 0 clamp(20px, 1.8vw, 30px) clamp(40px, 3.4vw, 54px);
   color: var(--on);
   background: var(--tone);
   border-radius: 999px 999px 18px 18px;
@@ -104,7 +104,7 @@
 /* Narrower screens: the intro block above, arches full width */
 @media (max-width: 1180px) {
   .hww {
-    --cap-h: clamp(420px, 50vw, 500px);
+    --cap-h: clamp(360px, 42vw, 430px);
   }
   .hww__layout {
     grid-template-columns: 1fr;
@@ -131,7 +131,7 @@
   }
   .caps__item {
     flex: none;
-    padding: 96px 28px 30px;
+    padding: 96px 28px 40px;
     border-radius: 50% 50% 18px 18px / 96px 96px 18px 18px;
   }
 }

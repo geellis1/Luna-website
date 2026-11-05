@@ -6,7 +6,7 @@ import './pillars.css'
 // Crimson, cream) with soft corners and space between them. On first view
 // they build in left to right: each box wipes up into place, then its
 // number and title rise in. Each box is a card that turns over on click (or
-// Enter / Space) to show its description; a small "Flip" mark in the corner
+// Enter / Space) to show its description; a turning-arrow mark in the corner
 // says so, and hovering tips the card slightly. Styles: pillars.css.
 const isPlaceholder = (text: string) => /^\[.*\]$/.test(text.trim())
 
@@ -52,7 +52,7 @@ export default function Pillars() {
                 <span className="pillar-box__text">
                   <span className="pillar-box__title">{p.title}</span>
                 </span>
-                <Hint label="Flip" />
+                <Hint />
               </span>
               <span className="pillar-box__face pillar-box__face--back" aria-hidden={!open}>
                 <span className="pillar-box__num">0{i + 1}</span>
@@ -71,10 +71,10 @@ export default function Pillars() {
   )
 }
 
-// A small label with a turning arrow, in the card's bottom-right corner
-function Hint({ label }: { label: string }) {
+// A turning arrow (with an optional label) in the card's bottom-right corner
+function Hint({ label }: { label?: string }) {
   return (
-    <span className="pillar-box__hint">
+    <span className="pillar-box__hint" aria-hidden={!label || undefined}>
       {label}
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4" />
