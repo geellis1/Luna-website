@@ -20,8 +20,8 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// The note sits just past the end of "change.", level with that line but
-// never higher than the bottom of the photo above it. Measured from the
+// The note sits just past the end of "change.", tucked under the photo above
+// it (never much higher than that line). Measured from the
 // headline itself, since the lines wrap differently at each window size.
 function useNotePlacement() {
   const board = useRef<HTMLDivElement>(null)
@@ -38,7 +38,9 @@ function useNotePlacement() {
       const text = document.createRange()
       text.selectNodeContents(words)
       const end = text.getBoundingClientRect().right - box.left
-      const top = Math.max(line.getBoundingClientRect().top - box.top, photo.offsetTop + photo.offsetHeight + 12)
+      // Tucked just under the photo, but no higher than a little above the line
+      const lineBox = line.getBoundingClientRect()
+      const top = Math.max(photo.offsetTop + photo.offsetHeight + 10, lineBox.top - box.top - lineBox.height * 0.4)
       el.style.setProperty('--note-x', `${Math.round(end)}px`)
       el.style.setProperty('--note-y', `${Math.round(top)}px`)
     }

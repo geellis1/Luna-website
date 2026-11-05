@@ -198,12 +198,12 @@
   position: absolute;
   z-index: 3;
   /* Just past the end of "change." (placed by HomeScrapbook) */
-  left: calc(var(--note-x, 75%) + 0.6em);
+  left: calc(var(--note-x, 75%) + 1em);
   top: var(--note-y, 82%);
   width: max-content;
   margin: 0;
   font-family: var(--font-hand);
-  font-size: clamp(1.15rem, 2vw, 1.9rem);
+  font-size: clamp(1.3rem, 2.3vw, 2.15rem);
   line-height: 1.15;
   color: var(--p-text);
   text-align: left;
