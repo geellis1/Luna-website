@@ -20,8 +20,8 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// The note sits just past the end of "change.", tucked under the photo above
-// it (never much higher than that line). Measured from the
+// The note sits just past the end of "change.", below the photo above it and
+// clear of the other lines. Measured from the
 // headline itself, since the lines wrap differently at each window size.
 function useNotePlacement() {
   const board = useRef<HTMLDivElement>(null)
@@ -38,11 +38,17 @@ function useNotePlacement() {
       const text = document.createRange()
       text.selectNodeContents(words)
       const end = text.getBoundingClientRect().right - box.left
-      // Tucked just under the photo, but no higher than a little above the line
+      // Under the photo and a third of the way down the line, so neither it
+      // nor its tilted right end touches the line above
       const lineBox = line.getBoundingClientRect()
-      const top = Math.max(photo.offsetTop + photo.offsetHeight + 10, lineBox.top - box.top - lineBox.height * 0.4)
+      const top = Math.max(photo.offsetTop + photo.offsetHeight + 12, lineBox.top - box.top + lineBox.height * 0.33)
       el.style.setProperty('--note-x', `${Math.round(end)}px`)
       el.style.setProperty('--note-y', `${Math.round(top)}px`)
+      // How far the note hangs below the headline, so the row beneath can
+      // leave room for it
+      const note = el.querySelector<HTMLElement>('.scrap-hero__note')
+      const hang = note ? note.getBoundingClientRect().bottom - el.getBoundingClientRect().bottom : 0
+      el.parentElement?.style.setProperty('--note-hang', `${Math.max(0, Math.round(hang))}px`)
     }
     place()
     document.fonts.ready.then(place)

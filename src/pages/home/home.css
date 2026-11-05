@@ -203,7 +203,7 @@
   width: max-content;
   margin: 0;
   font-family: var(--font-hand);
-  font-size: clamp(1.3rem, 2.3vw, 2.15rem);
+  font-size: clamp(1.45rem, 2.6vw, 2.45rem);
   line-height: 1.15;
   color: var(--p-text);
   text-align: left;
@@ -238,7 +238,7 @@
 /* Bottom row (shared .hero-foot styles) */
 .scrap-hero__foot {
   /* Clears the handwritten note, which hangs below the headline */
-  margin-top: clamp(64px, 9vh, 104px);
+  margin-top: max(clamp(64px, 9vh, 104px), var(--note-hang, 0px) + 28px);
   animation: scrap-fade 1.4s ease 3s both;
 }
 
