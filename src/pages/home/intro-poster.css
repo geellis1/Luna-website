@@ -28,7 +28,7 @@
   --sheet: var(--chartreuse);
 }
 .section.poster {
-  padding-block: clamp(48px, 5vw, 80px);
+  padding-block: clamp(16px, 2vw, 32px) clamp(48px, 5vw, 80px);
 }
 /* Room for the green sheet, which hangs below the poster */
 @media (min-width: 761px) {
@@ -99,7 +99,7 @@
   container-type: inline-size;
   top: 0;
   left: 63%;
-  width: 31%;
+  width: 33%;
   height: 62%;
   /* (cqi here is the stage's; the headline's cqi is the panel's) */
   padding: 2.6cqi 2.4cqi 0;
@@ -111,7 +111,7 @@
   font-family: var(--font-sans);
   font-weight: 500;
   /* Sized so SOMETHING fits on one line */
-  font-size: 16.5cqi;
+  font-size: 19.5cqi;
   line-height: 0.92;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -123,15 +123,15 @@
 /* The paragraph on a chartreuse sheet, over the poster's bottom edge */
 .poster__sheet {
   top: 75%;
-  left: 27%;
-  width: 34%;
+  left: 19%;
+  width: 42%;
   padding: 1.8cqi 2.2cqi 2cqi;
   color: var(--bordeaux);
   background: var(--sheet);
   rotate: -2.5deg;
 }
 .poster__sheet p {
-  font-size: max(15px, 1.5cqi);
+  font-size: 17px;
   line-height: 1.5;
 }
 
