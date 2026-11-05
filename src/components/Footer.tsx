@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { navLinks, tiers } from '../content'
+import { navLinks } from '../content'
 import { moonOn } from './moons/tonight'
 import { litPath } from './moons/phase'
 import './footer.css'
 
-// Site footer: Night Bordeaux with tonight's moon phase, the page and service
-// links, a closing line and the small print. On the home page a
+// Site footer: Night Bordeaux with tonight's moon phase on the left, the page
+// links and a Start a Conversation button on the right, then the small print. On the home page a
 // cream band leads into it: "Every engagement begins with a conversation."
 // (its two key words in Powder Blue) with a Powder Blue circular Let's Chat
 // button. Builds in once when it scrolls into view.
 // Styles: footer.css.
 
 const year = new Date().getFullYear()
-const services = tiers.map((t, i) => ({ ...t, num: `0${i + 1}` }))
 
 export default function Footer() {
   const { pathname } = useLocation()
@@ -51,32 +50,18 @@ export default function Footer() {
               {moon.name}
             </figcaption>
           </figure>
-          <div className="ft__cols">
-            <Column title="Pages">
+          <nav className="ft__nav" aria-label="Footer">
+            <ul className="ft__links">
               {navLinks.map((l) => (
                 <li key={l.to}>
                   <Link to={l.to}>{l.label}</Link>
                 </li>
               ))}
-            </Column>
-            <Column title="Services">
-              {services.map((s) => (
-                <li key={s.id}>
-                  <Link to={`/services#${s.id}`}>
-                    <span className="ft__num">{s.num}</span> {s.label}
-                  </Link>
-                </li>
-              ))}
-            </Column>
-            <Column title="Work with us">
-              <li className="ft__note">Every engagement begins with a conversation.</li>
-              <li>
-                <Link to="/contact" className="ft__cta">
-                  Start a conversation <Arrow />
-                </Link>
-              </li>
-            </Column>
-          </div>
+            </ul>
+            <Link to="/contact" className="ft__cta">
+              Start a Conversation <Arrow />
+            </Link>
+          </nav>
         </div>
         <div className="ft__wrap">
           <div className="ft__legal">
@@ -85,15 +70,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
-}
-
-function Column({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="ft__col">
-      <p className="ft__col-title">{title}</p>
-      <ul className="ft__list">{children}</ul>
-    </div>
   )
 }
 
