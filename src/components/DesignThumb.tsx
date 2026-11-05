@@ -18,28 +18,7 @@ const tones = [C.powder, C.chartreuse, C.crimson]
 // we work together, Option A's versions are a1 / a2.
 export default function DesignThumb({ section, id }: { section: string; id: string }) {
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'capsulesPhone') return <PhoneCapsules id={id as SectionDesign<'capsulesPhone'>} />
   return <WorkPreview id={id} />
-}
-
-// A phone screen with the three capsules stacked in each shape
-function PhoneCapsules({ id }: { id: SectionDesign<'capsulesPhone'> }) {
-  const fills = [C.powder, C.chartreuse, C.crimson]
-  const shape = (y: number) =>
-    id === 'a'
-      ? { x: 40, w: 40, d: `M40 ${y + 16}q0-12 20-12t20 12v6h-40z` }
-      : id === 'b'
-        ? { x: 46, w: 28, d: `M46 ${y + 18}a14 14 0 0 1 28 0v4h-28z` }
-        : { x: 40, w: 40, d: `M44 ${y + 4}h32a4 4 0 0 1 4 4v14h-40v-14a4 4 0 0 1 4-4z` }
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <rect x="36" y="2" width="48" height="62" rx="6" fill="none" stroke={C.bordeaux} strokeOpacity="0.3" />
-      {[0, 1, 2].map((i) => (
-        <path key={i} d={shape(2 + i * 20).d} fill={fills[i]} />
-      ))}
-    </svg>
-  )
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {

@@ -1,18 +1,16 @@
 import { Link } from 'react-router-dom'
 import { tiers } from '../../content'
-import { useSectionDesign } from '../../sectionDesigns'
 import './how-we-work.css'
 
 // Homepage "How we work together": the headline, paragraph and link on the
 // left; on the right, three arches (Begin, Build, Sustain), all open at equal
-// widths with everything showing. No motion. Styles: how-we-work.css.
+// widths with everything showing (rounded cards on phones). No motion.
+// Styles: how-we-work.css.
 
 const tones = ['powder', 'chartreuse', 'crimson'] as const
 const items = tiers.map((t, i) => ({ ...t, num: `0${i + 1}`, tone: tones[i] }))
 
 export default function HowWeWork() {
-  // Their shape on phones (Round 2: How We Work · Phone Capsules)
-  const [phone] = useSectionDesign('capsulesPhone')
   return (
     <section className="section section--cream hww" id="how-we-work">
       <div className="hww__layout">
@@ -29,7 +27,7 @@ export default function HowWeWork() {
           </Link>
         </div>
         <div className="hww__stage">
-          <div className={`caps caps--phone-${phone}`}>
+          <div className="caps">
             {items.map((item) => (
               <article key={item.id} className={`caps__item tone--${item.tone}`}>
                 <div>
