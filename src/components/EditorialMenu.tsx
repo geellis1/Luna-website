@@ -121,9 +121,6 @@ export default function EditorialMenu({ light }: { light: boolean }) {
               aria-label="Menu"
             >
               <div className="ed-menu__top">
-                <Link to="/" className="logo" onClick={close}>
-                  <span className="logo__mark" role="img" aria-label="Luna Civic Strategies" />
-                </Link>
                 <button ref={closeButton} type="button" className="ed-menu__close" onClick={close}>
                   Close
                   <MoonMark closing />
@@ -146,7 +143,7 @@ export default function EditorialMenu({ light }: { light: boolean }) {
                 </ol>
               </nav>
 
-              <p className="ed-menu__tagline">From mission to movement.</p>
+              <p className="ed-menu__tagline">From Mission to Movement</p>
             </div>
           </div>,
           document.body,

@@ -1,3 +1,10 @@
+/* The menu's tagline script */
+@font-face {
+  font-family: 'Shunsine';
+  src: url('/fonts/Shunsine.ttf') format('truetype');
+  font-display: swap;
+}
+
 /* ---------- Brand tokens ---------- */
 :root {
   --crimson: #741734;
@@ -15,6 +22,8 @@
   --font-hand: 'Nothing You Could Do', 'Bradley Hand', cursive;
   /* Home option E only: connected brush script */
   --font-brush: 'Mr Dafoe', 'Bradley Hand', cursive;
+  /* The menu's tagline */
+  --font-script: 'Shunsine', 'Bradley Hand', cursive;
 
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);
@@ -405,10 +414,7 @@ main > section:first-child {
 .ed-menu__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-.ed-menu__top .logo__mark {
-  height: 48px;
+  justify-content: flex-end;
 }
 .ed-menu__close {
   display: inline-flex;
@@ -497,9 +503,13 @@ main > section:first-child {
 
 .ed-menu__tagline {
   margin: 0;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  font-family: var(--font-script);
+  font-weight: 400;
+  /* One line across the drawer (it may wrap, balanced, on phones) */
+  font-size: clamp(1.75rem, 6.6cqi, 3.25rem);
+  line-height: 1.1;
+  text-wrap: balance;
+  color: var(--red);
   text-align: right;
 }
 
@@ -620,12 +630,6 @@ main > section:first-child {
   }
   .ed-menu__label {
     font-size: clamp(2.4rem, min(11vh, 15vw), 5rem);
-  }
-  .ed-menu__top .logo__mark {
-    height: 38px;
-  }
-  .ed-menu__tagline {
-    text-align: left;
   }
 }
 @media (prefers-reduced-motion: reduce) {
