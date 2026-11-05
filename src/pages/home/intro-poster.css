@@ -5,7 +5,9 @@
    Brand colors only; each treatment just sets the variables below. */
 .poster {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
-  overflow: hidden;
+  /* Crop at the sides only: the tilted blue note's top corner rises a little
+     above the section and should stay whole */
+  overflow-x: clip;
   color: var(--bordeaux);
   background: var(--section-bg);
 }
