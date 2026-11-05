@@ -24,6 +24,17 @@ type Group = {
 }
 
 export const sectionDesigns = {
+  // How we work together on phones: the capsules' shape
+  capsulesPhone: {
+    title: 'How We Work · Phone Capsules',
+    param: 'caps',
+    anchor: 'how-we-work',
+    choices: [
+      { id: 'a', label: 'A — Wide Arches', note: 'Full-width capsules with a low arch (as now)' },
+      { id: 'b', label: 'B — Narrow Arches', note: 'Narrower, centered capsules with a true round top' },
+      { id: 'c', label: 'C — Rounded Squares', note: 'Full-width cards with soft corners' },
+    ],
+  },
   // The statement right under the hero ("We help you do something about it")
   intro: {
     title: 'Intro Section',

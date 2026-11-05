@@ -134,4 +134,19 @@
     padding: 96px 28px 40px;
     border-radius: 50% 50% 18px 18px / 96px 96px 18px 18px;
   }
+  /* B: narrower and centered, with a true semicircular top */
+  .caps--phone-b {
+    align-items: center;
+    gap: 16px;
+  }
+  .caps--phone-b .caps__item {
+    width: min(82%, 320px);
+    padding: 118px 26px 40px;
+    border-radius: 999px 999px 18px 18px;
+  }
+  /* C: full-width cards with soft corners */
+  .caps--phone-c .caps__item {
+    padding: 30px 28px 34px;
+    border-radius: 24px;
+  }
 }
