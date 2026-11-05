@@ -87,17 +87,7 @@ export const sectionDesigns = {
       { id: 'b', label: 'Option B — Editorial Chapters', note: 'Three magazine-spread chapters, all open, alternating' },
     ],
   },
-  // On every page
-  footer: {
-    title: 'Footer',
-    param: 'footer',
-    anchor: 'site-footer',
-    choices: [
-      { id: 'a', label: 'Option A — Editorial Colophon', note: 'Cream; the closing line set large over ruled columns' },
-      { id: 'b', label: 'Option B — Service Bands', note: 'Begin / Build / Sustain color bands over Night Bordeaux' },
-      { id: 'c', label: 'Option C — Moon Wordmark', note: 'Tonight’s moon and an oversized LUNA' },
-    ],
-  },
+
   // On every page: the typeface for body copy (headlines keep theirs)
   bodyFont: {
     title: 'Body Font',
