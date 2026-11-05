@@ -117,7 +117,7 @@ export default function MoonCollage({ className, tint = 'cream' }: { className?:
               key={i}
               className="collage-tile"
               // Moons start once the headline has settled, then follow slowly
-              style={{ '--delay': `${0.6 + i * 0.22}s`, '--float-delay': `${-i * 1.1}s` } as CSSProperties}
+              style={{ '--delay': `${0.8 + i * 0.32}s`, '--float-delay': `${-i * 1.1}s` } as CSSProperties}
             >
               {t.p !== 0 && (
                 <g clipPath={`url(#tile${uid}-${i})`}>
