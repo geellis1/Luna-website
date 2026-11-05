@@ -20,41 +20,77 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// The note sits just past the end of "change.", below the photo above it and
-// clear of the other lines. Measured from the
-// headline itself, since the lines wrap differently at each window size.
+// The note sits just past the end of "change.", below the photo above it.
+// Measured from the headline itself, since the lines wrap differently at each
+// window size: it starts level with the last line and then steps down until
+// none of its (tilted) words come within 16px of the headline's letters.
 function useNotePlacement() {
   const board = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
     const el = board.current
     if (!el) return
+    const textRects = (node: Node | null | undefined) => {
+      if (!node) return []
+      const range = document.createRange()
+      range.selectNodeContents(node)
+      return [...range.getClientRects()]
+    }
     const place = () => {
       const line = el.querySelector<HTMLElement>('h1 .scrap-line:last-child')
       const photo = el.querySelector<HTMLElement>('.scrap-card--meeting')
-      if (!line || !photo) return
+      const note = el.querySelector<HTMLElement>('.scrap-hero__note')
+      if (!line || !photo || !note) return
       const box = el.getBoundingClientRect()
-      const words = line.firstElementChild?.firstChild
-      if (!words) return
-      const text = document.createRange()
-      text.selectNodeContents(words)
-      const end = text.getBoundingClientRect().right - box.left
-      // Under the photo and a third of the way down the line, so neither it
-      // nor its tilted right end touches the line above
-      const lineBox = line.getBoundingClientRect()
-      const top = Math.max(photo.offsetTop + photo.offsetHeight + 12, lineBox.top - box.top + lineBox.height * 0.33)
-      el.style.setProperty('--note-x', `${Math.round(end)}px`)
-      el.style.setProperty('--note-y', `${Math.round(top)}px`)
+      const end = textRects(line.firstElementChild?.firstChild)[0]
+      if (!end) return
+      el.style.setProperty('--note-x', `${Math.round(end.right - box.left)}px`)
+
+      // Each headline line's letters only: the browser's text box includes the
+      // font's full ascent and descent, far above and below the capitals
+      const h1 = el.querySelector('h1')
+      if (!h1) return
+      const pen = document.createElement('canvas').getContext('2d')
+      if (!pen) return
+      const style = getComputedStyle(h1)
+      pen.font = `${style.fontSize} ${style.fontFamily}`
+      const headline = [...el.querySelectorAll('h1 .scrap-line > span')].flatMap((s) => {
+        const ink = pen.measureText((s.textContent ?? '').toUpperCase())
+        return textRects(s.firstChild).map((r) => {
+          const baseline = r.top + ink.fontBoundingBoxAscent
+          return { left: r.left, right: r.right, top: baseline - ink.actualBoundingBoxAscent, bottom: baseline + ink.actualBoundingBoxDescent }
+        })
+      })
+      const pad = 16
+      const touches = () =>
+        [...note.querySelectorAll('span')]
+          .flatMap((s) => textRects(s.firstChild))
+          .some((w) =>
+            headline.some(
+              (h) => w.left < h.right + pad && h.left < w.right + pad && w.top < h.bottom + pad && h.top < w.bottom + pad,
+            ),
+          )
+      let top = Math.max(photo.offsetTop + photo.offsetHeight + 12, end.top - box.top)
+      for (let step = 0; step < 60; step++) {
+        el.style.setProperty('--note-y', `${Math.round(top)}px`)
+        if (!touches()) break
+        top += 4
+      }
+
       // How far the note hangs below the headline, so the row beneath can
       // leave room for it
-      const note = el.querySelector<HTMLElement>('.scrap-hero__note')
-      const hang = note ? note.getBoundingClientRect().bottom - el.getBoundingClientRect().bottom : 0
+      const hang = note.getBoundingClientRect().bottom - el.getBoundingClientRect().bottom
       el.parentElement?.style.setProperty('--note-hang', `${Math.max(0, Math.round(hang))}px`)
     }
     place()
     document.fonts.ready.then(place)
+    // Again once the headline lines have risen into place
+    el.addEventListener('animationend', place)
     const ro = new ResizeObserver(place)
     ro.observe(el)
-    return () => ro.disconnect()
+    return () => {
+      ro.disconnect()
+      el.removeEventListener('animationend', place)
+    }
   }, [])
   return board
 }
