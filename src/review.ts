@@ -27,8 +27,8 @@ const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
   'closing:a': 'Option A — As Is',
-  'closing:b': 'Option B — Serif Accent',
-  'closing:c': 'Option C — Handwritten Accent',
+  'closing:b': 'Option B — Powder Blue Words',
+  'closing:c': 'Option C — Crimson Words',
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {

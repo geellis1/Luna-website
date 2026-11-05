@@ -41,8 +41,8 @@ export const sectionDesigns = {
     anchor: 'site-footer',
     choices: [
       { id: 'a', label: 'A — As Is', note: 'All one typeface and color; outlined Let’s Chat circle' },
-      { id: 'b', label: 'B — Serif Accent', note: '“conversation.” in crimson italic serif; chartreuse button' },
-      { id: 'c', label: 'C — Handwritten Accent', note: '“conversation.” handwritten in Signal Red; crimson button' },
+      { id: 'b', label: 'B — Powder Blue Words', note: '“engagement” and “conversation” in Powder Blue; chartreuse button' },
+      { id: 'c', label: 'C — Crimson Words', note: '“engagement” and “conversation” in Deep Crimson; chartreuse button' },
     ],
   },
 } as const satisfies Record<string, Group>

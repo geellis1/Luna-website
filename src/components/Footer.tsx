@@ -28,7 +28,8 @@ export default function Footer() {
         <div className={`ft-lead ft-lead--${closing}`}>
           <div className="ft__wrap ft-lead__row">
             <p className="ft-lead__line">
-              Every engagement begins with a <span className="ft-lead__accent">conversation.</span>
+              Every <span className="ft-lead__accent">engagement</span> begins with a{' '}
+              <span className="ft-lead__accent">conversation</span>.
             </p>
             <Link to="/contact" className="ft-lead__chat">
               <span className="ft-lead__chat-label">Let’s Chat</span>

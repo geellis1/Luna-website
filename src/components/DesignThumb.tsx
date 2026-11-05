@@ -22,22 +22,18 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   return <WorkPreview id={id} />
 }
 
-// The closing line as bars with its last word picked out, and the round
-// button in each version's color
+// The closing line as bars with its two key words picked out, and the round
+// button (outlined, or chartreuse)
 function ClosingPreview({ id }: { id: SectionDesign<'closing'> }) {
-  const accent = { a: C.bordeaux, b: C.crimson, c: C.red }[id]
-  const button = { a: 'none', b: C.chartreuse, c: C.crimson }[id]
+  const accent = { a: C.bordeaux, b: C.powder, c: C.crimson }[id]
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
       <rect width="120" height="64" fill={C.cream} />
-      <rect x="10" y="14" width="34" height="7" rx="1" fill={C.bordeaux} />
+      <rect x="10" y="14" width="16" height="7" rx="1" fill={C.bordeaux} />
+      <rect x="29" y="14" width="30" height="7" rx="1" fill={accent} />
       <rect x="10" y="25" width="52" height="7" rx="1" fill={C.bordeaux} />
-      {id === 'c' ? (
-        <path d="M10 42c6-4 10 3 16-1s9-3 14 0 9 1 14-2" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" />
-      ) : (
-        <rect x="10" y="36" width="46" height="7" rx={id === 'b' ? 3.5 : 1} fill={accent} />
-      )}
-      <circle cx="96" cy="32" r="13" fill={button} stroke={id === 'a' ? C.bordeaux : button} />
+      <rect x="10" y="36" width="44" height="7" rx="1" fill={accent} />
+      <circle cx="96" cy="32" r="13" fill={id === 'a' ? 'none' : C.chartreuse} stroke={id === 'a' ? C.bordeaux : C.chartreuse} />
     </svg>
   )
 }
