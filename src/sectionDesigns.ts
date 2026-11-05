@@ -39,8 +39,11 @@ export const sectionDesigns = {
 export type SectionKey = keyof typeof sectionDesigns
 export type SectionDesign<K extends SectionKey> = (typeof sectionDesigns)[K]['choices'][number]['id']
 
-// The Explore Designs button shows unless VITE_HIDE_OPTIONS=true is set
-export const showSectionDesigns = import.meta.env.VITE_HIDE_OPTIONS !== 'true'
+// The Explore Designs button shows while reviewing: on this computer
+// (localhost) and on Vercel preview links (*.vercel.app). The real domain
+// never shows it, and VITE_HIDE_OPTIONS=true hides it everywhere.
+const reviewHost = /(^localhost$|^127\.0\.0\.1$|\.vercel\.app$)/.test(window.location.hostname)
+export const showSectionDesigns = reviewHost && import.meta.env.VITE_HIDE_OPTIONS !== 'true'
 
 const storageKey = (key: SectionKey) => `luna-section-${key}`
 
