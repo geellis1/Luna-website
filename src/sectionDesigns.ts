@@ -23,18 +23,6 @@ type Group = {
   parent?: { key: string; choice: string }
 }
 
-// Let's Work Together: the same three designs (and Option C's two section
-// backgrounds) on Home, About and Services, each page picking its own
-const ctaChoices = [
-  { id: 'a', label: 'A — Rounded Invitation', note: 'A large burgundy panel with an orbital moon' },
-  { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type and a big circular arrow' },
-  { id: 'c', label: 'C — Split-Panel Graphic', note: 'Burgundy and powder halves with a moving moon' },
-] as const
-const ctaBgChoices = [
-  { id: 'bordeaux', label: 'A — Night Bordeaux Background', note: 'The card framed on Night Bordeaux' },
-  { id: 'powder', label: 'B — Powder Blue Background', note: 'The card on Powder Blue' },
-] as const
-
 export const sectionDesigns = {
   // The statement right under the hero ("We help you do something about it")
   intro: {
@@ -46,20 +34,6 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
-  ctaAbout: {
-    title: 'About · Let’s Work Together',
-    param: 'ctaAbout',
-    anchor: 'cta',
-    path: '/about',
-    choices: ctaChoices,
-  },
-  ctaServices: {
-    title: 'Services · Let’s Work Together',
-    param: 'ctaServices',
-    anchor: 'cta',
-    path: '/services',
-    choices: ctaChoices,
-  },
   contact: {
     title: 'Contact Page — Three Directions',
     param: 'contact',
@@ -69,16 +43,6 @@ export const sectionDesigns = {
       { id: 'a', label: 'Option A: Editorial Letter', note: 'The form as a letter on framed stationery' },
       { id: 'b', label: 'Option B: Letter + Collage', note: 'Layered paper pieces beside the letter' },
       { id: 'c', label: 'Option C: Split Editorial', note: 'A huge statement on crimson beside the letter' },
-    ],
-  },
-  services: {
-    title: 'Services · Page Layout',
-    param: 'services',
-    anchor: 'services-top',
-    path: '/services',
-    choices: [
-      { id: 'a', label: 'Option A — Horizontal Accordion', note: 'Three full-width color bands; one opens at a time' },
-      { id: 'b', label: 'Option B — Editorial Chapters', note: 'Three magazine-spread chapters, all open, alternating' },
     ],
   },
 
@@ -94,34 +58,6 @@ export const sectionDesigns = {
       { id: 'schibsted', label: 'Schibsted Grotesk', note: 'Grotesque with a little editorial character' },
       { id: 'dm', label: 'DM Sans', note: 'Geometric and friendly, slightly rounder' },
     ],
-  },
-  aboutHeadshot: {
-    title: 'About · Kelli’s Headshot',
-    param: 'photo',
-    anchor: 'kelli',
-    path: '/about',
-    choices: [
-      { id: 'blazer', label: 'A — Houndstooth Blazer', note: 'The current photo' },
-      { id: 'glasses', label: 'B — Red Glasses', note: 'Warm, outdoors, red cat-eye glasses' },
-      { id: 'cardigan', label: 'C — Green Cardigan', note: 'Big smile, dark backdrop' },
-    ],
-  },
-  // CTA Option C's section backgrounds (per page)
-  ctaAboutC: {
-    title: 'Option C · Background',
-    param: 'ctaAboutBg',
-    anchor: 'cta',
-    path: '/about',
-    parent: { key: 'ctaAbout', choice: 'c' },
-    choices: ctaBgChoices,
-  },
-  ctaServicesC: {
-    title: 'Option C · Background',
-    param: 'ctaServicesBg',
-    anchor: 'cta',
-    path: '/services',
-    parent: { key: 'ctaServices', choice: 'c' },
-    choices: ctaBgChoices,
   },
 } as const satisfies Record<string, Group>
 

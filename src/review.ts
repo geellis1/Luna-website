@@ -5,7 +5,7 @@ import { readDesign, sectionDesigns, type SectionKey } from './sectionDesigns'
 // favorites and comments.
 //
 // Every design has a stable key, "<section>:<design>" (e.g. "intro:a1",
-// "cta:b"). Favorites and comments are stored under those keys in this
+// "contact:b"). Favorites and comments are stored under those keys in this
 // browser (localStorage), so they survive refreshes and page changes. To
 // share them, the whole review is packed into a link (/review?r=…) that opens
 // a read-only summary on any browser or device; no account or server needed.
@@ -26,15 +26,6 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
-  'cta:a': 'Rounded Invitation',
-  'cta:b': 'Editorial Typography',
-  'cta:c': 'Split Panel · A — Night Bordeaux Background',
-  'cta:c-powder': 'Split Panel · B — Powder Blue Background',
-  'aboutHeadshot:blazer': 'Houndstooth Blazer',
-  'aboutHeadshot:glasses': 'Red Glasses',
-  'aboutHeadshot:cardigan': 'Green Cardigan',
-  'services:a': 'Option A — Horizontal Accordion',
-  'services:b': 'Option B — Editorial Chapters',
   'bodyFont:system': 'Current — Apple System',
   'bodyFont:inter': 'Inter',
   'bodyFont:hanken': 'Hanken Grotesk',
@@ -46,34 +37,11 @@ const names: Record<string, string> = {
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
-  ctaAbout: 'Let’s Work Together',
-  ctaServices: 'Let’s Work Together',
-  aboutHeadshot: 'Kelli’s Headshot',
   contact: 'Contact Page',
-  services: 'Page Layout',
 }
-
-// Let's Work Together on each page, and the group holding its Option C
-// backgrounds
-const ctaBackgrounds = { ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
-const isCta = (key: SectionKey): key is keyof typeof ctaBackgrounds => key in ctaBackgrounds
 
 // A section's designs
 function designsOf(key: SectionKey): Design[] {
-  // Let's Work Together's Option C is listed as its two section backgrounds;
-  // Night Bordeaux keeps C's original key, so earlier notes on C carry over
-  if (isCta(key)) {
-    const bgKey = ctaBackgrounds[key]
-    return [
-      ...sectionDesigns[key].choices
-        .filter((c) => c.id !== 'c')
-        .map((c) => ({ key: `${key}:${c.id}`, section: key, id: c.id, name: names[`cta:${c.id}`], picks: { [key]: c.id } })),
-      ...sectionDesigns[bgKey].choices.map((v) => {
-        const id = v.id === 'bordeaux' ? 'c' : `c-${v.id}`
-        return { key: `${key}:${id}`, section: key, id, name: names[`cta:${id}`], picks: { [key]: 'c', [bgKey]: v.id } }
-      }),
-    ]
-  }
   return sectionDesigns[key].choices.map((c) => ({
     key: `${key}:${c.id}`,
     section: key,
@@ -91,8 +59,6 @@ const section = (key: SectionKey): Section => ({
 
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
-  { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot'), section('ctaAbout')] },
-  { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
   // On every page: previewing stays on the page being viewed (path '')
   { id: 'everywhere', title: 'Every Page', path: '', sections: [section('bodyFont')] },
@@ -106,7 +72,6 @@ export const findDesign = (key: string) => allDesigns.find((d) => d.design.key =
 // The design of a section that's showing now
 export function currentDesignKey(key: SectionKey, search: string) {
   const value = readDesign(key, search)
-  if (isCta(key) && value === 'c') return readDesign(ctaBackgrounds[key], search) === 'powder' ? `${key}:c-powder` : `${key}:c`
   return `${key}:${value}`
 }
 

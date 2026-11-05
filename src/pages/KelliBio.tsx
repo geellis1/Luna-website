@@ -5,13 +5,9 @@
 // On phones it's photo, then text.
 // Styles: "Kelli" in index.css.
 
-import { useSectionDesign } from '../sectionDesigns'
-import { headshots } from './headshots'
+import { kelliPhoto as photo } from './headshots'
 
 export default function KelliBio() {
-  // Which headshot (Round 2 review: About · Kelli's Headshot)
-  const [photoId] = useSectionDesign('aboutHeadshot')
-  const photo = headshots[photoId]
   return (
     <section className="section kelli" id="kelli">
       <div className="container">

@@ -32,7 +32,7 @@ export default function About() {
 
       <KelliBio />
 
-      <CtaSection section="ctaAbout" />
+      <CtaSection />
     </>
   )
 }

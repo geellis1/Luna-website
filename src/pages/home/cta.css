@@ -1,12 +1,15 @@
-/* ---------- Let's Work Together (Round 2 designs A–C) ----------
-   A compact invitation between How we work together and the footer: 40–60px
-   of cream around a panel of ~350–450px. Each design animates in once, when
-   it comes into view. */
+/* ---------- Let's Work Together (About and Services) ----------
+   Editorial typography on cream before the footer: "Let's Work / Together."
+   large, with a note above and a circular Let's Chat button. Animates in
+   once, when it comes into view. */
 .cta {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   padding: clamp(40px, 4.5vw, 60px) var(--gutter);
   color: var(--bordeaux);
   background: var(--cream);
+  /* "Together" starts nudged right for its entrance; keep that from making
+     the page scroll sideways on narrow screens */
+  overflow-x: clip;
 }
 .cta h2,
 .cta p {
@@ -30,119 +33,6 @@
   translate: none;
 }
 
-/* ===== A · Rounded Invitation ===== */
-.cta-a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: min(100%, 1624px);
-  min-height: clamp(360px, 30vw, 440px);
-  margin-inline: auto;
-  padding: clamp(40px, 4.5vw, 72px);
-  overflow: hidden;
-  color: var(--cream);
-  background: var(--crimson);
-  border-radius: 28px;
-  opacity: 0;
-  scale: 0.96;
-  transition:
-    opacity 0.7s ease,
-    scale 1s var(--ease-out);
-}
-.cta--a.is-in .cta-a {
-  opacity: 1;
-  scale: 1;
-}
-.cta-a__text {
-  position: relative;
-  z-index: 1;
-  max-width: 62%;
-}
-.cta-a__title {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(3rem, 6.4vw, 6.75rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-}
-.cta-a__title .cta__mask > span {
-  transition-delay: 0.25s;
-}
-.cta-a__title .cta__mask + .cta__mask > span {
-  transition-delay: 0.37s;
-}
-.cta-a__support {
-  max-width: 38ch;
-  margin: clamp(18px, 2vw, 26px) 0 clamp(24px, 2.6vw, 34px) !important;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 1.55;
-  opacity: 0.85;
-}
-.button.cta-a__button {
-  color: var(--bordeaux);
-  background: var(--chartreuse);
-  border-color: var(--chartreuse);
-}
-.button.cta-a__button:hover {
-  color: var(--chartreuse);
-  background: transparent;
-}
-/* Orbits running off the right edge, around a crescent moon */
-.cta-a__orbit {
-  position: absolute;
-  top: 50%;
-  right: -6%;
-  width: min(48%, 640px);
-  translate: 0 -50%;
-  overflow: visible;
-}
-.cta-a__ring {
-  fill: none;
-  stroke: var(--cream);
-  stroke-width: 1;
-  opacity: 0.35;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  transition: stroke-dashoffset 1.6s var(--ease-out) 0.5s;
-}
-.cta-a__ring--2 {
-  opacity: 0.5;
-  transition-delay: 0.65s;
-}
-.cta-a__ring--3 {
-  opacity: 0.25;
-  transition-delay: 0.8s;
-}
-.cta--a.is-in .cta-a__ring {
-  stroke-dashoffset: 0;
-}
-.cta-a__moon {
-  fill: var(--cream);
-}
-.cta-a__disc {
-  fill: none;
-  stroke: var(--cream);
-  stroke-width: 1;
-  opacity: 0;
-  transition: opacity 1s ease 1s;
-}
-.cta--a.is-in .cta-a__disc {
-  opacity: 0.45;
-}
-.cta-a__dot {
-  fill: var(--chartreuse);
-}
-.cta-a__moon,
-.cta-a__dot {
-  opacity: 0;
-  transition: opacity 1s ease 1s;
-}
-.cta--a.is-in .cta-a__moon,
-.cta--a.is-in .cta-a__dot {
-  opacity: 1;
-}
-
-/* ===== B · Editorial Typography ===== */
 .cta-b {
   position: relative;
   display: grid;
@@ -152,7 +42,7 @@
     'title circle';
   align-items: end;
   column-gap: clamp(32px, 4vw, 72px);
-  width: min(100%, 1624px);
+  width: min(100%, 1320px);
   margin-inline: auto;
   padding-block: clamp(8px, 1.5vw, 24px);
   border-top: 1px solid rgba(62, 25, 33, 0.25);
@@ -178,14 +68,14 @@
   color: var(--crimson);
   padding-top: 0.15em;
 }
-.cta--b.is-in .cta-b__note {
+.cta.is-in .cta-b__note {
   opacity: 1;
 }
 .cta-b__title {
   grid-area: title;
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: clamp(3.5rem, 9vw, 10rem);
+  font-size: clamp(3rem, 7.5vw, 8.25rem);
   line-height: 0.88;
   letter-spacing: -0.045em;
 }
@@ -204,7 +94,7 @@
     opacity 0.9s ease 0.35s,
     translate 1.2s var(--ease-out) 0.35s;
 }
-.cta--b.is-in .cta-b__together {
+.cta.is-in .cta-b__together {
   opacity: 1;
   translate: none;
 }
@@ -214,7 +104,7 @@
   place-items: center;
   align-content: center;
   gap: 6px;
-  width: clamp(132px, 13vw, 190px);
+  width: clamp(116px, 11vw, 160px);
   aspect-ratio: 1;
   margin-bottom: 0.4em;
   text-decoration: none;
@@ -229,7 +119,7 @@
     color 0.3s ease,
     background 0.3s ease;
 }
-.cta--b.is-in .cta-b__circle {
+.cta.is-in .cta-b__circle {
   scale: 1;
   opacity: 1;
 }
@@ -260,118 +150,8 @@
   rotate: 45deg;
 }
 
-/* ===== C · Split-Panel Graphic ===== */
-.cta-c {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  width: min(100%, 1624px);
-  min-height: clamp(360px, 30vw, 440px);
-  margin-inline: auto;
-  overflow: hidden;
-  border-radius: 28px;
-}
-.cta-c__left,
-.cta-c__right {
-  transition:
-    opacity 0.8s ease,
-    translate 1s var(--ease-out);
-  opacity: 0;
-}
-.cta-c__left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(40px, 4.5vw, 72px);
-  color: var(--cream);
-  background: var(--crimson);
-  translate: -40px 0;
-}
-.cta-c__right {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: clamp(28px, 3vw, 44px);
-  background: var(--powder);
-  translate: 40px 0;
-  transition-delay: 0.1s;
-}
-.cta--c.is-in .cta-c__left,
-.cta--c.is-in .cta-c__right {
-  opacity: 1;
-  translate: none;
-}
-.cta-c__title {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(3rem, 5.8vw, 6.25rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-}
-.cta-c__title .cta__mask > span {
-  transition-delay: 0.3s;
-}
-.cta-c__title .cta__mask + .cta__mask > span {
-  transition-delay: 0.42s;
-}
-.cta-c__support {
-  max-width: 36ch;
-  margin-top: clamp(18px, 2vw, 26px) !important;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 1.55;
-  opacity: 0.85;
-}
-.cta-c__burst {
-  display: block;
-  width: 112%;
-  max-width: none;
-  height: auto;
-  margin-inline: -6%;
-  opacity: 0;
-  scale: 0.9;
-  rotate: -4deg;
-  transition:
-    opacity 0.8s ease 0.3s,
-    scale 1.2s var(--ease-out) 0.3s,
-    rotate 1.2s var(--ease-out) 0.3s;
-}
-.cta--c.is-in .cta-c__burst {
-  opacity: 1;
-  scale: 1;
-  rotate: 0deg;
-}
-.button.cta-c__button {
-  white-space: nowrap;
-  color: var(--cream);
-  background: var(--bordeaux);
-  border-color: var(--bordeaux);
-}
-.button.cta-c__button:hover {
-  color: var(--bordeaux);
-  background: transparent;
-}
-
 /* ===== Tablet and phones ===== */
 @media (max-width: 860px) {
-  .cta-a {
-    display: block;
-    min-height: 0;
-    padding-bottom: clamp(200px, 48vw, 300px);
-  }
-  .cta-a__text {
-    max-width: none;
-  }
-  /* The orbit settles into the bottom-right corner, under the text */
-  .cta-a__orbit {
-    top: auto;
-    bottom: -18%;
-    right: -14%;
-    width: min(70%, 380px);
-    translate: none;
-  }
-
   .cta-b {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -390,20 +170,6 @@
     justify-self: end;
     margin: 20px 0 0;
   }
-
-  .cta-c {
-    grid-template-columns: 1fr;
-  }
-  .cta-c__left {
-    translate: 0 -24px;
-  }
-  .cta-c__right {
-    translate: 0 24px;
-  }
-  .cta-c__burst {
-    width: 100%;
-    margin-inline: 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -413,23 +179,4 @@
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
-}
-
-/* C's section: a full-width Night Bordeaux or Powder Blue background with
-   room around the card, so it reads as its own section between How we
-   work together and the footer */
-.cta.cta--c {
-  padding-block: clamp(64px, 6vw, 80px);
-}
-.cta--on-bordeaux {
-  background: var(--bordeaux);
-}
-.cta--on-powder {
-  background: var(--powder);
-}
-
-/* B: "Together" starts nudged right for its entrance; keep that from making
-   the page scroll sideways on narrow screens */
-.cta--b {
-  overflow-x: clip;
 }

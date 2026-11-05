@@ -1002,7 +1002,7 @@ fieldset.field {
    lines up with the photo, which is positioned over the center line. The photo is
    already set on this cream, so it blends in. */
 .kelli {
-  --photo-w: min(44vw, 580px);
+  --photo-w: min(38vw, 500px);
   --photo-h: calc(var(--photo-w) * 1.25);
   --gutter: 14px;
   padding-bottom: 0;
@@ -1014,7 +1014,7 @@ fieldset.field {
   margin: 0 0 clamp(28px, 3.5vw, 48px);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(3.25rem, 8vw, 7.5rem);
+  font-size: clamp(2.8rem, 6.2vw, 5.75rem);
   line-height: 0.9;
   letter-spacing: -0.01em;
   text-align: center;
@@ -1023,15 +1023,13 @@ fieldset.field {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1280px;
+  max-width: 1120px;
   min-height: var(--photo-h);
   margin: 0 auto;
 }
 .kelli__photo {
-  /* Her lower edge fades into the cream, so it reads as intentional whether
-     she stands on the section's edge or the bio runs a little past her */
-  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  /* She stands on the section's bottom edge (the bio is sized to fit within
+     her height, so the photo's top lines up with the text wrap) */
   position: absolute;
   top: 0;
   left: 50%;
@@ -1048,10 +1046,13 @@ fieldset.field {
      stands on the section's bottom edge; if the text runs longer, the last
      paragraph's margin gives it room */
   font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  text-align: justify;
-  hyphens: auto;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  /* Ragged right with whole words only; lines are balanced so a paragraph
+     doesn't end on a stranded word */
+  text-align: left;
+  hyphens: none;
+  text-wrap: pretty;
 }
 .kelli__col--left {
   padding-right: var(--gutter);
@@ -1061,6 +1062,10 @@ fieldset.field {
 }
 .kelli__col p {
   margin: 0 0 1em;
+}
+/* No space after the last paragraph, so she meets the section's bottom edge */
+.kelli__col > :last-child {
+  margin-bottom: 0;
 }
 .kelli__col strong {
   font-weight: 700;

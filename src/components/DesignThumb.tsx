@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { bodyFontStacks, type SectionDesign } from '../sectionDesigns'
-import { headshots } from '../pages/headshots'
 
 // Small pictures of each Round 2 design, drawn in the brand colors, for the
 // Explore Designs panel, favorites and the shared review page.
@@ -15,21 +14,11 @@ const C = {
 }
 const tones = [C.powder, C.chartreuse, C.crimson]
 
-// A small picture of one design (headshots show the photo itself). For How
+// A small picture of one design. For How
 // we work together, Option A's versions are a1 / a2.
 export default function DesignThumb({ section, id }: { section: string; id: string }) {
-  if (section === 'aboutHeadshot') {
-    const photo = headshots[id as SectionDesign<'aboutHeadshot'>]
-    return <img className="sx-preview sx-preview--photo" src={photo.src} alt="" />
-  }
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section.startsWith('cta')) {
-    // Option C's backgrounds: "c" (Night Bordeaux) and "c-powder"
-    if (id.startsWith('c')) return <CtaPreview id="c" bg={id === 'c-powder' ? C.powder : C.bordeaux} />
-    return <CtaPreview id={id as SectionDesign<'ctaAbout'>} />
-  }
   if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
-  if (section === 'services') return <ServicesPreview id={id as SectionDesign<'services'>} />
   if (section === 'bodyFont') return <FontPreview id={id as SectionDesign<'bodyFont'>} />
   return <WorkPreview id={id} />
 }
@@ -83,43 +72,6 @@ function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
             <rect key={i} x="7" y={12 + i * 10} width={[30, 36, 16, 34][i]} height="7" fill={C.cream} />
           ))}
           {letter(56, 56)}
-        </>
-      )}
-    </svg>
-  )
-}
-
-function CtaPreview({ id, bg = C.cream }: { id: SectionDesign<'ctaAbout'>; bg?: string }) {
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={bg} />
-      {id === 'a' && (
-        <>
-          <rect x="8" y="8" width="104" height="48" rx="7" fill={C.crimson} />
-          <rect x="16" y="20" width="44" height="7" fill={C.cream} />
-          <rect x="16" y="30" width="34" height="7" fill={C.cream} />
-          <rect x="16" y="43" width="20" height="6" rx="3" fill={C.chartreuse} />
-          <circle cx="92" cy="32" r="16" fill="none" stroke={C.cream} strokeWidth="0.8" opacity="0.6" />
-          <circle cx="92" cy="32" r="8" fill={C.cream} />
-        </>
-      )}
-      {id === 'b' && (
-        <>
-          <rect x="10" y="16" width="62" height="10" fill={C.bordeaux} />
-          <rect x="30" y="30" width="54" height="10" fill={C.powder} />
-          <rect x="10" y="48" width="30" height="2" fill={C.bordeaux} opacity="0.6" />
-          <circle cx="100" cy="35" r="11" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
-          <path d="M96 39l8-8M99 31h5v5" fill="none" stroke={C.bordeaux} strokeWidth="1.2" />
-        </>
-      )}
-      {id === 'c' && (
-        <>
-          <path d="M15 8h45v48H15a7 7 0 0 1-7-7V15a7 7 0 0 1 7-7z" fill={C.crimson} />
-          <path d="M60 8h45a7 7 0 0 1 7 7v34a7 7 0 0 1-7 7H60z" fill={C.powder} />
-          <rect x="16" y="20" width="34" height="7" fill={C.cream} />
-          <rect x="16" y="30" width="26" height="7" fill={C.cream} />
-          <circle cx="86" cy="28" r="12" fill={C.cream} />
-          <rect x="72" y="45" width="26" height="6" rx="3" fill={C.bordeaux} />
         </>
       )}
     </svg>
@@ -200,42 +152,3 @@ function WorkPreview({ id }: { id: string }) {
 }
 
 
-// Services page: A three bands, the first open; B three full blocks,
-// alternating sides
-function ServicesPreview({ id }: { id: SectionDesign<'services'> }) {
-  const on = [C.bordeaux, C.bordeaux, C.cream]
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <rect x="10" y="4" width="50" height="5" fill={C.bordeaux} />
-      {id === 'a' ? (
-        <>
-          <rect y="13" width="120" height="27" fill={tones[0]} />
-          <rect x="8" y="17" width="36" height="7" fill={on[0]} />
-          <rect x="64" y="18" width="46" height="2" fill={on[0]} opacity="0.7" />
-          <rect x="64" y="23" width="40" height="2" fill={on[0]} opacity="0.7" />
-          <rect x="64" y="28" width="44" height="2" fill={on[0]} opacity="0.7" />
-          <rect y="40" width="120" height="12" fill={tones[1]} />
-          <rect x="8" y="43" width="28" height="6" fill={on[1]} />
-          <rect y="52" width="120" height="12" fill={tones[2]} />
-          <rect x="8" y="55" width="38" height="6" fill={on[2]} />
-        </>
-      ) : (
-        [0, 1, 2].map((i) => {
-          const y = 13 + i * 17
-          const nameX = i === 1 ? 70 : 8
-          const textX = i === 1 ? 8 : 64
-          return (
-            <g key={i}>
-              <rect y={y} width="120" height="17" fill={tones[i]} />
-              <rect x={nameX} y={y + 4} width="42" height="9" fill={on[i]} />
-              <rect x={textX} y={y + 4} width="44" height="2" fill={on[i]} opacity="0.7" />
-              <rect x={textX} y={y + 8} width="38" height="2" fill={on[i]} opacity="0.7" />
-              <rect x={textX} y={y + 12} width="42" height="1" fill={on[i]} opacity="0.5" />
-            </g>
-          )
-        })
-      )}
-    </svg>
-  )
-}

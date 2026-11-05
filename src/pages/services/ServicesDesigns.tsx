@@ -1,19 +1,15 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Copy from '../../components/Copy'
 import { tiers } from '../../content'
 import CtaSection from '../home/CtaSection'
 import './services.css'
 
-// Services page, two Round 2 layouts that borrow the homepage panels' look
-// (Begin Powder Blue, Build Chartreuse, Sustain Deep Crimson; big uppercase
-// display names):
-//   A · Horizontal Accordion: three full-bleed bands, one open at a time
-//   B · Editorial Chapters: three full-bleed magazine-spread chapters, all
-//       open, alternating sides, building in as they scroll into view
-// Both show the same content and keep the #begin / #build / #sustain anchors
-// the homepage links to. The Let's Work Together section at the end is
-// picked separately in the panel (home/CtaSection.tsx). Styles: services.css.
+// Services page: a Horizontal Accordion in the homepage panels' look (Begin
+// Powder Blue, Build Chartreuse, Sustain Deep Crimson; big uppercase display
+// names). It keeps the #begin / #build / #sustain anchors the homepage links
+// to, and ends with the Let's Work Together invitation (home/CtaSection.tsx).
+// Styles: services.css.
 
 const tones = ['powder', 'chartreuse', 'crimson'] as const
 const services = tiers.map((t, i) => ({ ...t, num: `0${i + 1}`, tone: tones[i] }))
@@ -60,7 +56,7 @@ function Details({ service }: { service: Service }) {
         ))}
       </ul>
       <Link to="/contact" className="svc-cta">
-        Start a conversation about {service.label}
+        Start a Conversation
         <Arrow />
       </Link>
     </>
@@ -78,13 +74,13 @@ function Arrow(): ReactNode {
 // ---------- A · Horizontal Accordion ----------
 // Full-bleed bands stacked with no gaps. Closed, each shows its number, a
 // big name, its category and a +; open, it grows to show the details in two
-// columns. One open at a time (Begin to start, or the one the link points
-// to); clicking the open one closes it.
+// columns. All closed at first (unless a link points to one); one open at a
+// time; clicking the open one closes it.
 export function ServicesAccordion() {
   const { hash } = useLocation()
   const fromHash = services.find((s) => `#${s.id}` === hash)?.id
   const [choice, setChoice] = useState<{ hash: string; id: string } | null>(null)
-  const open = choice?.hash === hash ? choice.id : (fromHash ?? 'begin')
+  const open = choice?.hash === hash ? choice.id : (fromHash ?? '')
 
   // Arriving at #build (e.g. from the homepage): glide to it once it's open
   useEffect(() => {
@@ -126,75 +122,7 @@ export function ServicesAccordion() {
           )
         })}
       </div>
-      <CtaSection section="ctaServices" />
+      <CtaSection />
     </div>
-  )
-}
-
-// ---------- B · Editorial Chapters ----------
-// Three full-bleed chapters, all open, set like magazine spreads: a small
-// "01 / Training" line over a hairline, a dramatically oversized name, and
-// the details beside it. Begin and Sustain put the name on the left; Build
-// mirrors it, so the page alternates. As each chapter comes into view its
-// rule draws across, the name slides into place and the details fade in.
-export function ServicesBlocks() {
-  return (
-    <div className="svc svc--b">
-      <Intro />
-      {services.map((s, i) => (
-        <Chapter key={s.id} service={s} flip={i % 2 === 1} />
-      ))}
-      <CtaSection section="ctaServices" />
-    </div>
-  )
-}
-
-// Each name's width in the display face, in ems, so it can be sized to fill
-// its column exactly
-const nameWidths: Record<string, number> = { begin: 2.22, build: 2.2, sustain: 2.98 }
-
-function Chapter({ service: s, flip }: { service: Service; flip: boolean }) {
-  const ref = useRef<HTMLElement>(null)
-  const [shown, setShown] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0.2 },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-  return (
-    <section
-      ref={ref}
-      id={s.id}
-      className={`svc-block tone--${s.tone}${flip ? ' svc-block--flip' : ''}${shown ? ' is-in' : ''}`}
-      aria-labelledby={`svc-${s.id}-title`}
-    >
-      <div className="svc-block__inner">
-        <header className="svc-block__head">
-          <p className="svc-block__meta">
-            {s.num} <span aria-hidden="true">/</span> {s.kind}
-          </p>
-          <h2
-            className="svc-block__name"
-            id={`svc-${s.id}-title`}
-            style={{ '--em-width': nameWidths[s.id] ?? 3 } as CSSProperties}
-          >
-            {s.label}
-          </h2>
-        </header>
-        <div className="svc-block__body">
-          <Details service={s} />
-        </div>
-      </div>
-    </section>
   )
 }
