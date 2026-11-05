@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useSectionDesign } from '../sectionDesigns'
 import { navLinks, tiers } from '../content'
 import { moonOn } from './moons/tonight'
 import { litPath } from './moons/phase'
 import './footer.css'
 
 // Site footer: Night Bordeaux with tonight's moon phase, the page and service
-// links, a closing line, the small print and Back to top. On the home page a cream band
-// leads into it: "Every engagement begins with a conversation." with the
-// circular Let's Chat button. Builds in once when it scrolls into view.
+// links, a closing line and the small print. On the home page a
+// cream band leads into it: "Every engagement begins with a conversation."
+// (its two key words in Powder Blue) with a Powder Blue circular Let's Chat
+// button. Builds in once when it scrolls into view.
 // Styles: footer.css.
 
 const year = new Date().getFullYear()
@@ -20,12 +20,10 @@ export default function Footer() {
   const [ref, shown] = useInView<HTMLElement>()
   // Worked out once, when the footer first renders
   const [moon] = useState(() => moonOn(new Date()))
-  // How the home page's closing line is set (Round 2: Home · Closing Line)
-  const [closing] = useSectionDesign('closing')
   return (
     <footer ref={ref} className={`ft${shown ? ' is-in' : ''}`} id="site-footer">
       {pathname === '/' && (
-        <div className={`ft-lead ft-lead--${closing}`}>
+        <div className="ft-lead">
           <div className="ft__wrap ft-lead__row">
             <p className="ft-lead__line">
               Every <span className="ft-lead__accent">engagement</span> begins with a{' '}
@@ -78,21 +76,6 @@ export default function Footer() {
                 </Link>
               </li>
             </Column>
-            <button
-              type="button"
-              className="ft__back"
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-                })
-              }
-            >
-              Back to top
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 20V5M6 11l6-6 6 6" />
-              </svg>
-            </button>
           </div>
         </div>
         <div className="ft__wrap">

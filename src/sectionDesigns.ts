@@ -34,17 +34,6 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
-  // The home page's closing line, at the top of the footer
-  closing: {
-    title: 'Closing Line',
-    param: 'closing',
-    anchor: 'site-footer',
-    choices: [
-      { id: 'a', label: 'A — As Is', note: 'All one typeface and color; outlined Let’s Chat circle' },
-      { id: 'b', label: 'B — Powder Blue Words', note: '“engagement” and “conversation” in Powder Blue; chartreuse button' },
-      { id: 'c', label: 'C — Crimson Words', note: '“engagement” and “conversation” in Deep Crimson; chartreuse button' },
-    ],
-  },
 } as const satisfies Record<string, Group>
 
 export type SectionKey = keyof typeof sectionDesigns

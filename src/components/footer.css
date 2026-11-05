@@ -47,15 +47,12 @@
   opacity: 1;
   translate: none;
 }
-/* B and C: "engagement" and "conversation" in color, same typeface */
-.ft-lead--b .ft-lead__accent {
+/* "engagement" and "conversation" in Powder Blue */
+.ft-lead__accent {
   color: var(--powder);
 }
-.ft-lead--c .ft-lead__accent {
-  color: var(--crimson);
-}
-/* The circular button: grows in, then fills with Deep Crimson on hover as its
-   arrow turns to point straight ahead */
+/* The circular button, filled Powder Blue: grows in, then turns Deep Crimson
+   on hover as its arrow turns to point straight ahead */
 .ft-lead__chat {
   display: grid;
   place-items: center;
@@ -63,7 +60,8 @@
   gap: 6px;
   width: clamp(132px, 13vw, 190px);
   aspect-ratio: 1;
-  border: 1.5px solid currentColor;
+  background: var(--powder);
+  border: 1.5px solid var(--powder);
   border-radius: 50%;
   scale: 0.85;
   opacity: 0;
@@ -102,12 +100,6 @@
 .ft-lead__chat:hover svg,
 .ft-lead__chat:focus-visible svg {
   rotate: 45deg;
-}
-/* B and C: a chartreuse button that turns Deep Crimson on hover */
-.ft-lead--b .ft-lead__chat,
-.ft-lead--c .ft-lead__chat {
-  background: var(--chartreuse);
-  border-color: var(--chartreuse);
 }
 
 /* ---------- The footer itself ---------- */
@@ -171,7 +163,7 @@
 }
 .ft__cols {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 32px;
 }
 .ft__col-title {
@@ -235,38 +227,6 @@
   margin: 0;
   opacity: 0.7;
 }
-.ft__back {
-  align-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0;
-  font: inherit;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-.ft__back svg {
-  width: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: translate 0.25s var(--ease-out);
-}
-.ft__back:hover {
-  color: var(--chartreuse);
-}
-.ft__back:hover svg {
-  translate: 0 -3px;
-}
 /* Tablets and phones */
 @media (max-width: 900px) {
   .ft__top {
@@ -284,11 +244,8 @@
   .ft__cols {
     grid-template-columns: 1fr 1fr;
   }
-  .ft__cols > :nth-child(3) {
+  .ft__cols > :last-child {
     grid-column: 1 / -1;
-  }
-  .ft__back {
-    justify-self: start;
   }
 }
 

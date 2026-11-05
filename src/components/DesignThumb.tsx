@@ -18,24 +18,7 @@ const tones = [C.powder, C.chartreuse, C.crimson]
 // we work together, Option A's versions are a1 / a2.
 export default function DesignThumb({ section, id }: { section: string; id: string }) {
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'closing') return <ClosingPreview id={id as SectionDesign<'closing'>} />
   return <WorkPreview id={id} />
-}
-
-// The closing line as bars with its two key words picked out, and the round
-// button (outlined, or chartreuse)
-function ClosingPreview({ id }: { id: SectionDesign<'closing'> }) {
-  const accent = { a: C.bordeaux, b: C.powder, c: C.crimson }[id]
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <rect x="10" y="14" width="16" height="7" rx="1" fill={C.bordeaux} />
-      <rect x="29" y="14" width="30" height="7" rx="1" fill={accent} />
-      <rect x="10" y="25" width="52" height="7" rx="1" fill={C.bordeaux} />
-      <rect x="10" y="36" width="44" height="7" rx="1" fill={accent} />
-      <circle cx="96" cy="32" r="13" fill={id === 'a' ? 'none' : C.chartreuse} stroke={id === 'a' ? C.bordeaux : C.chartreuse} />
-    </svg>
-  )
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
