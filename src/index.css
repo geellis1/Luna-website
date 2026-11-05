@@ -978,7 +978,7 @@ fieldset.field {
 .collage-tile {
   /* Slow, gentle fade-up one by one, then an unhurried float */
   animation:
-    collage-in 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) var(--delay) both,
+    collage-in 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) var(--delay) both,
     collage-float 10s ease-in-out var(--float-delay) infinite;
 }
 .collage-tile__line {

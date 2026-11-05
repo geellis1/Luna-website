@@ -6,7 +6,7 @@ import { litPath } from './moons/phase'
 import './footer.css'
 
 // Site footer: Night Bordeaux with tonight's moon phase on the left, the page
-// links and a Start a Conversation button on the right, then the small print. On the home page a
+// links and a Start a Conversation link on the right, then the small print. On the home page a
 // cream band leads into it: "Every engagement begins with a conversation."
 // ("conversation" in Powder Blue) with a Powder Blue circular Let's Chat
 // button. Builds in once when it scrolls into view.
@@ -58,8 +58,8 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <Link to="/contact" className="ft__cta">
-              Start a Conversation <Arrow />
+            <Link to="/contact" className="text-link ft__cta">
+              Start a Conversation
             </Link>
           </nav>
         </div>
@@ -70,14 +70,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
-}
-
-function Arrow() {
-  return (
-    <svg className="ft__arrow" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 12h15M13 6l6 6-6 6" />
-    </svg>
   )
 }
 

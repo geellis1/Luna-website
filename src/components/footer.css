@@ -161,7 +161,7 @@
   text-transform: uppercase;
   opacity: 0.7;
 }
-/* Page links in a row, then an outlined pill button */
+/* Page links in a row, then the Start a Conversation link */
 .ft__nav {
   display: flex;
   flex-wrap: wrap;
@@ -188,41 +188,14 @@
   background-size: 100% 1px;
 }
 .ft__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 26px;
+  padding-bottom: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
   white-space: nowrap;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  transition:
-    color 0.25s ease,
-    background 0.25s ease,
-    border-color 0.25s ease;
+  transition: color 0.2s ease;
 }
-.ft__cta:hover,
-.ft__cta:focus-visible {
-  color: var(--bordeaux);
-  background: var(--cream);
-  border-color: var(--cream);
-  outline: none;
-}
-.ft__arrow {
-  width: 18px;
-  flex: none;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: translate 0.25s var(--ease-out);
-}
-.ft__cta:hover .ft__arrow {
-  translate: 4px 0;
+.ft__cta:hover {
+  color: var(--chartreuse);
 }
 .ft__legal {
   padding: 14px 0 18px;

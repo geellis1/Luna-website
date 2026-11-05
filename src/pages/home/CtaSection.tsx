@@ -8,7 +8,8 @@ import './cta.css'
 // annotation, and a circular Let's Chat button that leads to the contact
 // page. Builds in once it's well on screen. Styles: cta.css.
 
-const support = 'Every engagement begins with a conversation. Tell us about your work and your goals.'
+const support =
+  'Every engagement begins with a conversation. Tell us about your work and your goals. We’ll take it from there.'
 
 export default function CtaSection() {
   const ref = useRef<HTMLElement>(null)
