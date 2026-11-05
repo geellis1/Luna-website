@@ -18,14 +18,14 @@
    "Why Luna." and the intro on one row, then the four reasons on a two-column
    grid under hairlines: one serif, one size, numbers in the same place. */
 .section.why--b {
-  padding-block: clamp(56px, 5.5vw, 88px);
+  padding-block: clamp(44px, 4.2vw, 68px);
 }
 .why-b__head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   align-items: end;
   gap: clamp(32px, 5vw, 96px);
-  margin-bottom: clamp(36px, 4vw, 60px);
+  margin-bottom: clamp(28px, 3vw, 44px);
 }
 .why-b__title {
   margin: 0;
@@ -56,7 +56,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: clamp(40px, 5vw, 96px);
-  row-gap: clamp(32px, 3.5vw, 56px);
+  row-gap: clamp(20px, 2.2vw, 36px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -65,9 +65,8 @@
   display: grid;
   grid-template-columns: 3.2em 1fr;
   align-items: baseline;
-  padding-top: clamp(20px, 2vw, 28px);
+  padding-top: clamp(16px, 1.6vw, 24px);
   border-top: 1px solid rgba(245, 240, 232, 0.25);
-  outline: none;
 }
 .why-b__num {
   font-size: 0.8rem;
@@ -114,36 +113,12 @@
 .why-b__item.is-in .why-b__key {
   color: var(--powder);
 }
-/* Short description: shown on hover or focus (always on touch screens) */
-.why-b__note {
-  grid-column: 2;
-  max-width: 40ch;
-  margin-top: 14px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  opacity: 0;
-  translate: 0 -6px;
-  transition:
-    opacity 0.35s ease,
-    translate 0.35s var(--ease-out);
-}
+/* Hovering a reason turns its key word chartreuse */
 @media (hover: hover) {
-  .why-b__item:hover .why-b__note,
-  .why-b__item:focus-visible .why-b__note {
-    opacity: 0.75;
-    translate: none;
-  }
-  .why-b__item:hover .why-b__key,
-  .why-b__item:focus-visible .why-b__key {
+  .why-b__item:hover .why-b__key {
     color: var(--chartreuse);
     transition-delay: 0s;
     transition-duration: 0.3s;
-  }
-}
-@media (hover: none) {
-  .why-b__item.is-in .why-b__note {
-    opacity: 0.7;
-    translate: none;
   }
 }
 

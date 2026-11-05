@@ -36,9 +36,9 @@ function useReveal() {
 // A typographic spread on burgundy with a clear grid: "Why Luna." large at
 // the top left with the intro beside it, then the four reasons in a
 // two-column grid, all in the site's serif at one size. Each reason has one
-// italic key word that warms to powder blue once it's in; hovering (or
-// focusing) a reason brings up its short description. The heading rises in
-// first, then the reasons, one after another, out of masks.
+// italic key word that warms to powder blue once it's in (chartreuse on
+// hover). The heading rises in first, then the reasons, one after another,
+// out of masks.
 
 // The reasons, with the one word in each that carries the accent
 const reasons: { lead: string; key: string; tail: string }[] = [
@@ -64,14 +64,11 @@ export default function WhyLuna() {
 
         <ol className="why-b__grid">
           {reasons.map((r, i) => {
-            // A short description, once it's real copy (not a [placeholder])
-            const note = /^\[.*\]$/.test(pillars[i].description) ? null : pillars[i].description
             return (
               <li
                 key={pillars[i].title}
                 className="why-b__item"
                 data-reveal
-                tabIndex={note ? 0 : undefined}
                 style={{ '--i': i } as CSSProperties}
               >
                 <span className="why-b__num">0{i + 1}</span>
@@ -82,7 +79,6 @@ export default function WhyLuna() {
                     {r.tail}
                   </span>
                 </span>
-                {note && <span className="why-b__note">{note}</span>}
               </li>
             )
           })}
