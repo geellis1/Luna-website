@@ -187,18 +187,13 @@
    little, each showing its lined-up copy of the headline in cream. The copy
    undoes the photo's own entrance and drift so it never shifts off the real
    letters. */
-.scrap-hero--a .scrap-card,
-.scrap-hero--c .scrap-card {
+.scrap-hero--a .scrap-card {
   z-index: 2;
 }
 .scrap-hero--a .scrap-card img {
   filter: brightness(0.62) saturate(0.9);
 }
-/* Option C — Black & White: the same cream letters over black-and-white
-   photos */
-.scrap-hero--c .scrap-card img {
-  filter: grayscale(1) contrast(1.05) brightness(0.6);
-}
+
 .scrap-hero .scrap-card__copy {
   position: absolute;
   left: calc(-1 * var(--ox, 0px));
@@ -233,6 +228,16 @@
 }
 .scrap-hero--b .scrap-card img {
   opacity: 0.68;
+}
+
+/* Option C — Black & White: B's light wash on black-and-white photos; the
+   letters stay dark */
+.scrap-hero--c .scrap-card {
+  background: var(--cream);
+}
+.scrap-hero--c .scrap-card img {
+  opacity: 0.68;
+  filter: grayscale(1);
 }
 
 /* Handwritten note that writes itself on, line by line */

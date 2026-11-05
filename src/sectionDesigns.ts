@@ -44,7 +44,7 @@ export const sectionDesigns = {
     choices: [
       { id: 'a', label: 'A — Letters Change Color', note: 'Where letters cross a photo they turn cream; the photo is dimmed a little' },
       { id: 'b', label: 'B — Softened Photos', note: 'The photos get a light cream wash so the letters stay dark' },
-      { id: 'c', label: 'C — Black & White', note: 'Black-and-white photos; letters crossing them turn cream' },
+      { id: 'c', label: 'C — Black & White', note: 'Black-and-white photos with a light wash; the letters stay dark' },
     ],
   },
   // The statement right under the hero ("We help you do something about it")
