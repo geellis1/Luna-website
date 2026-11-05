@@ -7,14 +7,13 @@
   --bordeaux: #3e1921;
   --cream: #f5f0e8;
 
-  /* Placeholder typefaces: swap these two lines when brand fonts arrive */
+  /* Typefaces: a serif for headings and editorial text, Hanken Grotesk for
+     body copy and labels, a tall condensed display serif for the big
+     uppercase headlines, and handwriting for small notes */
   --font-serif: Georgia, 'Times New Roman', serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  /* Home option C only: tall condensed display serif + handwriting */
+  --font-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-hand: 'Nothing You Could Do', 'Bradley Hand', cursive;
-  /* Home option E only: connected brush script */
-  --font-brush: 'Mr Dafoe', 'Bradley Hand', cursive;
 
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);
@@ -278,6 +277,90 @@ svg {
 .logo--footer img {
   height: 80px;
 }
+/* ----- Scrolling behavior (Round 2: Explore Designs · Navigation) -----
+   All three stay fixed to the top of the window; at the very top they look
+   exactly like the nav above. */
+.nav--a,
+.nav--b,
+.nav--c {
+  position: fixed;
+  inset: 0 0 auto;
+  margin-bottom: 0;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    padding 0.3s ease,
+    height 0.3s ease,
+    translate 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.nav .logo__mark {
+  transition: height 0.3s ease;
+}
+/* A and C: once scrolled, a slim cream bar with a hairline */
+.nav--a.is-scrolled,
+.nav--c.is-scrolled {
+  height: 72px;
+  padding-top: 0;
+  color: var(--bordeaux);
+  background: var(--cream);
+  box-shadow: 0 1px 0 rgba(62, 25, 33, 0.12);
+}
+.nav--a.is-scrolled .nav__inner,
+.nav--c.is-scrolled .nav__inner {
+  height: 72px;
+}
+.nav--a.is-scrolled .logo__mark,
+.nav--c.is-scrolled .logo__mark {
+  height: 42px;
+}
+/* C: slides up out of view while scrolling down */
+.nav--c.is-hidden {
+  translate: 0 -100%;
+}
+/* B: once scrolled, the bar itself disappears and the logo and menu gather
+   into a cream pill centered near the top */
+.nav--b.is-scrolled {
+  height: auto;
+  padding-top: 14px;
+  color: var(--bordeaux);
+  pointer-events: none;
+}
+.nav--b .nav__inner {
+  transition:
+    max-width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    height 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    padding 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.nav--b.is-scrolled .nav__inner {
+  max-width: 360px;
+  height: 60px;
+  padding: 0 10px 0 26px;
+  background: var(--cream);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(62, 25, 33, 0.1),
+    0 10px 30px -12px rgba(62, 25, 33, 0.35);
+  pointer-events: auto;
+}
+.nav--b.is-scrolled .logo__mark {
+  height: 36px;
+}
+.nav--b.is-scrolled .moon-mark {
+  width: 36px;
+  height: 36px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav--a,
+  .nav--b,
+  .nav--c,
+  .nav--b .nav__inner {
+    transition: none;
+  }
+}
+
 /* The white logo file, painted in the nav's text color through a mask */
 .logo__mark {
   display: block;
@@ -496,7 +579,7 @@ main > section:first-child {
   margin: 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 19px;
+  font-size: 26px;
   color: var(--red);
   text-align: right;
 }

@@ -8,7 +8,6 @@ import Contact from './pages/Contact'
 import Home from './pages/home/Home'
 import ReviewPage from './pages/review/ReviewPage'
 import Services from './pages/Services'
-import { bodyFontStacks, useSectionDesign } from './sectionDesigns'
 
 const titles: Record<string, string> = {
   '/': 'Luna Civic Strategies',
@@ -32,20 +31,10 @@ function RouteEffects() {
   return null
 }
 
-// The Body Font pick, applied to the whole site's body copy
-function BodyFont() {
-  const [font] = useSectionDesign('bodyFont')
-  useEffect(() => {
-    document.documentElement.style.setProperty('--font-sans', bodyFontStacks[font])
-  }, [font])
-  return null
-}
-
 export default function App() {
   return (
     <>
       <RouteEffects />
-      <BodyFont />
       <Nav />
       <main>
         <Routes>

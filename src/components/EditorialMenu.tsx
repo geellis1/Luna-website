@@ -30,7 +30,7 @@ function MoonMark({ closing = false }: { closing?: boolean }) {
   )
 }
 
-export default function EditorialMenu({ light }: { light: boolean }) {
+export default function EditorialMenu({ light, className = '' }: { light: boolean; className?: string }) {
   const [open, setOpen] = useState(false)
   const [closing, setClosing] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
@@ -86,7 +86,7 @@ export default function EditorialMenu({ light }: { light: boolean }) {
   }, [open, closing])
 
   return (
-    <header className={`nav nav--menu${light ? ' nav--on-light' : ''}`}>
+    <header className={`nav nav--menu${light ? ' nav--on-light' : ''} ${className}`}>
       <div className="container nav__inner">
         <Link to="/" className="logo">
           <span className="logo__mark" role="img" aria-label="Luna Civic Strategies" />

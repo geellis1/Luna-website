@@ -26,11 +26,9 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
-  'bodyFont:system': 'Current — Apple System',
-  'bodyFont:inter': 'Inter',
-  'bodyFont:hanken': 'Hanken Grotesk',
-  'bodyFont:schibsted': 'Schibsted Grotesk',
-  'bodyFont:dm': 'DM Sans',
+  'nav:a': 'Option A — Sticky',
+  'nav:b': 'Option B — Floating Pill',
+  'nav:c': 'Option C — Hide and Return',
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
@@ -56,7 +54,7 @@ const section = (key: SectionKey): Section => ({
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
   // On every page: previewing stays on the page being viewed (path '')
-  { id: 'everywhere', title: 'Every Page', path: '', sections: [section('bodyFont')] },
+  { id: 'everywhere', title: 'Every Page', path: '', sections: [section('nav')] },
 ]
 
 export const pageForPath = (pathname: string) => pages.find((p) => p.path === pathname) ?? pages[0]

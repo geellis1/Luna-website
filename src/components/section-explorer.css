@@ -718,19 +718,6 @@
   object-fit: cover;
   object-position: 50% 22%;
 }
-/* Body Font options: a type specimen */
-.sx-preview--font {
-  aspect-ratio: 120 / 64;
-  display: grid;
-  place-items: center;
-  background: var(--cream);
-  color: var(--bordeaux);
-  border: 1px solid rgba(62, 25, 33, 0.12);
-  font-size: 1.9rem;
-  font-weight: 500;
-  line-height: 1;
-}
-
 /* Phones: the drawer takes the screen, with a little air around it */
 @media (max-width: 520px) {
   .sx-drawer {

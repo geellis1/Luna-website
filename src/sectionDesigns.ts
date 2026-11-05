@@ -35,30 +35,18 @@ export const sectionDesigns = {
     ],
   },
 
-  // On every page: the typeface for body copy (headlines keep theirs)
-  bodyFont: {
-    title: 'Body Font',
-    param: 'font',
+  // On every page: how the nav behaves as the page scrolls
+  nav: {
+    title: 'Navigation',
+    param: 'nav',
     anchor: '',
     choices: [
-      { id: 'system', label: 'Current — Apple System', note: 'The device’s own font (San Francisco on Apple)' },
-      { id: 'inter', label: 'Inter', note: 'Clean and open; the common free stand-in for Helvetica' },
-      { id: 'hanken', label: 'Hanken Grotesk', note: 'A tighter, more traditional grotesque' },
-      { id: 'schibsted', label: 'Schibsted Grotesk', note: 'Grotesque with a little editorial character' },
-      { id: 'dm', label: 'DM Sans', note: 'Geometric and friendly, slightly rounder' },
+      { id: 'a', label: 'A — Sticky', note: 'Stays at the top; turns into a cream bar once you scroll' },
+      { id: 'b', label: 'B — Floating Pill', note: 'Once you scroll, the logo and menu float in a centered pill' },
+      { id: 'c', label: 'C — Hide and Return', note: 'Slides away as you scroll down, comes back when you scroll up' },
     ],
   },
 } as const satisfies Record<string, Group>
-
-// Each body font's stack (the free ones load from Google Fonts in index.html)
-const systemSans = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-export const bodyFontStacks: Record<(typeof sectionDesigns)['bodyFont']['choices'][number]['id'], string> = {
-  system: systemSans,
-  inter: `'Inter', ${systemSans}`,
-  hanken: `'Hanken Grotesk', ${systemSans}`,
-  schibsted: `'Schibsted Grotesk', ${systemSans}`,
-  dm: `'DM Sans', ${systemSans}`,
-}
 
 export type SectionKey = keyof typeof sectionDesigns
 export type SectionDesign<K extends SectionKey> = (typeof sectionDesigns)[K]['choices'][number]['id']
