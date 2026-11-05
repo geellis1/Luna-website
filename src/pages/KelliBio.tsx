@@ -2,18 +2,61 @@
 // portrait in the middle and her bio wrapping around her silhouette on both
 // sides. Each column floats an invisible half of her silhouette (a traced
 // polygon) that the text flows around; the photo sits over the center line.
-// On phones it's photo, then text.
+// The bio's size is fitted to her: the largest size at which both columns
+// end at the bottom of her photo, so the text fills the space around her and
+// she stands on the section's bottom edge. On phones it's photo, then text.
 // Styles: "Kelli" in index.css.
 
+import { useLayoutEffect, useRef } from 'react'
 import { kelliPhoto as photo } from './headshots'
 
+// Below this width the bio sits under the photo in one column (index.css)
+const SIDE_BY_SIDE = '(min-width: 1100px)'
+
+function useFittedBio() {
+  const spread = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const el = spread.current
+    if (!el) return
+    const fit = () => {
+      if (!window.matchMedia(SIDE_BY_SIDE).matches) {
+        el.style.removeProperty('--bio-size')
+        return
+      }
+      const img = el.querySelector<HTMLElement>('.kelli__photo')
+      const ends = [...el.querySelectorAll<HTMLElement>('.kelli__col > :last-child')]
+      if (!img || !ends.length) return
+      // How far the longer column runs past her (negative: room to spare)
+      const over = (px: number) => {
+        el.style.setProperty('--bio-size', `${px}px`)
+        const bottom = img.getBoundingClientRect().bottom
+        return Math.max(...ends.map((e) => e.getBoundingClientRect().bottom - bottom))
+      }
+      let lo = 15
+      let hi = 26
+      for (let i = 0; i < 9; i++) {
+        const mid = (lo + hi) / 2
+        if (over(mid) <= 0) lo = mid
+        else hi = mid
+      }
+      over(Math.floor(lo * 4) / 4)
+    }
+    fit()
+    document.fonts.ready.then(fit)
+    window.addEventListener('resize', fit)
+    return () => window.removeEventListener('resize', fit)
+  }, [])
+  return spread
+}
+
 export default function KelliBio() {
+  const spread = useFittedBio()
   return (
     <section className="section kelli" id="kelli">
       <div className="container">
         <h2 className="kelli__title">Hi, I’m Kelli.</h2>
 
-        <div className="kelli__spread">
+        <div ref={spread} className="kelli__spread">
           <img
             className="kelli__photo"
             src={photo.src}
@@ -28,7 +71,7 @@ export default function KelliBio() {
               For better or for worse, I am an optimist, a visionary, and I believe wholeheartedly in
               the radical power of imagination.
             </p>
-            <p>
+            <p className="kelli__pull">
               <strong>
                 If we can’t picture a better world, one where our friends, our family, and our
                 neighbors can thrive, how can we ever build it?
@@ -44,15 +87,17 @@ export default function KelliBio() {
             <h3 className="kelli__subhead">That belief is what brought me to this work.</h3>
             <p>
               For nearly a decade, I led AWAKE Tennessee, a statewide gender equity policy and
-              advocacy nonprofit. I built its legislative presence, its training infrastructure, its
-              funder relationships, and its reputation in a supermajority Republican legislature,
-              during some of the most hostile sessions for gender equity policy in Tennessee’s
-              history.
+              advocacy nonprofit.
             </p>
           </div>
 
           <div className="kelli__col kelli__col--right">
             <span className="kelli__wrap kelli__wrap--right" aria-hidden="true" style={{ shapeOutside: `${photo.right} border-box` }} />
+            <p>
+              I built its legislative presence, its training infrastructure, its funder
+              relationships, and its reputation in a supermajority Republican legislature, during
+              some of the most hostile sessions for gender equity policy in Tennessee’s history.
+            </p>
             <p>
               My approach is grounded in intersectional feminist theory, collective action
               frameworks, and a deep commitment to centering the people most impacted by policy in

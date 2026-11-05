@@ -97,7 +97,7 @@
 .caps__text {
   margin: 0 0 18px;
   font-family: var(--font-serif);
-  font-size: clamp(1rem, 1.1vw, 1.12rem);
+  font-size: clamp(1.0625rem, 1.2vw, 1.125rem);
   line-height: 1.45;
 }
 .caps__more {

@@ -54,7 +54,7 @@
   max-width: 560px;
   padding-top: 16px;
   margin-bottom: clamp(12px, 2vw, 28px) !important;
-  font-size: 0.92rem;
+  font-size: 1.0625rem;
   line-height: 1.5;
   opacity: 0;
   transition: opacity 0.8s ease 0.9s;

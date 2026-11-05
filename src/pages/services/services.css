@@ -62,7 +62,7 @@
 .svc-intro__lede {
   margin: 0;
   max-width: 46ch;
-  font-size: 1.05rem;
+  font-size: 1.125rem;
   line-height: 1.55;
 }
 .svc-intro__index {
@@ -102,7 +102,7 @@
 }
 .svc-desc {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.6;
 }
 .svc-list__heading {
@@ -125,7 +125,7 @@
   display: flex;
   gap: 16px;
   padding: 13px 0;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   border-bottom: 1px solid var(--rule);
   counter-increment: svc;
 }

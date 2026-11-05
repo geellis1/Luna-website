@@ -39,7 +39,7 @@
 .why-b__lede {
   margin: 0;
   max-width: 46ch;
-  font-size: clamp(0.95rem, 1vw, 1.05rem);
+  font-size: clamp(1.0625rem, 1.2vw, 1.125rem);
   line-height: 1.6;
   opacity: 0;
   translate: 0 12px;
