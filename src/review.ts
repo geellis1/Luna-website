@@ -44,6 +44,11 @@ const names: Record<string, string> = {
   'footer:a': 'Option A — Editorial Colophon',
   'footer:b': 'Option B — Service Bands',
   'footer:c': 'Option C — Moon Wordmark',
+  'bodyFont:system': 'Current — Apple System',
+  'bodyFont:inter': 'Inter',
+  'bodyFont:hanken': 'Hanken Grotesk',
+  'bodyFont:schibsted': 'Schibsted Grotesk',
+  'bodyFont:dm': 'DM Sans',
   'contact:a': 'Editorial Letter',
   'contact:b': 'Letter + Collage',
   'contact:c': 'Split Editorial',
@@ -121,7 +126,7 @@ export const pages: Page[] = [
   { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
   // On every page: previewing stays on the page being viewed (path '')
-  { id: 'everywhere', title: 'Every Page', path: '', sections: [section('footer')] },
+  { id: 'everywhere', title: 'Every Page', path: '', sections: [section('bodyFont'), section('footer')] },
 ]
 
 export const pageForPath = (pathname: string) => pages.find((p) => p.path === pathname) ?? pages[0]

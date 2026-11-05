@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { SectionDesign } from '../sectionDesigns'
+import { bodyFontStacks, type SectionDesign } from '../sectionDesigns'
 import { headshots } from '../pages/headshots'
 
 // Small pictures of each Round 2 design, drawn in the brand colors, for the
@@ -31,7 +31,17 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   }
   if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
   if (section === 'services') return <ServicesPreview id={id as SectionDesign<'services'>} />
+  if (section === 'bodyFont') return <FontPreview id={id as SectionDesign<'bodyFont'>} />
   return <WorkPreview id={id} />
+}
+
+// A type specimen, set in the font itself
+function FontPreview({ id }: { id: SectionDesign<'bodyFont'> }) {
+  return (
+    <div className="sx-preview sx-preview--font" style={{ fontFamily: bodyFontStacks[id] }}>
+      Aa
+    </div>
+  )
 }
 
 function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {

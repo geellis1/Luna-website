@@ -117,6 +117,19 @@ export const sectionDesigns = {
       { id: 'c', label: 'Option C — Moon Wordmark', note: 'Tonight’s moon and an oversized LUNA' },
     ],
   },
+  // On every page: the typeface for body copy (headlines keep theirs)
+  bodyFont: {
+    title: 'Body Font',
+    param: 'font',
+    anchor: '',
+    choices: [
+      { id: 'system', label: 'Current — Apple System', note: 'The device’s own font (San Francisco on Apple)' },
+      { id: 'inter', label: 'Inter', note: 'Clean and open; the common free stand-in for Helvetica' },
+      { id: 'hanken', label: 'Hanken Grotesk', note: 'A tighter, more traditional grotesque' },
+      { id: 'schibsted', label: 'Schibsted Grotesk', note: 'Grotesque with a little editorial character' },
+      { id: 'dm', label: 'DM Sans', note: 'Geometric and friendly, slightly rounder' },
+    ],
+  },
   aboutHeadshot: {
     title: 'About · Kelli’s Headshot',
     param: 'photo',
@@ -164,6 +177,16 @@ export const sectionDesigns = {
     ],
   },
 } as const satisfies Record<string, Group>
+
+// Each body font's stack (the free ones load from Google Fonts in index.html)
+const systemSans = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+export const bodyFontStacks: Record<(typeof sectionDesigns)['bodyFont']['choices'][number]['id'], string> = {
+  system: systemSans,
+  inter: `'Inter', ${systemSans}`,
+  hanken: `'Hanken Grotesk', ${systemSans}`,
+  schibsted: `'Schibsted Grotesk', ${systemSans}`,
+  dm: `'DM Sans', ${systemSans}`,
+}
 
 export type SectionKey = keyof typeof sectionDesigns
 export type SectionDesign<K extends SectionKey> = (typeof sectionDesigns)[K]['choices'][number]['id']
