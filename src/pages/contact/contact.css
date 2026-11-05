@@ -1,5 +1,5 @@
-/* ---------- Contact page: Round 2 designs ----------
-   The shared letter form, then the three page layouts around it.
+/* ---------- Contact page ----------
+   The letter form, its confirmation, then the Split Editorial layout.
    Brand colors only (with tints of Night Bordeaux for lines). */
 .ct {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -83,6 +83,26 @@
   opacity: 0.38;
 }
 
+/* A required blank left empty: its line turns Signal Red and thickens */
+.blank.is-missing .blank__input {
+  border-bottom-color: var(--red);
+  box-shadow: inset 0 -1px 0 var(--red);
+}
+.blank.is-missing .blank__input::placeholder {
+  color: var(--red);
+  opacity: 0.7;
+}
+/* "(optional)" after a prompt: small and quiet */
+.letter__optional {
+  font-family: var(--font-sans);
+  font-size: 0.55em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 0.15em;
+  opacity: 0.55;
+}
+
 /* Services as tags (real checkboxes underneath) */
 .letter__services {
   margin: 0;
@@ -137,6 +157,13 @@
 .tag input:checked + span::before {
   content: '✓';
 }
+/* No service chosen yet: the tags' outlines turn Signal Red */
+.letter__services.is-missing .tag span {
+  border-color: var(--red);
+}
+.letter__services.is-missing legend {
+  color: var(--red);
+}
 .tag input:focus-visible + span {
   outline: 2px solid var(--crimson);
   outline-offset: 3px;
@@ -189,163 +216,78 @@
   color: var(--red);
 }
 
-/* ===== A · Editorial Letter ===== */
-.ct-a {
-  width: min(100% - 2 * var(--gutter), 1040px);
-  margin-inline: auto;
-}
-.ct-a__title {
-  margin-bottom: clamp(28px, 3vw, 48px) !important;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3rem, 6.6vw, 6.75rem);
-  line-height: 0.9;
-  text-align: center;
-  text-transform: uppercase;
-}
-.ct-a__title em {
-  font-style: italic;
-  color: var(--crimson);
-}
-.ct-a__sheet {
-  padding: clamp(28px, 5vw, 72px) clamp(24px, 6.5vw, 96px);
-  border: 1.5px solid var(--bordeaux);
-  border-radius: 28px;
-  opacity: 0;
-  translate: 0 18px;
-  transition:
-    opacity 0.8s ease 0.2s,
-    translate 0.9s var(--ease-out) 0.2s;
-}
-.ct--a.is-in .ct-a__sheet {
-  opacity: 1;
-  translate: none;
-}
-
-/* ===== B · Letter + Collage ===== */
-.ct-b {
+/* ===== Confirmation =====
+   Takes the letter's place once it's sent: a moon fills in, then "Received."
+   rises in large and the line follows, on the same cream. */
+.received {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  align-items: start;
-  gap: clamp(40px, 5vw, 96px);
-  width: min(100% - 2 * var(--gutter), 1440px);
-  margin-inline: auto;
+  justify-items: start;
+  gap: clamp(18px, 2vw, 28px);
+  max-width: 780px;
+  padding-top: clamp(8px, 4vw, 64px);
+  outline: none;
 }
-.ct-b__title {
+.received__moon {
+  width: clamp(72px, 7vw, 104px);
+  overflow: visible;
+}
+.received__ring {
+  fill: none;
+  stroke: var(--crimson);
+  stroke-width: 1.5;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: received-draw 1.1s var(--ease-out) forwards;
+}
+.received__disc {
+  fill: var(--crimson);
+  transform-origin: 50px 50px;
+  scale: 0;
+  animation: received-fill 0.9s var(--ease-out) 0.7s forwards;
+}
+.received__title {
+  overflow: hidden;
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3.4rem, 7.2vw, 8rem);
-  line-height: 0.86;
-  text-transform: uppercase;
-}
-.ct-b__title em {
-  font-style: italic;
-  color: var(--crimson);
-}
-.ct-b__lede {
-  max-width: 34ch;
-  margin-top: clamp(18px, 2vw, 28px) !important;
-  font-size: clamp(1rem, 1.15vw, 1.15rem);
-  line-height: 1.6;
-}
-/* The paper pieces: settle in on first view; the moon and note drift
-   slightly with the scroll (--p) */
-.ct-b__collage {
-  position: relative;
-  height: clamp(300px, 28vw, 430px);
-  margin-top: clamp(28px, 3vw, 48px);
-}
-.ct-b__collage > * {
-  position: absolute;
-  opacity: 0;
-  transform: translateY(30px) rotate(var(--from, 0deg));
-  transition:
-    opacity 0.7s ease var(--delay),
-    transform 1s var(--ease-out) var(--delay);
-}
-.ct--b.is-in .ct-b__collage > * {
-  opacity: 1;
-  transform: none;
-}
-.ct-b__moon {
-  --delay: 0.3s;
-  top: 2%;
-  left: 42%;
-  width: 46%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--powder);
-  translate: 0 calc(var(--p, 0) * -28px);
-}
-.ct-b__poster {
-  --delay: 0.5s;
-  --from: -10deg;
-  top: 16%;
-  left: 2%;
-  width: 52%;
-  padding: 7% 7% 9%;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 2.9vw, 3.1rem);
+  font-size: clamp(4rem, 9vw, 8.5rem);
   line-height: 0.9;
   text-transform: uppercase;
-  color: var(--cream);
-  background: var(--crimson);
-  rotate: -4deg;
 }
-.ct-b__strip {
-  --delay: 0.65s;
-  top: 80%;
-  left: 10%;
-  width: 38%;
-  height: 14px;
-  background: var(--chartreuse);
-  rotate: 5deg;
-}
-.ct-b__note {
-  --delay: 0.8s;
-  --from: 12deg;
-  top: 50%;
-  left: 46%;
-  width: 46%;
-  padding: 5% 6% 6%;
-  font-family: var(--font-hand);
-  font-size: clamp(1.1rem, 1.55vw, 1.6rem);
-  line-height: 1.25;
-  background: #fff;
-  rotate: 5deg;
-  translate: 0 calc(var(--p, 0) * 18px);
-}
-/* The note's handwriting writes itself on, line by line */
-.ct-b__note span {
+.received__title span {
   display: block;
-  clip-path: inset(-20% 100% -20% 0);
-  transition: clip-path 0.8s linear;
+  translate: 0 105%;
+  animation: received-rise 1s var(--ease-out) 1s forwards;
 }
-.ct-b__note span:nth-child(1) {
-  transition-delay: 1.3s;
-}
-.ct-b__note span:nth-child(2) {
-  transition-delay: 2s;
-}
-.ct-b__note span:nth-child(3) {
-  transition-delay: 2.7s;
-}
-.ct--b.is-in .ct-b__note span {
-  clip-path: inset(-20% -5% -20% 0);
-}
-.ct-b__frame {
-  padding: clamp(28px, 4vw, 64px);
-  background: #fff;
-  border: 1.5px solid var(--bordeaux);
-  border-radius: 24px;
+.received__line {
+  max-width: 22ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-style: italic;
+  line-height: 1.3;
   opacity: 0;
-  transition: opacity 0.8s ease 0.2s;
+  animation: received-fade 0.9s ease 1.5s forwards;
 }
-.ct--b.is-in .ct-b__frame {
-  opacity: 1;
+@keyframes received-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes received-fill {
+  to {
+    scale: 1;
+  }
+}
+@keyframes received-rise {
+  to {
+    translate: none;
+  }
+}
+@keyframes received-fade {
+  to {
+    opacity: 1;
+  }
 }
 
-/* ===== C · Split Editorial ===== */
+/* ===== Split Editorial ===== */
 .ct--c {
   padding-bottom: 0;
 }
@@ -397,13 +339,8 @@
 
 /* ===== Tablet ===== */
 @media (max-width: 1024px) {
-  .ct-b,
   .ct-c {
     grid-template-columns: 1fr;
-  }
-  .ct-b__collage {
-    height: clamp(280px, 50vw, 380px);
-    max-width: 560px;
   }
   .ct-c__panel {
     padding: clamp(40px, 7vw, 64px) var(--gutter);
@@ -419,7 +356,7 @@
   }
 }
 
-/* ===== Phones: blanks on their own lines, simpler collage ===== */
+/* ===== Phones: blanks on their own lines ===== */
 @media (max-width: 640px) {
   .letter {
     font-size: 1.15rem;
@@ -437,23 +374,6 @@
   .tag span {
     font-size: 0.68em;
   }
-  .ct-a__sheet {
-    padding: 28px 20px;
-    border-radius: 20px;
-  }
-  .ct-b__collage {
-    height: 250px;
-  }
-  .ct-b__poster {
-    font-size: 1.5rem;
-  }
-  .ct-b__note {
-    font-size: 1.05rem;
-  }
-  .ct-b__frame {
-    padding: 24px 20px;
-    border-radius: 20px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -463,8 +383,11 @@
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
-  .ct-b__moon,
-  .ct-b__note {
+  .received * {
+    animation: none !important;
+    stroke-dashoffset: 0;
+    scale: 1;
     translate: none;
+    opacity: 1;
   }
 }

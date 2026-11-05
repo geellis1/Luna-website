@@ -34,17 +34,6 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
-  contact: {
-    title: 'Contact Page — Three Directions',
-    param: 'contact',
-    anchor: 'contact-page',
-    path: '/contact',
-    choices: [
-      { id: 'a', label: 'Option A: Editorial Letter', note: 'The form as a letter on framed stationery' },
-      { id: 'b', label: 'Option B: Letter + Collage', note: 'Layered paper pieces beside the letter' },
-      { id: 'c', label: 'Option C: Split Editorial', note: 'A huge statement on crimson beside the letter' },
-    ],
-  },
 
   // On every page: the typeface for body copy (headlines keep theirs)
   bodyFont: {

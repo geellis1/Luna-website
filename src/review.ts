@@ -5,7 +5,7 @@ import { readDesign, sectionDesigns, type SectionKey } from './sectionDesigns'
 // favorites and comments.
 //
 // Every design has a stable key, "<section>:<design>" (e.g. "intro:a1",
-// "contact:b"). Favorites and comments are stored under those keys in this
+// "intro:a2"). Favorites and comments are stored under those keys in this
 // browser (localStorage), so they survive refreshes and page changes. To
 // share them, the whole review is packed into a link (/review?r=…) that opens
 // a read-only summary on any browser or device; no account or server needed.
@@ -31,13 +31,9 @@ const names: Record<string, string> = {
   'bodyFont:hanken': 'Hanken Grotesk',
   'bodyFont:schibsted': 'Schibsted Grotesk',
   'bodyFont:dm': 'DM Sans',
-  'contact:a': 'Editorial Letter',
-  'contact:b': 'Letter + Collage',
-  'contact:c': 'Split Editorial',
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
-  contact: 'Contact Page',
 }
 
 // A section's designs
@@ -59,7 +55,6 @@ const section = (key: SectionKey): Section => ({
 
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
-  { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
   // On every page: previewing stays on the page being viewed (path '')
   { id: 'everywhere', title: 'Every Page', path: '', sections: [section('bodyFont')] },
 ]

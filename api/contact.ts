@@ -39,7 +39,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     : []
 
   if (!firstName || !lastName) return res.status(400).json({ error: 'Please enter your first and last name.' })
+  if (!organization) return res.status(400).json({ error: 'Please enter your organization.' })
   if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Please enter a valid email address.' })
+  if (!services.length) return res.status(400).json({ error: 'Please choose what you’re interested in exploring.' })
 
   const rows: [string, string][] = [
     ['Name', `${firstName} ${lastName}`],
