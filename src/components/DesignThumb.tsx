@@ -37,10 +37,11 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
 }
 
 // Headline bars crossing two rounded photos: A turns the crossing cream over a
-// dimmed photo, B keeps it dark over a washed-out one, C is B in black & white
+// dimmed photo, B keeps it dark over a washed-out one, C is B in black & white,
+// D inverts the photo inside the letters
 function HeroPreview({ id }: { id: SectionDesign<'hero'> }) {
-  const photo = { a: C.crimson, b: '#C9B8BC', c: '#BDBDBD' }[id]
-  const cross = id === 'a' ? C.cream : C.bordeaux
+  const photo = { a: C.crimson, b: '#C9B8BC', c: '#BDBDBD', d: C.powder }[id]
+  const cross = { a: C.cream, b: C.bordeaux, c: C.bordeaux, d: '#654828' }[id]
   const bars = [18, 30, 42]
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
@@ -50,7 +51,7 @@ function HeroPreview({ id }: { id: SectionDesign<'hero'> }) {
       {bars.map((y) => (
         <rect key={y} x="20" y={y} width="80" height="7" rx="1" fill={C.bordeaux} />
       ))}
-      {id === 'a' && (
+      {(id === 'a' || id === 'd') && (
         <>
           <rect x="78" y="18" width="22" height="7" fill={cross} />
           <rect x="78" y="30" width="22" height="4" fill={cross} />

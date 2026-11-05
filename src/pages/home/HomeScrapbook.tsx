@@ -21,8 +21,9 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// Option A: each photo sits over the headline and carries its own copy of it,
-// lined up with the real one, so letters crossing a photo show in cream. The
+// Options A and D: each photo sits over the headline and carries its own copy
+// of it, lined up with the real one, so letters crossing a photo show in cream
+// (A) or as the photo inverted (D). The
 // copy is placed from the photo's offset in the board, kept current on resize.
 function useAlignedCopies(on: boolean) {
   const board = useRef<HTMLDivElement>(null)
@@ -46,7 +47,7 @@ function useAlignedCopies(on: boolean) {
 
 export default function HomeScrapbook() {
   const [design] = useSectionDesign('hero')
-  const copies = design === 'a'
+  const copies = design === 'a' || design === 'd'
   const board = useAlignedCopies(copies)
   return (
     <>

@@ -188,7 +188,8 @@
    little, each showing its lined-up copy of the headline in cream. The copy
    undoes the photo's own entrance and drift so it never shifts off the real
    letters. */
-.scrap-hero--a .scrap-card {
+.scrap-hero--a .scrap-card,
+.scrap-hero--d .scrap-card {
   z-index: 2;
 }
 .scrap-hero--a .scrap-card img {
@@ -204,6 +205,13 @@
   animation:
     scrap-drop-undo 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both,
     scrap-drift-undo 12s ease-in-out var(--drift) infinite;
+}
+/* Option D — Knockout: the same lined-up copy, but it inverts the photo
+   behind it (difference blend), so letters crossing a photo show it in
+   negative; the photos stay full color */
+.scrap-hero--d .scrap-card__copy {
+  color: #fff;
+  mix-blend-mode: difference;
 }
 @keyframes scrap-drop-undo {
   from {
