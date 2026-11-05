@@ -870,33 +870,63 @@ fieldset.field {
   }
 }
 
-/* ---------- About hero ----------
-   Big bold centered headline; its letters rise into place one by one (then
-   stay still), then the collage moons fade up beneath it, left to right, and float gently. The
-   outline of the moon nearest the current phase turns chartreuse. Intro and
-   pillars follow. */
-.about-hero__center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(20px, 4vh, 48px);
+/* ---------- About header ----------
+   The Services header's layout (small label, large title on the left, intro
+   on the right, a rule beneath) in cream on Night Bordeaux. The collage moons
+   follow in a slim row: they fade up one by one, left to right, and float
+   gently; the outline of the moon nearest the current phase turns
+   chartreuse. The pillars follow. */
+/* Same top position as the Services header, which isn't the page's first
+   section and so doesn't get the nav-clearing border this one does */
+.section.about-head {
+  padding-block: max(0px, clamp(120px, 12vw, 160px) - var(--nav-h) - var(--below-nav)) clamp(56px, 6vw, 88px);
 }
-.about-hero__title {
+.about-head__wrap {
+  padding-inline: var(--gutter);
+}
+.about-head__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: end;
+  gap: 18px clamp(32px, 5vw, 80px);
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-bottom: clamp(28px, 3vw, 40px);
+  border-bottom: 1px solid rgba(245, 240, 232, 0.25);
+}
+.about-head__kicker {
+  grid-column: 1 / -1;
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: clamp(3.25rem, min(11vw, 14vh), 10rem);
+  font-size: 0.78rem;
   font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  text-align: center;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--powder);
 }
-.about-hero__char {
-  display: inline-block;
-  animation: about-char 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(0.3s + var(--i) * 0.06s) both;
+.about-head__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 7.2vw, 6.6rem);
+  line-height: 0.86;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
-.about-hero__moons {
+.about-head__lede {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+/* A slim row of moons under the header */
+.about-head__moons {
+  display: flex;
+  justify-content: center;
+  margin: clamp(28px, 3.5vw, 48px) 0 clamp(40px, 5vw, 72px);
+}
+.about-head__collage {
   display: block;
-  width: min(100%, 1100px);
+  width: min(100%, 760px);
   overflow: visible;
 }
 .collage-tile {
@@ -913,23 +943,6 @@ fieldset.field {
 .collage-tile.is-active .collage-tile__line {
   stroke: var(--chartreuse);
   stroke-opacity: 1;
-}
-.about-hero__lede {
-  max-width: 62ch;
-  margin: clamp(48px, 6vw, 80px) auto clamp(48px, 6vw, 88px);
-  text-align: center;
-}
-@keyframes about-char {
-  from {
-    opacity: 0;
-    transform: translateY(0.45em);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
 }
 @keyframes collage-in {
   from {
@@ -952,19 +965,24 @@ fieldset.field {
     translate: 0 -6px;
   }
 }
-@media (max-width: 760px) {
-  /* Let the row run wider than the screen so the moons stay a decent size */
-  .about-hero__moons {
-    width: 170vw;
-    max-width: none;
+@media (max-width: 900px) {
+  .about-head__inner {
+    grid-template-columns: 1fr;
   }
-  .about-hero__center {
+}
+@media (max-width: 760px) {
+  /* Let the row run a little wider than the screen so the moons stay legible */
+  .about-head__moons {
     overflow: hidden;
-    margin: 0 calc(-1 * var(--gutter));
+    margin-inline: calc(-1 * var(--gutter));
+  }
+  .about-head__collage {
+    width: 130vw;
+    max-width: none;
+    flex: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .about-hero__char,
   .collage-tile {
     animation: none;
   }
