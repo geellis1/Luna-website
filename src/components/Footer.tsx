@@ -8,7 +8,7 @@ import './footer.css'
 // Site footer: Night Bordeaux with tonight's moon phase on the left, the page
 // links and a Start a Conversation button on the right, then the small print. On the home page a
 // cream band leads into it: "Every engagement begins with a conversation."
-// (its two key words in Powder Blue) with a Powder Blue circular Let's Chat
+// ("conversation" in Powder Blue) with a Powder Blue circular Let's Chat
 // button. Builds in once when it scrolls into view.
 // Styles: footer.css.
 
@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="ft-lead">
           <div className="ft__wrap ft-lead__row">
             <p className="ft-lead__line">
-              Every <span className="ft-lead__accent">engagement</span> begins with a{' '}
+              Every engagement begins with a{' '}
               <span className="ft-lead__accent">conversation</span>.
             </p>
             <Link to="/contact" className="ft-lead__chat">

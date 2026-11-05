@@ -94,7 +94,7 @@
    padding shorthand, which loads after this file. */
 .scrap-hero .scrap-hero__stage {
   padding-top: clamp(48px, 9vh, 112px);
-  padding-bottom: 100px;
+  padding-bottom: clamp(24px, 3vw, 40px);
 }
 /* The board is the headline's box; cut-outs and the note are placed on it */
 /* Spare height goes above the headline, so the bottom row stays close to it */
@@ -193,52 +193,9 @@
   opacity: 0.68;
 }
 
-/* Handwritten note that writes itself on, line by line */
-.scrap-hero__note {
-  position: absolute;
-  z-index: 3;
-  /* Just past the end of "change." (placed by HomeScrapbook) */
-  left: calc(var(--note-x, 75%) + 1em);
-  top: var(--note-y, 82%);
-  width: max-content;
-  margin: 0;
-  font-family: var(--font-hand);
-  font-size: clamp(1.45rem, 2.6vw, 2.45rem);
-  line-height: 1.15;
-  color: var(--p-text);
-  text-align: left;
-  rotate: -8deg;
-}
-.scrap-hero__note span {
-  display: block;
-  clip-path: inset(-20% 100% -20% 0);
-  animation: scrap-write 1s linear both;
-}
-.scrap-hero__note span:nth-child(2) {
-  padding-left: 1.4em;
-}
-.scrap-hero__note span:nth-child(3) {
-  padding-left: 2.6em;
-}
-.scrap-hero__scribble {
-  display: block;
-  width: 6.2em;
-  margin-left: 2.4em;
-  fill: none;
-  stroke: var(--p-script);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-.scrap-hero__scribble path {
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  animation: scrap-underline 0.9s ease-out 5.1s forwards;
-}
-
 /* Bottom row (shared .hero-foot styles) */
 .scrap-hero__foot {
-  /* Clears the handwritten note, which hangs below the headline */
-  margin-top: max(clamp(64px, 9vh, 104px), var(--note-hang, 0px) + 28px);
+  margin-top: clamp(48px, 7vh, 80px);
   animation: scrap-fade 1.4s ease 3s both;
 }
 
@@ -269,16 +226,6 @@
     translate: 0 -8px;
   }
 }
-@keyframes scrap-write {
-  to {
-    clip-path: inset(-20% -10% -20% 0);
-  }
-}
-@keyframes scrap-underline {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
 @keyframes scrap-fade {
   from {
     opacity: 0;
@@ -290,7 +237,7 @@
 
 @media (max-width: 760px) {
   .scrap-hero .scrap-hero__stage {
-    padding-bottom: 72px;
+    padding-bottom: 28px;
   }
   .scrap-hero__title {
     font-size: clamp(2.6rem, 13vw, 5rem);
@@ -305,13 +252,6 @@
   .scrap-card--hands {
     width: 26%;
   }
-  .scrap-hero__note {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 16px 0 0 auto;
-    width: max-content;
-  }
   .scrap-hero__foot {
     margin-top: 24px;
   }
@@ -322,12 +262,6 @@
   .scrap-card,
   .scrap-hero__foot {
     animation: none;
-  }
-  .scrap-hero__note span,
-  .scrap-hero__scribble path {
-    animation: none;
-    clip-path: none;
-    stroke-dashoffset: 0;
   }
 }
 

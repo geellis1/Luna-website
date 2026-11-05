@@ -47,7 +47,7 @@
   opacity: 1;
   translate: none;
 }
-/* "engagement" and "conversation" in Powder Blue */
+/* "conversation" in Powder Blue */
 .ft-lead__accent {
   color: var(--powder);
 }

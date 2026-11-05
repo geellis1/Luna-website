@@ -33,7 +33,7 @@ function useReveal() {
   return ref
 }
 
-// A typographic spread on burgundy with a clear grid: "Why Luna." large at
+// A typographic spread on burgundy with a clear grid: "Why Luna?" large at
 // the top left with the intro beside it, then the four reasons in a
 // two-column grid, all in the site's serif at one size. Each reason has one
 // italic key word that warms to powder blue once it's in (chartreuse on
@@ -56,7 +56,7 @@ export default function WhyLuna() {
         <header className="why-b__head" data-reveal>
           <h2 className="why-b__title">
             <span className="why-b__mask">
-              <span>Why Luna.</span>
+              <span>Why Luna?</span>
             </span>
           </h2>
           <p className="why-b__lede">{lede}</p>
