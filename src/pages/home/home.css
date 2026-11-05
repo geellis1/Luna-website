@@ -143,17 +143,18 @@
   height: 100%;
   object-fit: cover;
 }
-/* Top right: rises above the end of line 1 */
+/* Top right: rises a little above the end of line 1, staying clear of the
+   nav; cropped square, the sky trimmed off the top */
 .scrap-card--capitol {
   right: 0%;
-  top: -34%;
+  top: -14%;
   width: 24%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1;
   --in: 1.1s;
   --drift: -3s;
 }
 .scrap-card--capitol img {
-  object-position: 50% 62%;
+  object-position: 50% 85%;
 }
 /* Left: pokes out past the start of lines 2 and 3 */
 .scrap-card--rally {
