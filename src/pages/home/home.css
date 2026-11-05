@@ -256,6 +256,21 @@
   .scrap-card--hands {
     width: 26%;
   }
+  /* Phones: the two right photos further apart, the left one a little
+     higher and the hands a little lower; and they stay still (they only
+     fade in, no floating) */
+  .scrap-card--rally {
+    top: 13%;
+  }
+  .scrap-card--hands {
+    top: 66%;
+  }
+  .scrap-card--meeting {
+    top: 48%;
+  }
+  .scrap-card {
+    animation: scrap-drop 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both;
+  }
   .scrap-hero__foot {
     margin-top: 24px;
   }
