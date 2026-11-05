@@ -1,21 +1,8 @@
-/* ---------- How we work together (Round 2 designs A–C) ----------
-   Shared: a wide two-column layout, with the headline, paragraph and link on
-   the left and the interactive design on the right. Each design has its own
-   shape and motion, with no bounce, and keeps a fixed height so nothing below
-   the section moves. */
-.hww {
-  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --ease-slide: cubic-bezier(0.65, 0, 0.35, 1);
-}
-.hww__title {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(3rem, 5.4vw, 5.75rem);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  color: var(--bordeaux);
-}
+/* ---------- How we work together ----------
+   A wide two-column layout: the headline, paragraph and link as one block on
+   the left, vertically centered on three open arches on the right. Arches
+   have true semicircular tops (999px radii scale down to exactly half the
+   width) and nearly flat bottoms. */
 
 /* Brand color per engagement, and the text color that sits on it */
 .tone--powder {
@@ -31,204 +18,14 @@
   --on: var(--cream);
 }
 
-.caps-a__more,
-.caps-b__more,
-.panel-c__more {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-underline-offset: 4px;
-}
-
-/* ===== C · Editorial Accordion =====
-   Split screen: cream text on the left; on the right three color blocks,
-   flush together, running the section's full height and out to the screen's
-   right edge. The open panel takes 70% of the width and the closed two share
-   the rest; widths change over 0.75s while the total stays fixed. The open
-   panel's content is laid out at its final width (so it never re-wraps) and
-   fades in once there's room. */
-.hww--c {
-  /* The section is at least this tall; the panels fill it either way */
-  --panel-h: clamp(460px, 34vw, 540px);
-}
-.section.hww-wide.hww--c {
-  padding-block: 0;
-}
-.hww--c .hww-wide__layout {
-  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
-  align-items: stretch;
-  width: 100%;
-  max-width: none;
-  padding-inline: 0;
-}
-/* The text keeps the site's left margin (the 1720px frame's edge on very
-   wide screens) and is centered top to bottom */
-.hww--c .hww-wide__intro {
-  align-self: center;
-  max-width: none;
-  padding-right: clamp(32px, 4vw, 72px);
-  padding-block: clamp(48px, 5vw, 72px);
-  padding-left: max(var(--gutter), calc((100vw - 1720px) / 2 + var(--gutter)));
-}
-.hww--c .hww-wide__stage {
-  display: flex;
-}
-.panels-c {
-  container-type: inline-size;
-  display: flex;
-  flex: 1;
-  min-height: var(--panel-h);
-}
-.panel-c {
-  position: relative;
-  flex: 15 1 0;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--on);
-  background: var(--tone);
-  transition: flex-grow 0.75s var(--ease-slide);
-}
-.panel-c.is-open {
-  flex-grow: 70;
-}
-/* A closed panel widens a touch on hover */
-@media (hover: hover) {
-  .panel-c:not(.is-open):hover {
-    flex-grow: 18;
-  }
-}
-.panel-c__spine {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 28px 0;
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-.panel-c__spine:focus-visible {
-  outline: 2px solid var(--on);
-  outline-offset: -8px;
-}
-.panel-c__num {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-.panel-c__arrow {
-  width: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: rotate 0.5s var(--ease-slide);
-}
-/* Closed: number at the top, title centered, arrow at the bottom */
-.panel-c__spine .panel-c__arrow {
-  order: 2;
-}
-.panel-c__vtitle {
-  order: 1;
-  /* Physical margins: with vertical text, "block" margins run sideways */
-  margin-top: auto;
-  margin-bottom: auto;
-  writing-mode: vertical-rl;
-  rotate: 180deg;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 3.4vw, 3.2rem);
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.panel-c__spine > * {
-  transition: opacity 0.3s ease 0.4s;
-}
-.panel-c.is-open .panel-c__spine > * {
-  opacity: 0;
-  transition-delay: 0s;
-  transition-duration: 0.15s;
-}
-/* Open: number and type at the top, a very large title, then the
-   description and link at the bottom */
-.panel-c__sheet {
-  position: absolute;
-  inset: 0 auto 0 0;
-  z-index: 1;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  width: calc(100cqi * 0.7);
-  padding: clamp(28px, 2.6vw, 40px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-.panel-c.is-open .panel-c__sheet {
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 0.45s ease 0.4s;
-}
-.panel-c__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.panel-c__meta {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.panel-c__sheet .panel-c__arrow {
-  rotate: 90deg;
-}
-.panel-c__title {
-  margin: clamp(12px, 2cqi, 22px) 0 0;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(4.5rem, 15cqi, 10rem);
-  line-height: 0.82;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-  translate: -20px 0;
-  transition: translate 0.2s ease;
-}
-.panel-c.is-open .panel-c__title {
-  translate: none;
-  transition: translate 0.7s var(--ease-out) 0.4s;
-}
-.panel-c__body {
-  padding-top: 18px;
-  border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
-  translate: 0 12px;
-  transition: translate 0.2s ease;
-}
-.panel-c.is-open .panel-c__body {
-  translate: none;
-  transition: translate 0.7s var(--ease-out) 0.5s;
-}
-.panel-c__text {
-  margin: 0 0 16px;
-  max-width: 26ch;
-  font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 1.6vw, 1.6rem);
-  line-height: 1.35;
-}
-
-/* ===== Wide layout (A, B and C) =====
-   Uses most of the screen (up to 1720px wide): headline, paragraph and link as
-   one block on the left, vertically centered on the capsules on the right. */
 /* Doubled class so this beats the generic .section padding */
-.section.hww-wide {
+.section.hww {
   padding-block: clamp(72px, 7vw, 104px);
 }
-.hww-wide__layout {
+.hww {
+  --cap-h: clamp(450px, 34vw, 540px);
+}
+.hww__layout {
   display: grid;
   grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
   align-items: center;
@@ -237,243 +34,58 @@
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
-.hww--b .hww-wide__layout {
-  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
-}
-.hww-wide__intro {
+.hww__intro {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   max-width: 520px;
 }
-.hww-wide .hww__title {
+.hww__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
   font-size: clamp(3rem, 4.6vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--bordeaux);
 }
-.hww-wide__lede {
+.hww__lede {
   margin: clamp(20px, 2vw, 28px) 0 clamp(28px, 2.6vw, 36px);
   max-width: 30em;
   font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
   line-height: 1.6;
 }
-.hww-wide__stage {
+.hww__stage {
   min-width: 0;
-}
-.hww--a .hww-wide__stage {
-  justify-self: end;
-  width: 100%;
   display: flex;
   justify-content: flex-end;
 }
-.hww--b .hww-wide__stage {
-  justify-self: center;
-}
 
-/* ===== A · Expanding Capsules (A1) and All Open (A2) =====
-   Arches with true semicircular tops (999px radii scale down to exactly half
-   the width, at any width) and nearly flat bottoms. */
-.hww--a {
-  --cap-h: clamp(450px, 34vw, 540px);
-  --cw: clamp(120px, 10vw, 170px); /* closed capsule */
-  --ow: calc(var(--cap-h) * 1.08); /* open capsule, at most */
-  --gap: 16px;
-}
-.caps-a,
-.caps-a2 {
+.caps {
   display: flex;
-  gap: var(--gap);
-  width: min(100%, calc(2 * var(--cw) + var(--ow) + 2 * var(--gap)));
+  gap: 16px;
+  /* As wide as two slim arches and one wide one would be */
+  width: min(100%, calc(2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h) + 32px));
   height: var(--cap-h);
 }
-.caps-a {
-  container-type: inline-size;
-}
-.caps-a__item,
-.caps-a2__item {
+.caps__item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(20px, 1.8vw, 30px) clamp(28px, 2.4vw, 36px);
   color: var(--on);
   background: var(--tone);
   border-radius: 999px 999px 18px 18px;
 }
-.caps-a__item {
-  position: relative;
-  flex: none;
-  width: var(--cw);
-  overflow: hidden;
-  transition: width 0.6s var(--ease-slide);
-}
-/* The open capsule takes the rest of the row */
-.caps-a__item.is-open {
-  width: calc(100cqi - 2 * var(--cw) - 2 * var(--gap));
-}
-.caps-a__toggle {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
-  border-radius: inherit;
-  cursor: pointer;
-}
-.caps-a__toggle:focus-visible {
-  outline: 2px solid var(--on);
-  outline-offset: -8px;
-}
-.caps-a__num {
-  position: absolute;
-  top: calc(var(--cw) * 0.42);
-  left: 50%;
-  translate: -50% 0;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-.caps-a__vtitle {
-  position: absolute;
-  bottom: 96px;
-  left: 50%;
-  translate: -50% 0;
-  writing-mode: vertical-rl;
-  rotate: 180deg;
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 3.4vw, 3.75rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-/* Closed: number and vertical title come back after the content has gone */
-.caps-a__num,
-.caps-a__vtitle {
-  transition:
-    opacity 0.3s ease 0.35s,
-    translate 0.35s var(--ease-out);
-}
-.caps-a__item.is-open .caps-a__num,
-.caps-a__item.is-open .caps-a__vtitle {
-  opacity: 0;
-  transition-delay: 0s;
-  transition-duration: 0.18s;
-}
-@media (hover: hover) {
-  .caps-a__item:not(.is-open):hover .caps-a__vtitle {
-    translate: -50% -6px;
-  }
-}
-/* + that becomes a −, sliding from the center to the bottom-right corner */
-.caps-a__icon {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  width: 42px;
-  height: 42px;
-  translate: -50% 0;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  transition:
-    left 0.6s var(--ease-slide),
-    translate 0.6s var(--ease-slide);
-}
-.caps-a__icon::before,
-.caps-a__icon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 1.5px;
-  translate: -50% -50%;
-  background: currentColor;
-  transition: rotate 0.5s var(--ease-out);
-}
-.caps-a__icon::after {
-  rotate: 90deg;
-}
-.caps-a__item.is-open .caps-a__icon {
-  left: calc(100% - 28px);
-  translate: -100% 0;
-}
-.caps-a__item.is-open .caps-a__icon::after {
-  rotate: 0deg;
-}
-/* The open capsule's story: laid out at the open width from the start (so it
-   never re-wraps), and only shown once the capsule is nearly full width */
-.caps-a__content {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 1;
-  width: calc(100cqi - 2 * var(--cw) - 2 * var(--gap));
-  padding: 0 92px 34px 40px;
-  opacity: 0;
-  translate: 0 14px;
-  pointer-events: none;
-  transition:
-    opacity 0.15s ease,
-    translate 0.15s ease;
-}
-.caps-a__item.is-open .caps-a__content {
-  opacity: 1;
-  translate: none;
-  pointer-events: auto;
-  transition:
-    opacity 0.4s ease 0.45s,
-    translate 0.5s var(--ease-out) 0.45s;
-}
-.caps-a__kind {
+.caps__kind {
   margin: 0 0 8px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.caps-a__title {
-  margin: 0 0 14px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3.5rem, 8cqi, 6.25rem);
-  line-height: 0.86;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-}
-.caps-a__text {
-  margin: 0 0 18px;
-  max-width: 30ch;
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  line-height: 1.45;
-}
-
-/* A2: all three open at equal widths */
-.caps-a2__item {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 clamp(20px, 1.8vw, 30px) clamp(28px, 2.4vw, 36px);
-  opacity: 0;
-  translate: 0 28px;
-  transition:
-    opacity 0.6s ease calc(var(--i) * 140ms),
-    translate 0.8s var(--ease-out) calc(var(--i) * 140ms);
-}
-.caps-a2.is-shown .caps-a2__item {
-  opacity: 1;
-  translate: none;
-}
-.caps-a2__content {
-  transition: translate 0.4s var(--ease-out);
-}
-@media (hover: hover) {
-  .caps-a2__item:hover .caps-a2__content {
-    translate: 0 -6px;
-  }
-  .caps-a2__item:hover .text-link::after {
-    transform: translate(2px, -2px);
-  }
-}
-.caps-a2__title {
+.caps__title {
   margin: 0 0 12px;
   font-family: var(--font-display);
   font-weight: 400;
@@ -481,390 +93,47 @@
   line-height: 0.88;
   text-transform: uppercase;
 }
-.caps-a2__text {
+.caps__text {
   margin: 0 0 18px;
   font-family: var(--font-serif);
   font-size: clamp(1rem, 1.1vw, 1.12rem);
   line-height: 1.45;
 }
-.caps-a2__more {
+.caps__more {
   padding-bottom: 6px;
   font-size: 0.78rem;
 }
 
-/* ===== B · Rising Capsules =====
-   Three oversized, fully rounded pills of equal width; the chosen one rises
-   34px (room is reserved above, so the section never changes height). */
-.section.hww-wide.hww--b {
-  padding-block: clamp(56px, 5.5vw, 88px);
-}
-.hww--b {
-  --pill-w: clamp(160px, 15vw, 230px);
-  --pill-gap: clamp(20px, 2.4vw, 36px);
-  --rise: 34px;
-}
-.caps-b {
-  width: max-content;
-  max-width: 100%;
-}
-.caps-b__row {
-  display: grid;
-  grid-template-columns: repeat(3, var(--pill-w));
-  gap: var(--pill-gap);
-  padding-top: calc(var(--rise) + 8px);
-}
-.caps-b__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: calc(var(--pill-w) * 2.15);
-  padding: calc(var(--pill-w) * 0.22) 12px calc(var(--pill-w) * 0.28);
-  font: inherit;
-  color: var(--on);
-  background: var(--tone);
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    translate 0.6s var(--ease-slide),
-    box-shadow 0.5s ease;
-}
-/* Chosen: rises and gets a burgundy ring with a cream gap */
-.caps-b__item.is-active {
-  translate: 0 calc(-1 * var(--rise));
-  box-shadow:
-    0 0 0 5px var(--cream),
-    0 0 0 7px var(--bordeaux);
-}
-@media (hover: hover) {
-  .caps-b__item:not(.is-active):hover {
-    translate: 0 -8px;
-  }
-}
-.caps-b__item:focus-visible {
-  outline: 2px solid var(--bordeaux);
-  outline-offset: 12px;
-}
-.caps-b__label {
-  display: grid;
-  justify-items: center;
-  gap: 12px;
-}
-.caps-b__num {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-.caps-b__title {
-  font-family: var(--font-display);
-  font-size: calc(var(--pill-w) * 0.24);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-/* Moon-phase marks: one circle, one line weight, one position on every pill;
-   the chosen pill's ring draws itself in and its phase brightens */
-.phase {
-  width: calc(var(--pill-w) * 0.4);
-  overflow: visible;
-}
-.phase__ring {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.25;
-  stroke-dasharray: 100;
-  opacity: 0.45;
-  transition: opacity 0.5s ease;
-}
-.phase__lit {
-  fill: currentColor;
-  opacity: 0.55;
-  transform-box: fill-box;
-  transform-origin: center;
-  scale: 0.92;
-  transition:
-    opacity 0.5s ease,
-    scale 0.6s var(--ease-out);
-}
-.caps-b__item.is-active .phase__ring {
-  opacity: 1;
-  animation: phase-draw 0.9s var(--ease-out) 0.15s both;
-}
-.caps-b__item.is-active .phase__lit {
-  opacity: 1;
-  scale: 1;
-}
-@keyframes phase-draw {
-  from {
-    stroke-dashoffset: 100;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-/* The chosen engagement, in one reserved area under the pills, aligned to
-   their left edge: all three stacked in one cell (so it's as tall as the
-   longest) and cross-faded. Width 0 / min 100% so it never widens the group. */
-.caps-b__detail {
-  display: grid;
-  width: 0;
-  min-width: 100%;
-  margin-top: clamp(26px, 2.4vw, 36px);
-  padding-top: 18px;
-  border-top: 1px solid rgba(62, 25, 33, 0.2);
-}
-.caps-b__copy {
-  grid-area: 1 / 1;
-  opacity: 0;
-  translate: 0 10px;
-  transition:
-    opacity 0.25s ease,
-    translate 0.25s ease;
-}
-.caps-b__copy.is-active {
-  opacity: 1;
-  translate: none;
-  transition:
-    opacity 0.45s ease 0.2s,
-    translate 0.55s var(--ease-out) 0.2s;
-}
-.caps-b__kind {
-  margin: 0 0 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--crimson);
-}
-.caps-b__heading {
-  margin: 0 0 10px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2rem, 2.6vw, 2.6rem);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-.caps-b__text {
-  margin: 0 0 18px;
-  max-width: 34ch;
-  font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
-  line-height: 1.45;
-}
-.caps-b__more {
-  padding-bottom: 6px;
-  font-size: 0.8rem;
-}
-
-/* A and B, narrower screens: the intro block above, capsules full width */
+/* Narrower screens: the intro block above, arches full width */
 @media (max-width: 1180px) {
-  .hww-wide__layout,
-  .hww--b .hww-wide__layout,
-  .hww--c .hww-wide__layout {
+  .hww {
+    --cap-h: clamp(420px, 50vw, 500px);
+  }
+  .hww__layout {
     grid-template-columns: 1fr;
     row-gap: 48px;
   }
-  .hww-wide__intro {
+  .hww__intro {
     max-width: 640px;
   }
-  .hww--a .hww-wide__stage {
+  .hww__stage {
     justify-content: flex-start;
   }
-  .hww--a {
-    --cap-h: clamp(420px, 50vw, 500px);
-    --cw: clamp(96px, 14vw, 150px);
-  }
-  .caps-a,
-  .caps-a2 {
+  .caps {
     width: 100%;
-  }
-  .hww--b {
-    --pill-w: clamp(140px, 22vw, 210px);
-  }
-  .hww--c {
-    --panel-h: clamp(420px, 56vw, 520px);
-  }
-  .hww--c .hww-wide__layout {
-    row-gap: 0;
-  }
-  .hww--c .hww-wide__intro {
-    padding: clamp(56px, 7vw, 80px) var(--gutter) 48px;
   }
 }
 
-/* ===== Phones: each design gets its own stacked form ===== */
+/* Phones: stacked, with a lower arch so three fit comfortably */
 @media (max-width: 640px) {
-  /* A1: stacked capsule bars; the open one grows downward like an accordion */
-  .caps-a {
-    container-type: normal;
-    flex-direction: column;
-    gap: 10px;
-    height: auto;
-  }
-  .caps-a__item,
-  .caps-a__item.is-open {
-    width: auto;
-    border-radius: 44px;
-  }
-  .caps-a__toggle {
-    position: relative;
-    inset: auto;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    height: 88px;
-    padding: 0 22px 0 28px;
-    text-align: left;
-  }
-  .caps-a__num,
-  .caps-a__vtitle,
-  .caps-a__icon {
-    position: static;
-    translate: none;
-  }
-  .caps-a__vtitle {
-    writing-mode: horizontal-tb;
-    rotate: none;
-    font-size: 2.1rem;
-  }
-  .caps-a__item.is-open .caps-a__num,
-  .caps-a__item.is-open .caps-a__vtitle {
-    opacity: 1;
-  }
-  .caps-a__icon {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    display: block;
-    flex: none;
-    margin-left: auto;
-  }
-  .caps-a__item.is-open .caps-a__icon {
-    left: auto;
-    translate: none;
-  }
-  .caps-a__content {
-    position: static;
-    width: auto;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 28px;
-    translate: none;
-    transition:
-      max-height 0.45s var(--ease-out),
-      padding 0.45s var(--ease-out),
-      opacity 0.25s ease;
-  }
-  .caps-a__item.is-open .caps-a__content {
-    max-height: 260px;
-    padding-bottom: 30px;
-    translate: none;
-    transition:
-      max-height 0.5s var(--ease-out),
-      padding 0.5s var(--ease-out),
-      opacity 0.4s ease 0.15s;
-  }
-  .caps-a__title {
-    display: none;
-  }
-
-  /* A2: stacked, with a lower arch so three fit comfortably */
-  .caps-a2 {
+  .caps {
     flex-direction: column;
     height: auto;
     gap: 12px;
   }
-  .caps-a2__item {
+  .caps__item {
     flex: none;
-    min-height: 0;
     padding: 96px 28px 30px;
     border-radius: 50% 50% 18px 18px / 96px 96px 18px 18px;
-  }
-
-  /* B: the three pills stay side by side, slimmer, with vertical titles */
-  .hww--b {
-    --pill-gap: 12px;
-    --pill-w: calc((100vw - 2 * var(--gutter) - 2 * var(--pill-gap)) / 3);
-    --rise: 20px;
-  }
-  .caps-b__item {
-    height: calc(var(--pill-w) * 2.6);
-    padding-inline: 4px;
-  }
-  .caps-b__title {
-    writing-mode: vertical-rl;
-    rotate: 180deg;
-    font-size: 2.1rem;
-  }
-
-  /* C: horizontal bands like folder tabs; the open one slides down */
-  .panels-c {
-    container-type: normal;
-    flex-direction: column;
-    height: auto;
-    min-height: 0;
-  }
-  .panel-c,
-  .panel-c.is-open {
-    flex: none;
-  }
-  .panel-c__spine {
-    position: relative;
-    inset: auto;
-    flex-direction: row;
-    height: 76px;
-    padding: 0 20px;
-  }
-  .panel-c__vtitle {
-    order: -1;
-    margin: 0 auto 0 0;
-    writing-mode: horizontal-tb;
-    rotate: none;
-    font-size: 2.1rem;
-  }
-  .panel-c.is-open .panel-c__spine > * {
-    opacity: 1;
-  }
-  .panel-c.is-open .panel-c__spine .panel-c__arrow {
-    rotate: 90deg;
-  }
-  .panel-c__sheet {
-    position: static;
-    width: auto;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    transition:
-      max-height 0.45s var(--ease-slide),
-      padding 0.45s var(--ease-slide),
-      opacity 0.2s ease;
-  }
-  .panel-c.is-open .panel-c__sheet {
-    max-height: 280px;
-    padding-bottom: 24px;
-    transition:
-      max-height 0.5s var(--ease-slide),
-      padding 0.5s var(--ease-slide),
-      opacity 0.4s ease 0.15s;
-  }
-  .panel-c__text {
-    font-size: 1.15rem;
-  }
-  .panel-c__top,
-  .panel-c__title {
-    display: none;
-  }
-  .panel-c__body {
-    justify-self: stretch;
-    width: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hww *,
-  .hww *::before,
-  .hww *::after {
-    transition-duration: 0.01ms !important;
-    transition-delay: 0s !important;
   }
 }

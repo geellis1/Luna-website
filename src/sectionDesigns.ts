@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 type Choice = { readonly id: string; readonly label: string; readonly note: string }
 // A group with a `parent` is a set of sub-designs, shown in the panel only
-// while its parent design is selected (e.g. A1/A2 under Option A)
+// while its parent design is selected (e.g. Option C's backgrounds)
 type Group = {
   title: string
   param: string
@@ -44,16 +44,6 @@ export const sectionDesigns = {
     choices: [
       { id: 'a1', label: 'Poster Collage A1 — Cream / Deep Crimson', note: 'A crimson poster with layered paper on cream' },
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
-    ],
-  },
-  howWeWork: {
-    title: 'How We Work Together',
-    param: 'work',
-    anchor: 'how-we-work',
-    choices: [
-      { id: 'a', label: 'A — Expanding Capsules', note: 'Tall capsules; the one you choose widens to tell its story' },
-      { id: 'b', label: 'B — Rising Capsules', note: 'Equal capsules with a symbol each; the one you choose rises' },
-      { id: 'c', label: 'C — Sliding Editorial Panels', note: 'Architectural panels that slide open like a folder' },
     ],
   },
   cta: {
@@ -155,17 +145,6 @@ export const sectionDesigns = {
     path: '/services',
     parent: { key: 'ctaServices', choice: 'c' },
     choices: ctaBgChoices,
-  },
-  // Option A's two versions
-  howWeWorkA: {
-    title: 'Option A',
-    param: 'workA',
-    anchor: 'how-we-work',
-    parent: { key: 'howWeWork', choice: 'a' },
-    choices: [
-      { id: 'a1', label: 'A1 — Auto-Expanding', note: 'One open at a time, moving on by itself' },
-      { id: 'a2', label: 'A2 — All Open', note: 'All three open side by side' },
-    ],
   },
 } as const satisfies Record<string, Group>
 

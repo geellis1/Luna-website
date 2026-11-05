@@ -5,7 +5,7 @@ import { readDesign, sectionDesigns, type SectionKey } from './sectionDesigns'
 // favorites and comments.
 //
 // Every design has a stable key, "<section>:<design>" (e.g. "intro:a1",
-// "howWeWork:a1"). Favorites and comments are stored under those keys in this
+// "cta:b"). Favorites and comments are stored under those keys in this
 // browser (localStorage), so they survive refreshes and page changes. To
 // share them, the whole review is packed into a link (/review?r=…) that opens
 // a read-only summary on any browser or device; no account or server needed.
@@ -26,10 +26,6 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
-  'howWeWork:a1': 'Auto-Expanding Capsules',
-  'howWeWork:a2': 'All-Open Capsules',
-  'howWeWork:b': 'Rising Capsules',
-  'howWeWork:c': 'Editorial Accordion',
   'cta:a': 'Rounded Invitation',
   'cta:b': 'Editorial Typography',
   'cta:c': 'Split Panel · A — Night Bordeaux Background',
@@ -66,29 +62,8 @@ const sectionTitles: Partial<Record<SectionKey, string>> = {
 const ctaBackgrounds = { cta: 'ctaC', ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
 const isCta = (key: SectionKey): key is keyof typeof ctaBackgrounds => key in ctaBackgrounds
 
-// A section's designs; How we work together's Option A is listed as its two
-// versions (A1 / A2), each setting both the design and the version
+// A section's designs
 function designsOf(key: SectionKey): Design[] {
-  if (key === 'howWeWork') {
-    return [
-      ...sectionDesigns.howWeWorkA.choices.map((v) => ({
-        key: `howWeWork:${v.id}`,
-        section: key,
-        id: v.id,
-        name: names[`howWeWork:${v.id}`],
-        picks: { howWeWork: 'a', howWeWorkA: v.id },
-      })),
-      ...sectionDesigns.howWeWork.choices
-        .filter((c) => c.id !== 'a')
-        .map((c) => ({
-          key: `howWeWork:${c.id}`,
-          section: key,
-          id: c.id,
-          name: names[`howWeWork:${c.id}`],
-          picks: { howWeWork: c.id },
-        })),
-    ]
-  }
   // Let's Work Together's Option C is listed as its two section backgrounds;
   // Night Bordeaux keeps C's original key, so earlier notes on C carry over
   if (isCta(key)) {
@@ -119,7 +94,7 @@ const section = (key: SectionKey): Section => ({
 })
 
 export const pages: Page[] = [
-  { id: 'home', title: 'Home', path: '/', sections: (['intro', 'howWeWork', 'cta'] as const).map(section) },
+  { id: 'home', title: 'Home', path: '/', sections: (['intro', 'cta'] as const).map(section) },
   { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot'), section('ctaAbout')] },
   { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
@@ -135,7 +110,6 @@ export const findDesign = (key: string) => allDesigns.find((d) => d.design.key =
 // The design of a section that's showing now
 export function currentDesignKey(key: SectionKey, search: string) {
   const value = readDesign(key, search)
-  if (key === 'howWeWork' && value === 'a') return `howWeWork:${readDesign('howWeWorkA', search)}`
   if (isCta(key) && value === 'c') return readDesign(ctaBackgrounds[key], search) === 'powder' ? `${key}:c-powder` : `${key}:c`
   return `${key}:${value}`
 }
