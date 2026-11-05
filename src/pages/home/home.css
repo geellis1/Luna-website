@@ -236,7 +236,11 @@
 }
 
 @media (max-width: 760px) {
+  /* Phones: no full-screen height, so the headline and photos sit right
+     under the nav instead of below a stretch of empty space */
   .scrap-hero .scrap-hero__stage {
+    min-height: 0;
+    padding-top: 56px;
     padding-bottom: 28px;
   }
   .scrap-hero__title {
