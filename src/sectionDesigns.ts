@@ -35,17 +35,6 @@ export const sectionDesigns = {
     ],
   },
 
-  // On every page: how the nav behaves as the page scrolls
-  nav: {
-    title: 'Navigation',
-    param: 'nav',
-    anchor: '',
-    choices: [
-      { id: 'a', label: 'A — Sticky', note: 'Stays at the top; turns into a cream bar once you scroll' },
-      { id: 'b', label: 'B — Floating Pill', note: 'Once you scroll, the logo and menu float in a centered pill' },
-      { id: 'c', label: 'C — Hide and Return', note: 'Slides away as you scroll down, comes back when you scroll up' },
-    ],
-  },
 } as const satisfies Record<string, Group>
 
 export type SectionKey = keyof typeof sectionDesigns

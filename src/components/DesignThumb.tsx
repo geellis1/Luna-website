@@ -18,41 +18,7 @@ const tones = [C.powder, C.chartreuse, C.crimson]
 // we work together, Option A's versions are a1 / a2.
 export default function DesignThumb({ section, id }: { section: string; id: string }) {
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
-  if (section === 'nav') return <NavPreview id={id as SectionDesign<'nav'>} />
   return <WorkPreview id={id} />
-}
-
-// A scrolled page: A a full-width cream bar, B a centered pill, C the bar
-// sliding away (dashed) with an arrow
-function NavPreview({ id }: { id: SectionDesign<'nav'> }) {
-  return (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.bordeaux} />
-      <rect x="10" y="24" width="60" height="5" rx="1" fill={C.powder} opacity="0.6" />
-      <rect x="10" y="34" width="84" height="5" rx="1" fill={C.powder} opacity="0.6" />
-      <rect x="10" y="44" width="48" height="5" rx="1" fill={C.powder} opacity="0.6" />
-      {id === 'a' && (
-        <>
-          <rect width="120" height="14" fill={C.cream} />
-          <rect x="8" y="5" width="18" height="4" rx="1" fill={C.bordeaux} />
-          <circle cx="110" cy="7" r="3.5" fill="none" stroke={C.bordeaux} />
-        </>
-      )}
-      {id === 'b' && (
-        <>
-          <rect x="34" y="4" width="52" height="12" rx="6" fill={C.cream} />
-          <rect x="40" y="8" width="16" height="4" rx="1" fill={C.bordeaux} />
-          <circle cx="79" cy="10" r="3" fill="none" stroke={C.bordeaux} />
-        </>
-      )}
-      {id === 'c' && (
-        <>
-          <rect x="0.5" y="-6" width="119" height="12" fill="none" stroke={C.cream} strokeDasharray="3 2" />
-          <path d="M60 18v-8M56 13l4-4 4 4" fill="none" stroke={C.chartreuse} strokeWidth="1.5" />
-        </>
-      )}
-    </svg>
-  )
 }
 
 function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {

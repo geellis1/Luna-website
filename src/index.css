@@ -277,12 +277,10 @@ svg {
 .logo--footer img {
   height: 80px;
 }
-/* ----- Scrolling behavior (Round 2: Explore Designs · Navigation) -----
-   All three stay fixed to the top of the window; at the very top they look
-   exactly like the nav above. */
-.nav--a,
-.nav--b,
-.nav--c {
+/* Sticky: fixed to the top of the window. At the very top it sits straight
+   on the first section as above; once the page scrolls it becomes a slim
+   cream bar with a hairline, so it stays readable over any section. */
+.nav--sticky {
   position: fixed;
   inset: 0 0 auto;
   margin-bottom: 0;
@@ -291,72 +289,27 @@ svg {
     color 0.3s ease,
     box-shadow 0.3s ease,
     padding 0.3s ease,
-    height 0.3s ease,
-    translate 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    height 0.3s ease;
 }
 .nav .logo__mark {
   transition: height 0.3s ease;
 }
-/* A and C: once scrolled, a slim cream bar with a hairline */
-.nav--a.is-scrolled,
-.nav--c.is-scrolled {
-  height: 72px;
+.nav--sticky.is-scrolled {
+  height: 80px;
   padding-top: 0;
   color: var(--bordeaux);
   background: var(--cream);
   box-shadow: 0 1px 0 rgba(62, 25, 33, 0.12);
 }
-.nav--a.is-scrolled .nav__inner,
-.nav--c.is-scrolled .nav__inner {
-  height: 72px;
+.nav--sticky.is-scrolled .nav__inner {
+  height: 80px;
 }
-.nav--a.is-scrolled .logo__mark,
-.nav--c.is-scrolled .logo__mark {
-  height: 42px;
-}
-/* C: slides up out of view while scrolling down */
-.nav--c.is-hidden {
-  translate: 0 -100%;
-}
-/* B: once scrolled, the bar itself disappears and the logo and menu gather
-   into a cream pill centered near the top */
-.nav--b.is-scrolled {
-  height: auto;
-  padding-top: 14px;
-  color: var(--bordeaux);
-  pointer-events: none;
-}
-.nav--b .nav__inner {
-  transition:
-    max-width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    height 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    padding 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    background 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.nav--b.is-scrolled .nav__inner {
-  max-width: 360px;
-  height: 60px;
-  padding: 0 10px 0 26px;
-  background: var(--cream);
-  border-radius: 999px;
-  box-shadow:
-    0 0 0 1px rgba(62, 25, 33, 0.1),
-    0 10px 30px -12px rgba(62, 25, 33, 0.35);
-  pointer-events: auto;
-}
-.nav--b.is-scrolled .logo__mark {
-  height: 36px;
-}
-.nav--b.is-scrolled .moon-mark {
-  width: 36px;
-  height: 36px;
+.nav--sticky.is-scrolled .logo__mark {
+  height: 50px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav--a,
-  .nav--b,
-  .nav--c,
-  .nav--b .nav__inner {
+  .nav--sticky,
+  .nav .logo__mark {
     transition: none;
   }
 }
@@ -364,7 +317,7 @@ svg {
 /* The white logo file, painted in the nav's text color through a mask */
 .logo__mark {
   display: block;
-  height: 56px;
+  height: 66px;
   aspect-ratio: 3 / 1;
   background: currentColor;
   -webkit-mask: url('/logo-white.png') center / contain no-repeat;
@@ -372,7 +325,10 @@ svg {
 }
 @media (max-width: 760px) {
   .logo__mark {
-    height: 38px;
+    height: 44px;
+  }
+  .nav--sticky.is-scrolled .logo__mark {
+    height: 40px;
   }
 }
 
@@ -391,8 +347,8 @@ main > section:first-child {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  /* 42px moon, 48px tap target; the moon's edge sits on the header margin */
-  min-height: 48px;
+  /* 50px moon, 56px tap target; the moon's edge sits on the header margin */
+  min-height: 56px;
   padding: 3px;
   margin-right: -3px;
   background: none;
@@ -402,8 +358,8 @@ main > section:first-child {
 }
 .moon-mark {
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
   overflow: visible;
 }
 .moon-mark__ring {
@@ -446,8 +402,8 @@ main > section:first-child {
 }
 .moon-trigger__lines {
   display: grid;
-  gap: 7px;
-  width: 26px;
+  gap: 8px;
+  width: 31px;
 }
 .moon-trigger__lines span {
   display: block;
