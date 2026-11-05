@@ -3,7 +3,7 @@
 When someone sends the contact form at lunacivicstrategies.com/contact:
 
 1. **An email goes to Kelli** at `kelli@lunacivicstrategies.com`, from `website@lunacivicstrategies.com`, with the subject *New Contact Form Submission — Luna Civic Strategies*. Hitting Reply answers the person who wrote in.
-2. **A row is added to her Google Sheet** ([Contact form submissions](https://docs.google.com/spreadsheets/d/1je9A_gd11WlBN7OLwSyFePBB1tvsvVOkZRD-lUPYddM/edit)) on a tab called **Submissions**: Timestamp, First Name, Last Name, Email, Organization, Interested In, Phone, Working Toward.
+2. **A row is added to her Google Sheet** ([Contact form submissions](https://docs.google.com/spreadsheets/d/1d9ABfCdOvMEu1kQm514FwICUV78pEAy_2bXCf5P7h90/edit)) on a tab called **Submissions**: Timestamp, First Name, Last Name, Email, Organization, Interested In, Phone, Working Toward.
 
 The email is the important one: if the sheet can't be reached, the person still sees "Received." and Kelli still gets the email. The problem shows up in Vercel's logs.
 
@@ -34,7 +34,7 @@ Copy the result. You'll paste it in two places: steps 4 and 7.
 
 ### 2. Open the sheet's script editor
 
-Open [the sheet](https://docs.google.com/spreadsheets/d/1je9A_gd11WlBN7OLwSyFePBB1tvsvVOkZRD-lUPYddM/edit), signed in as the Google account that owns it, then **Extensions → Apps Script**.
+Open [the sheet](https://docs.google.com/spreadsheets/d/1d9ABfCdOvMEu1kQm514FwICUV78pEAy_2bXCf5P7h90/edit), signed in as the Google account that owns it, then **Extensions → Apps Script**.
 
 ### 3. Paste the code
 
