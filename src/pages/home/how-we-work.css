@@ -23,16 +23,17 @@
   padding-block: clamp(72px, 7vw, 104px);
 }
 .hww {
-  --cap-h: clamp(450px, 34vw, 540px);
+  --cap-h: clamp(470px, 35.5vw, 570px);
 }
 .hww__layout {
   display: grid;
-  grid-template-columns: minmax(0, 27fr) minmax(0, 73fr);
+  grid-template-columns: minmax(0, 26fr) minmax(0, 74fr);
   align-items: center;
   column-gap: clamp(40px, 4vw, 80px);
   width: min(100%, 1720px);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  /* The capsules sit closer to the right edge than the text does to the left */
+  padding-inline: var(--gutter) clamp(16px, 1.7vw, 28px);
 }
 .hww__intro {
   display: flex;
@@ -64,8 +65,8 @@
 .caps {
   display: flex;
   gap: 16px;
-  /* 10% wider than two slim arches and one wide one would be */
-  width: min(100%, calc(1.1 * (2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h)) + 32px));
+  /* About 15% wider than two slim arches and one wide one would be */
+  width: min(100%, calc(1.15 * (2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h)) + 32px));
   height: var(--cap-h);
 }
 .caps__item {
@@ -112,6 +113,7 @@
   .hww__layout {
     grid-template-columns: 1fr;
     row-gap: 48px;
+    padding-inline: var(--gutter);
   }
   .hww__intro {
     max-width: 640px;
