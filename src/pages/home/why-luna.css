@@ -1,5 +1,5 @@
-/* ---------- Why Luna (Round 2 designs B and C) ----------
-   Both on burgundy, in the same wide frame (up to 1720px) as How we work
+/* ---------- Why Luna (Editorial Typography) ----------
+   On burgundy, in the same wide frame (up to 1720px) as How we work
    together below, so the two line up. Reveals happen once, as each piece
    reaches the screen; nothing loops. */
 .why {
@@ -18,20 +18,20 @@
    "Why Luna." and the intro on one row, then the four reasons on a two-column
    grid under hairlines: one serif, one size, numbers in the same place. */
 .section.why--b {
-  padding-block: clamp(72px, 7vw, 112px);
+  padding-block: clamp(56px, 5.5vw, 88px);
 }
 .why-b__head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   align-items: end;
   gap: clamp(32px, 5vw, 96px);
-  margin-bottom: clamp(48px, 5vw, 80px);
+  margin-bottom: clamp(36px, 4vw, 60px);
 }
 .why-b__title {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: clamp(3.5rem, 8vw, 8.5rem);
+  font-size: clamp(2.8rem, 6vw, 6.25rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--cream);
@@ -39,7 +39,7 @@
 .why-b__lede {
   margin: 0;
   max-width: 46ch;
-  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  font-size: clamp(0.95rem, 1vw, 1.05rem);
   line-height: 1.6;
   opacity: 0;
   translate: 0 12px;
@@ -55,8 +55,8 @@
 .why-b__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(48px, 6vw, 120px);
-  row-gap: clamp(44px, 4.5vw, 72px);
+  column-gap: clamp(40px, 5vw, 96px);
+  row-gap: clamp(32px, 3.5vw, 56px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -82,7 +82,7 @@
 }
 .why-b__phrase {
   font-family: var(--font-serif);
-  font-size: clamp(2.1rem, 4vw, 4.25rem);
+  font-size: clamp(1.7rem, 3vw, 3.1rem);
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--cream);
@@ -147,248 +147,6 @@
   }
 }
 
-/* ===== C · Editorial Collage ===== */
-.section.why--c {
-  padding-block: clamp(64px, 6vw, 96px);
-}
-.why-c__stage {
-  position: relative;
-  height: clamp(600px, 50vw, 780px);
-}
-/* On desktop the groups dissolve, so every piece is placed on the stage */
-.why-c__intro,
-.why-c__collage,
-.why-c__strips {
-  display: contents;
-}
-.why-c__strips {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.why-c__piece {
-  position: absolute;
-  margin: 0;
-  /* Depth: drifts with scroll (--p), on top of the assembly below */
-  translate: 0 calc(var(--p, 0) * var(--depth) * 1px);
-  opacity: 0;
-  transform: translate(var(--fx), var(--fy)) rotate(var(--fr));
-  transition:
-    opacity 0.7s ease var(--delay),
-    transform 1.1s var(--ease-out) var(--delay);
-}
-.why-c__stage.is-in .why-c__piece {
-  opacity: 1;
-  transform: none;
-}
-
-/* Title: "Why" in italic, "Luna" heavy, with a chartreuse paper moon */
-.why-c__title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  margin: 0;
-  font-weight: 400;
-  line-height: 0.85;
-}
-.why-c__why {
-  display: block;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(2.6rem, 5vw, 5.5rem);
-  color: var(--powder);
-}
-.why-c__luna {
-  position: relative;
-  display: block;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(5rem, 11vw, 12rem);
-  letter-spacing: -0.05em;
-}
-.why-c__moon {
-  position: absolute;
-  z-index: -1;
-  /* Rising behind the end of the word, clear of the letters */
-  top: -34%;
-  left: 82%;
-  width: 0.62em;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--chartreuse);
-  /* Cut-paper edge */
-  clip-path: polygon(50% 0%, 63% 2%, 75% 7%, 85% 15%, 93% 25%, 98% 37%, 100% 50%, 98% 63%, 93% 75%, 85% 85%, 75% 93%, 63% 98%, 50% 100%, 37% 98%, 25% 93%, 15% 85%, 7% 75%, 2% 63%, 0% 50%, 2% 37%, 7% 25%, 15% 15%, 25% 7%, 37% 2%);
-  scale: 0;
-  transition: scale 1s var(--ease-out) 0.3s;
-}
-.why-c__stage.is-in .why-c__moon {
-  scale: 1;
-}
-.why-c__lede {
-  position: absolute;
-  left: 0;
-  bottom: 4%;
-  z-index: 3;
-  width: min(30%, 420px);
-  margin: 0;
-  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
-  line-height: 1.6;
-  opacity: 0;
-  transition: opacity 0.9s ease 1.5s;
-}
-.why-c__stage.is-in .why-c__lede {
-  opacity: 0.85;
-}
-
-/* Cut-paper shapes */
-.why-c__circle {
-  top: 8%;
-  left: 46%;
-  width: min(34%, 560px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--powder);
-  rotate: 0deg;
-}
-.why-c__half {
-  top: 2%;
-  right: 3%;
-  width: min(9%, 150px);
-  aspect-ratio: 2 / 1;
-  border-radius: 999px 999px 0 0;
-  background: var(--chartreuse);
-  rotate: 18deg;
-}
-.why-c__bar {
-  top: 47%;
-  left: 36%;
-  width: min(16%, 260px);
-  height: 14px;
-  background: var(--red);
-  rotate: -6deg;
-}
-
-/* Photos: black and white, torn top and bottom edges, a strip of tape */
-.why-c__photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.15);
-  transition: filter 0.6s ease;
-  clip-path: polygon(0 2%, 8% 0, 17% 2.5%, 27% 0.5%, 38% 2%, 49% 0, 61% 2.5%, 72% 0.5%, 83% 2%, 92% 0, 100% 1.5%, 100% 98%, 91% 100%, 80% 97.5%, 68% 99.5%, 57% 97.5%, 45% 100%, 33% 98%, 21% 100%, 10% 97.5%, 0 99.5%);
-}
-.why-c__photo {
-  z-index: 1;
-  cursor: default;
-}
-.why-c__photo--1 {
-  top: 2%;
-  left: 37%;
-  width: min(19%, 320px);
-  aspect-ratio: 4 / 5;
-  rotate: -5deg;
-}
-.why-c__photo--2 {
-  top: 26%;
-  left: 70%;
-  width: min(18%, 300px);
-  aspect-ratio: 3 / 4;
-  rotate: 4deg;
-}
-.why-c__photo--3 {
-  top: 58%;
-  left: 52%;
-  width: min(17%, 280px);
-  aspect-ratio: 4 / 3;
-  rotate: -2deg;
-}
-.why-c__tape {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  width: 72px;
-  height: 22px;
-  translate: -50% 0;
-  rotate: -4deg;
-  background: rgba(245, 240, 232, 0.55);
-}
-@media (hover: hover) {
-  .why-c__photo {
-    pointer-events: auto;
-  }
-  .why-c__photo:hover img {
-    filter: grayscale(0) contrast(1.05);
-  }
-}
-
-/* The four reasons on paper strips */
-.why-c__strip {
-  z-index: 4;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  max-width: 30%;
-  padding: 0.45em 0.7em 0.5em;
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.2vw, 2.4rem);
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--bordeaux);
-  background: var(--cream);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  rotate: var(--r, 0deg);
-  transition:
-    opacity 0.7s ease var(--delay),
-    transform 1.1s var(--ease-out) var(--delay),
-    rotate 0.4s var(--ease-out),
-    scale 0.4s var(--ease-out);
-}
-.why-c__strip-num {
-  flex: none;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--crimson);
-}
-.why-c__strip--1 {
-  --r: -3deg;
-  top: 40%;
-  left: 18%;
-}
-.why-c__strip--2 {
-  --r: 2deg;
-  top: 76%;
-  left: 66%;
-  max-width: 32%;
-  background: var(--chartreuse);
-}
-.why-c__strip--3 {
-  --r: 3deg;
-  top: 12%;
-  left: 62%;
-  color: var(--cream);
-  background: var(--red);
-}
-.why-c__strip--3 .why-c__strip-num {
-  color: var(--cream);
-}
-.why-c__strip--4 {
-  --r: -2deg;
-  top: 56%;
-  left: 74%;
-  background: var(--powder);
-}
-@media (hover: hover) {
-  .why-c__strip:hover {
-    z-index: 5;
-    rotate: 0deg;
-    scale: 1.04;
-  }
-}
-
 /* ===== Tablet ===== */
 @media (max-width: 1024px) {
   .why-b__head {
@@ -406,77 +164,6 @@
   .why-b__item {
     grid-template-columns: 2.6em 1fr;
   }
-
-  /* C: title and text, a smaller collage, then the strips in a column */
-  .why-c__stage {
-    height: auto;
-  }
-  .why-c__intro,
-  .why-c__collage,
-  .why-c__strips {
-    display: block;
-  }
-  .why-c__title,
-  .why-c__lede {
-    position: static;
-  }
-  /* Shrink to the word, so the moon sits at its end */
-  .why-c__luna {
-    display: inline-block;
-  }
-  .why-c__lede {
-    width: auto;
-    margin-top: 20px;
-  }
-  .why-c__collage {
-    position: relative;
-    height: 92vw;
-    margin: 32px 0 24px;
-  }
-  .why-c__circle {
-    top: 6%;
-    left: 22%;
-    width: 64%;
-  }
-  .why-c__half {
-    top: 0;
-    width: 20%;
-  }
-  .why-c__bar {
-    top: 84%;
-    left: 4%;
-    width: 36%;
-  }
-  .why-c__photo--1 {
-    top: 0;
-    left: 4%;
-    width: 44%;
-  }
-  .why-c__photo--2 {
-    top: 30%;
-    left: 52%;
-    width: 42%;
-  }
-  .why-c__photo--3 {
-    top: 58%;
-    left: 14%;
-    width: 44%;
-  }
-  .why-c__strips {
-    display: grid;
-    justify-items: start;
-    gap: 20px;
-  }
-  .why-c__strip,
-  .why-c__strip--2 {
-    position: relative;
-    inset: auto;
-    max-width: 100%;
-    font-size: 1.6rem;
-  }
-  .why-c__strip:nth-child(even) {
-    justify-self: end;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -485,8 +172,5 @@
   .why *::after {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
-  }
-  .why-c__piece {
-    translate: none;
   }
 }

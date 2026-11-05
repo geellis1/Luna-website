@@ -46,15 +46,6 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
-  whyLuna: {
-    title: 'Why Luna',
-    param: 'why',
-    anchor: 'why-luna',
-    choices: [
-      { id: 'b', label: 'B — Editorial Typography', note: 'Oversized type set like a magazine spread' },
-      { id: 'c', label: 'C — Editorial Collage', note: 'Layered paper, photos and type that assemble' },
-    ],
-  },
   howWeWork: {
     title: 'How We Work Together',
     param: 'work',

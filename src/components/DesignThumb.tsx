@@ -22,7 +22,6 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
     const photo = headshots[id as SectionDesign<'aboutHeadshot'>]
     return <img className="sx-preview sx-preview--photo" src={photo.src} alt="" />
   }
-  if (section === 'whyLuna') return <WhyPreview id={id as SectionDesign<'whyLuna'>} />
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
   if (section.startsWith('cta')) {
     // Option C's backgrounds: "c" (Night Bordeaux) and "c-powder"
@@ -139,31 +138,6 @@ function IntroPreview({ id }: { id: SectionDesign<'intro'> }) {
       <rect x="76" y="3" width="30" height="46" fill={a1 ? C.powder : C.crimson} transform="rotate(-4 91 26)" />
       <rect x="6" y="9" width="20" height="9" fill={a1 ? '#fff' : C.cream} transform="rotate(-8 16 13)" />
       <rect x="40" y="50" width="30" height="11" fill={C.chartreuse} transform="rotate(-3 55 55)" />
-    </svg>
-  )
-}
-
-function WhyPreview({ id }: { id: SectionDesign<'whyLuna'> }) {
-  return id === 'b' ? (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.bordeaux} />
-      <rect x="8" y="9" width="70" height="11" fill={C.cream} />
-      <rect x="30" y="24" width="82" height="11" fill={C.powder} />
-      <rect x="8" y="39" width="56" height="11" fill={C.cream} />
-      <rect x="70" y="39" width="30" height="11" fill={C.chartreuse} />
-      <rect x="8" y="55" width="22" height="2" fill={C.cream} opacity="0.6" />
-      <rect x="86" y="55" width="26" height="2" fill={C.cream} opacity="0.6" />
-    </svg>
-  ) : (
-    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
-      <rect width="120" height="64" fill={C.cream} />
-      <circle cx="84" cy="30" r="22" fill={C.powder} />
-      <rect x="62" y="12" width="30" height="36" fill="#8E7F78" transform="rotate(-4 77 30)" />
-      <rect x="18" y="34" width="26" height="22" fill="#6f6560" transform="rotate(5 31 45)" />
-      <rect x="40" y="8" width="16" height="16" fill={C.chartreuse} transform="rotate(10 48 16)" />
-      <rect x="8" y="10" width="34" height="7" fill={C.bordeaux} />
-      <rect x="8" y="20" width="26" height="7" fill={C.bordeaux} />
-      <rect x="96" y="48" width="18" height="4" fill={C.crimson} />
     </svg>
   )
 }
