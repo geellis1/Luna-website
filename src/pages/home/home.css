@@ -174,87 +174,31 @@
   --in: 1.7s;
   --drift: -5s;
 }
-/* Right: pokes out past the end of lines 3 and 4 */
+/* Right: pokes out past the end of lines 2 and 3, leaving room for the
+   handwritten note below it */
 .scrap-card--meeting {
   right: -16%;
-  top: 48%;
+  top: 36%;
   width: 30%;
   aspect-ratio: 4 / 3;
   --in: 2s;
   --drift: -9s;
 }
 
-/* Option A — Letters Change Color: the photos sit over the headline, dimmed a
-   little, each showing its lined-up copy of the headline in cream. The copy
-   undoes the photo's own entrance and drift so it never shifts off the real
-   letters. */
-.scrap-hero--a .scrap-card,
-.scrap-hero--d .scrap-card {
-  z-index: 2;
-}
-.scrap-hero--a .scrap-card img {
-  filter: brightness(0.62) saturate(0.9);
-}
-
-.scrap-hero .scrap-card__copy {
-  position: absolute;
-  left: calc(-1 * var(--ox, 0px));
-  top: calc(-1 * var(--oy, 0px));
-  width: var(--board-w, 100%);
-  color: var(--cream);
-  animation:
-    scrap-drop-undo 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both,
-    scrap-drift-undo 12s ease-in-out var(--drift) infinite;
-}
-/* Option D — Knockout: the same lined-up copy, but it inverts the photo
-   behind it (difference blend), so letters crossing a photo show it in
-   negative; the photos stay full color */
-.scrap-hero--d .scrap-card__copy {
-  color: #fff;
-  mix-blend-mode: difference;
-}
-@keyframes scrap-drop-undo {
-  from {
-    transform: translateY(-14px);
-  }
-  to {
-    transform: none;
-  }
-}
-@keyframes scrap-drift-undo {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 8px;
-  }
-}
-
-/* Option B — Softened Photos: the letters stay dark over a light cream wash */
-.scrap-hero--b .scrap-card {
+/* Over the photos, a light cream wash keeps the dark letters readable */
+.scrap-card {
   background: var(--cream);
 }
-.scrap-hero--b .scrap-card img {
+.scrap-card img {
   opacity: 0.68;
-}
-
-/* Option C — Black & White: B's light wash on black-and-white photos; the
-   letters stay dark */
-.scrap-hero--c .scrap-card {
-  background: var(--cream);
-}
-.scrap-hero--c .scrap-card img {
-  opacity: 0.68;
-  filter: grayscale(1);
 }
 
 /* Handwritten note that writes itself on, line by line */
 .scrap-hero__note {
   position: absolute;
   z-index: 3;
-  right: -4%;
-  bottom: -18%;
+  right: 1%;
+  bottom: -14%;
   margin: 0;
   font-family: var(--font-hand);
   font-size: clamp(1.15rem, 2vw, 1.9rem);
@@ -292,7 +236,7 @@
 /* Bottom row (shared .hero-foot styles) */
 .scrap-hero__foot {
   /* Clears the handwritten note, which hangs below the headline */
-  margin-top: clamp(88px, 13vh, 136px);
+  margin-top: clamp(64px, 9vh, 104px);
   animation: scrap-fade 1.4s ease 3s both;
 }
 
@@ -363,18 +307,17 @@
     position: relative;
     right: auto;
     bottom: auto;
-    margin: 28px 0 0 auto;
+    margin: 16px 0 0 auto;
     width: max-content;
   }
   .scrap-hero__foot {
-    margin-top: 32px;
+    margin-top: 24px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .scrap-line > span,
   .scrap-card,
-  .scrap-hero .scrap-card__copy,
   .scrap-hero__foot {
     animation: none;
   }

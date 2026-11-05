@@ -36,18 +36,6 @@ const ctaBgChoices = [
 ] as const
 
 export const sectionDesigns = {
-  // The headline where it crosses the photos
-  hero: {
-    title: 'Hero · Letters Over Photos',
-    param: 'hero',
-    anchor: 'hero',
-    choices: [
-      { id: 'a', label: 'A — Letters Change Color', note: 'Where letters cross a photo they turn cream; the photo is dimmed a little' },
-      { id: 'b', label: 'B — Softened Photos', note: 'The photos get a light cream wash so the letters stay dark' },
-      { id: 'c', label: 'C — Black & White', note: 'Black-and-white photos with a light wash; the letters stay dark' },
-      { id: 'd', label: 'D — Knockout', note: 'Letters crossing a photo invert it, like a photo negative' },
-    ],
-  },
   // The statement right under the hero ("We help you do something about it")
   intro: {
     title: 'Intro Section',

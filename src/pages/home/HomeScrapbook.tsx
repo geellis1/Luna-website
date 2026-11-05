@@ -1,7 +1,5 @@
-import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { photoSrc, photos } from '../../photos'
-import { useSectionDesign } from '../../sectionDesigns'
 import BandSections from './BandSections'
 
 // Homepage: Scrapbook. A huge condensed serif headline on cream, with advocacy
@@ -13,7 +11,7 @@ const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.
 
 // Placeholder photos (src/photos.ts), in the order they're placed
 const cutouts = (['capitol', 'rally', 'hands', 'meeting'] as const).map((key) => ({ key, ...photos[key] }))
-const note = ["Let's move from", 'mission to', 'movement.']
+const note = ['Built for', 'the moment', 'we are in.']
 
 const headline = lines.map((line, i) => (
   <span className="scrap-line" key={line}>
@@ -21,48 +19,17 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// Options A and D: each photo sits over the headline and carries its own copy
-// of it, lined up with the real one, so letters crossing a photo show in cream
-// (A) or as the photo inverted (D). The
-// copy is placed from the photo's offset in the board, kept current on resize.
-function useAlignedCopies(on: boolean) {
-  const board = useRef<HTMLDivElement>(null)
-  useLayoutEffect(() => {
-    const el = board.current
-    if (!on || !el) return
-    const place = () => {
-      el.style.setProperty('--board-w', `${el.offsetWidth}px`)
-      el.querySelectorAll<HTMLElement>('.scrap-card').forEach((card) => {
-        card.style.setProperty('--ox', `${card.offsetLeft}px`)
-        card.style.setProperty('--oy', `${card.offsetTop}px`)
-      })
-    }
-    place()
-    const ro = new ResizeObserver(place)
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [on])
-  return board
-}
-
 export default function HomeScrapbook() {
-  const [design] = useSectionDesign('hero')
-  const copies = design === 'a' || design === 'd'
-  const board = useAlignedCopies(copies)
   return (
     <>
-      <section id="hero" className={`scrap-hero scrap-hero--${design}`}>
+      <section className="scrap-hero">
         <div className="container scrap-hero__stage">
 
-          <div ref={board} className="scrap-hero__board">
+          <div className="scrap-hero__board">
+            {/* Photos sit behind the letters */}
             {cutouts.map((ph) => (
               <div key={ph.key} className={`scrap-card scrap-card--${ph.key}`}>
                 <img src={photoSrc(ph)} alt={ph.alt} loading="eager" />
-                {copies && (
-                  <div className="scrap-hero__title scrap-card__copy" aria-hidden="true">
-                    {headline}
-                  </div>
-                )}
               </div>
             ))}
 

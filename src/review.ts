@@ -24,10 +24,6 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 
 // Short, clear names for the panel (the full labels live in sectionDesigns)
 const names: Record<string, string> = {
-  'hero:a': 'Letters Change Color',
-  'hero:b': 'Softened Photos',
-  'hero:c': 'Black & White',
-  'hero:d': 'Knockout',
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
   'whyLuna:b': 'Editorial Typography',
@@ -57,8 +53,8 @@ const names: Record<string, string> = {
   'contact:b': 'Letter + Collage',
   'contact:c': 'Split Editorial',
 }
+// The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
-  hero: 'Hero · Letters Over Photos',
   cta: 'Let’s Work Together',
   ctaAbout: 'Let’s Work Together',
   ctaServices: 'Let’s Work Together',
@@ -125,7 +121,7 @@ const section = (key: SectionKey): Section => ({
 })
 
 export const pages: Page[] = [
-  { id: 'home', title: 'Home', path: '/', sections: (['hero', 'intro', 'whyLuna', 'howWeWork', 'cta'] as const).map(section) },
+  { id: 'home', title: 'Home', path: '/', sections: (['intro', 'whyLuna', 'howWeWork', 'cta'] as const).map(section) },
   { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot'), section('ctaAbout')] },
   { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },
