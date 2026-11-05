@@ -1,6 +1,7 @@
 // Site copy lives here so it can be edited without touching layout code.
 // Any string wrapped in [square brackets] is placeholder copy: it renders
-// highlighted in chartreuse until it's replaced with the final text.
+// highlighted in chartreuse until it's replaced with the final text. A \n in
+// a pillar description starts a new line.
 
 export const pillars = [
   {
@@ -20,7 +21,7 @@ export const pillars = [
   {
     title: 'Movement Awareness',
     description:
-      "This work doesn't happen in a vacuum. Every engagement is informed by an understanding of where social movements are, where power is shifting, and what that means for the strategy in front of us. We build for the moment we're in and the one that's coming.",
+      "This work doesn't happen in a vacuum.\nEvery engagement is informed by an understanding of where social movements are, where power is shifting, and what that means for the strategy in front of us. We build for the moment we're in and the one that's coming.",
   },
 ]
 

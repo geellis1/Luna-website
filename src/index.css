@@ -872,8 +872,8 @@ fieldset.field {
 
 /* ---------- About header ----------
    The Services header's layout (small label, large title on the left, intro
-   on the right, a rule beneath) in cream on Night Bordeaux. The collage moons
-   follow in a slim row: they fade up one by one, left to right, and float
+   on the right) in cream on Night Bordeaux. The collage moons follow in a
+   slim row above a rule: they fade up one by one, left to right, and float
    gently; the outline of the moon nearest the current phase turns
    chartreuse. The pillars follow. */
 /* Same top position as the Services header, which isn't the page's first
@@ -891,8 +891,6 @@ fieldset.field {
   gap: 18px clamp(32px, 5vw, 80px);
   max-width: 1320px;
   margin-inline: auto;
-  padding-bottom: clamp(28px, 3vw, 40px);
-  border-bottom: 1px solid rgba(245, 240, 232, 0.25);
 }
 .about-head__kicker {
   grid-column: 1 / -1;
@@ -920,16 +918,18 @@ fieldset.field {
   font-size: 1.05rem;
   line-height: 1.55;
 }
-/* The pillars share the header's centered frame */
-.about-head__pillars {
-  max-width: 1320px;
-  margin-inline: auto;
-}
-/* A slim row of moons under the header */
+/* A slim row of moons under the header, then the rule */
 .about-head__moons {
   display: flex;
   justify-content: center;
-  margin: clamp(28px, 3.5vw, 48px) 0 clamp(40px, 5vw, 72px);
+  margin: clamp(28px, 3.5vw, 48px) 0 clamp(28px, 3vw, 40px);
+}
+/* The pillars share the header's centered frame, below the rule */
+.about-head__pillars {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-top: clamp(40px, 5vw, 72px);
+  border-top: 1px solid rgba(245, 240, 232, 0.25);
 }
 .about-head__collage {
   display: block;
