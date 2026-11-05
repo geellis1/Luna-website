@@ -6,10 +6,10 @@ import { litPath } from './moons/phase'
 import './footer.css'
 
 // Site footer: Night Bordeaux with tonight's moon phase, the page and service
-// links, a closing line, and an oversized LUNA cropped by the bottom edge. On
-// the home page a cream band leads into it: "Every engagement begins with a
-// conversation." with the circular Let's Chat button. Builds in once when it
-// scrolls into view. Styles: footer.css.
+// links, a closing line and the small print. On the home page a cream band
+// leads into it: "Every engagement begins with a conversation." with the
+// circular Let's Chat button. Builds in once when it scrolls into view.
+// Styles: footer.css.
 
 const year = new Date().getFullYear()
 const services = tiers.map((t, i) => ({ ...t, num: `0${i + 1}` }))
@@ -79,9 +79,6 @@ export default function Footer() {
             <p>© {year} Luna Civic Strategies. All rights reserved.</p>
           </div>
         </div>
-        <p className="ft__word" aria-hidden="true">
-          Luna
-        </p>
       </div>
     </footer>
   )

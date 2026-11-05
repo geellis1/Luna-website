@@ -1,6 +1,6 @@
 /* ---------- Site footer ----------
-   Night Bordeaux with tonight's moon, three link columns, the small print and
-   an oversized LUNA cropped by the bottom edge. On the home page a cream band
+   Night Bordeaux with tonight's moon, three link columns and the small
+   print. On the home page a cream band
    with the closing line and the Let's Chat circle leads into it. */
 .ft {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -222,24 +222,6 @@
   margin: 0;
   opacity: 0.7;
 }
-/* The oversized wordmark, cropped by the bottom edge; it rises on view */
-.ft__word {
-  font-family: var(--font-display);
-  font-size: 34vw;
-  line-height: 0.74;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  color: var(--crimson);
-  margin: 12px 0 -0.16em;
-  translate: 0 20%;
-  transition: translate 1.4s var(--ease-out) 0.2s;
-  user-select: none;
-}
-.ft.is-in .ft__word {
-  translate: none;
-}
-
 /* Tablets and phones */
 @media (max-width: 900px) {
   .ft__top {
