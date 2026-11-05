@@ -26,6 +26,7 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'hero:a': 'Letters Change Color',
   'hero:b': 'Softened Photos',
+  'hero:c': 'Black & White',
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
   'whyLuna:b': 'Editorial Typography',

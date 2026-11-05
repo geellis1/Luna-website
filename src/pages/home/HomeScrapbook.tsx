@@ -21,7 +21,7 @@ const headline = lines.map((line, i) => (
   </span>
 ))
 
-// Option A: each photo sits over the headline and carries its own copy of it,
+// Options A and C: each photo sits over the headline and carries its own copy of it,
 // lined up with the real one, so letters crossing a photo show in cream. The
 // copy is placed from the photo's offset in the board, kept current on resize.
 function useAlignedCopies(on: boolean) {
@@ -46,7 +46,8 @@ function useAlignedCopies(on: boolean) {
 
 export default function HomeScrapbook() {
   const [design] = useSectionDesign('hero')
-  const board = useAlignedCopies(design === 'a')
+  const copies = design === 'a' || design === 'c'
+  const board = useAlignedCopies(copies)
   return (
     <>
       <section id="hero" className={`scrap-hero scrap-hero--${design}`}>
@@ -56,7 +57,7 @@ export default function HomeScrapbook() {
             {cutouts.map((ph) => (
               <div key={ph.key} className={`scrap-card scrap-card--${ph.key}`}>
                 <img src={photoSrc(ph)} alt={ph.alt} loading="eager" />
-                {design === 'a' && (
+                {copies && (
                   <div className="scrap-hero__title scrap-card__copy" aria-hidden="true">
                     {headline}
                   </div>

@@ -37,10 +37,10 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
 }
 
 // Headline bars crossing two rounded photos: A turns the crossing cream over a
-// dimmed photo, B keeps it dark over a washed-out one
+// dimmed photo, B keeps it dark over a washed-out one, C is A in black & white
 function HeroPreview({ id }: { id: SectionDesign<'hero'> }) {
-  const photo = id === 'a' ? C.crimson : '#C9B8BC'
-  const cross = id === 'a' ? C.cream : C.bordeaux
+  const photo = { a: C.crimson, b: '#C9B8BC', c: '#5A5A5A' }[id]
+  const cross = id === 'b' ? C.bordeaux : C.cream
   const bars = [18, 30, 42]
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
@@ -50,7 +50,7 @@ function HeroPreview({ id }: { id: SectionDesign<'hero'> }) {
       {bars.map((y) => (
         <rect key={y} x="20" y={y} width="80" height="7" rx="1" fill={C.bordeaux} />
       ))}
-      {id === 'a' && (
+      {id !== 'b' && (
         <>
           <rect x="78" y="18" width="22" height="7" fill={cross} />
           <rect x="78" y="30" width="22" height="4" fill={cross} />
@@ -87,7 +87,7 @@ function ContactPreview({ id }: { id: SectionDesign<'contact'> }) {
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
       <rect width="120" height="64" fill={C.cream} />
-      {id === 'a' && (
+      {id !== 'b' && (
         <>
           <rect x="30" y="4" width="60" height="5" fill={C.bordeaux} />
           <rect x="22" y="12" width="76" height="48" rx="5" fill="none" stroke={C.bordeaux} strokeWidth="0.8" />
@@ -121,7 +121,7 @@ function CtaPreview({ id, bg = C.cream }: { id: SectionDesign<'cta'>; bg?: strin
   return (
     <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
       <rect width="120" height="64" fill={bg} />
-      {id === 'a' && (
+      {id !== 'b' && (
         <>
           <rect x="8" y="8" width="104" height="48" rx="7" fill={C.crimson} />
           <rect x="16" y="20" width="44" height="7" fill={C.cream} />
