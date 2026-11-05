@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useSectionDesign } from '../sectionDesigns'
 import { navLinks, tiers } from '../content'
 import { moonOn } from './moons/tonight'
 import { litPath } from './moons/phase'
@@ -19,12 +20,16 @@ export default function Footer() {
   const [ref, shown] = useInView<HTMLElement>()
   // Worked out once, when the footer first renders
   const [moon] = useState(() => moonOn(new Date()))
+  // How the home page's closing line is set (Round 2: Home · Closing Line)
+  const [closing] = useSectionDesign('closing')
   return (
     <footer ref={ref} className={`ft${shown ? ' is-in' : ''}`} id="site-footer">
       {pathname === '/' && (
-        <div className="ft-lead">
+        <div className={`ft-lead ft-lead--${closing}`}>
           <div className="ft__wrap ft-lead__row">
-            <p className="ft-lead__line">Every engagement begins with a conversation.</p>
+            <p className="ft-lead__line">
+              Every engagement begins with a <span className="ft-lead__accent">conversation.</span>
+            </p>
             <Link to="/contact" className="ft-lead__chat">
               <span className="ft-lead__chat-label">Let’s Chat</span>
               <svg viewBox="0 0 32 32" aria-hidden="true">

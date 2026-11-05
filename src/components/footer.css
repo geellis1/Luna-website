@@ -47,6 +47,27 @@
   opacity: 1;
   translate: none;
 }
+/* B: "conversation." in Deep Crimson italic serif, lowercase, a touch
+   smaller so it sits with the condensed capitals */
+.ft-lead--b .ft-lead__accent {
+  font-family: var(--font-serif);
+  font-size: 0.82em;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--crimson);
+}
+/* C: "conversation." handwritten in Signal Red, tilted slightly */
+.ft-lead--c .ft-lead__accent {
+  display: inline-block;
+  font-family: var(--font-hand);
+  font-size: 0.72em;
+  line-height: 1;
+  text-transform: none;
+  color: var(--red);
+  rotate: -4deg;
+  translate: 0.08em 0.06em;
+}
 /* The circular button: grows in, then fills with Deep Crimson on hover as its
    arrow turns to point straight ahead */
 .ft-lead__chat {
@@ -95,6 +116,22 @@
 .ft-lead__chat:hover svg,
 .ft-lead__chat:focus-visible svg {
   rotate: 45deg;
+}
+/* B: a chartreuse button that turns Deep Crimson on hover */
+.ft-lead--b .ft-lead__chat {
+  background: var(--chartreuse);
+  border-color: var(--chartreuse);
+}
+/* C: a Deep Crimson button in cream that turns Night Bordeaux on hover */
+.ft-lead--c .ft-lead__chat {
+  color: var(--cream);
+  background: var(--crimson);
+  border-color: var(--crimson);
+}
+.ft-lead--c .ft-lead__chat:hover,
+.ft-lead--c .ft-lead__chat:focus-visible {
+  background: var(--bordeaux);
+  border-color: var(--bordeaux);
 }
 
 /* ---------- The footer itself ---------- */

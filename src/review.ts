@@ -26,6 +26,9 @@ export type Page = { id: string; title: string; path: string; sections: Section[
 const names: Record<string, string> = {
   'intro:a1': 'Poster Collage · Crimson',
   'intro:a2': 'Poster Collage · Powder Blue',
+  'closing:a': 'Option A — As Is',
+  'closing:b': 'Option B — Serif Accent',
+  'closing:c': 'Option C — Handwritten Accent',
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
@@ -49,7 +52,7 @@ const section = (key: SectionKey): Section => ({
 })
 
 export const pages: Page[] = [
-  { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
+  { id: 'home', title: 'Home', path: '/', sections: [section('intro'), section('closing')] },
 ]
 
 export const pageForPath = (pathname: string) => pages.find((p) => p.path === pathname) ?? pages[0]
