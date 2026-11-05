@@ -904,6 +904,8 @@ fieldset.field {
   color: var(--powder);
 }
 .about-head__title {
+  /* Right under the label, however tall the intro beside it runs */
+  align-self: start;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
@@ -917,6 +919,11 @@ fieldset.field {
   max-width: 46ch;
   font-size: 1.05rem;
   line-height: 1.55;
+}
+/* The pillars share the header's centered frame */
+.about-head__pillars {
+  max-width: 1320px;
+  margin-inline: auto;
 }
 /* A slim row of moons under the header */
 .about-head__moons {

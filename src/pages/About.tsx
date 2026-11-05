@@ -24,9 +24,9 @@ export default function About() {
           <div className="about-head__moons">
             <MoonCollage className="about-head__collage" />
           </div>
-        </div>
-        <div className="container">
-          <Pillars />
+          <div className="about-head__pillars">
+            <Pillars />
+          </div>
         </div>
       </section>
 

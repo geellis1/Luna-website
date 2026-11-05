@@ -1,22 +1,25 @@
-/* ---------- Why Luna pillars (About page): color boxes ----------
-   Four rounded boxes with gaps between them, square-ish on desktop, two
-   across on tablets and stacked on phones. Box 04 is cream rather than
-   Night Bordeaux so it shows on the hero's Night Bordeaux background. */
+/* ---------- Why Luna pillars (About page): flip cards ----------
+   Four rounded boxes with gaps between them, two across on tablets and
+   stacked on phones. Box 04 is cream rather than Night Bordeaux so it shows
+   on the header's Night Bordeaux background. Each card turns over on its
+   vertical axis to show its description on the same color; both faces share
+   one grid cell, so a card is as tall as its longer side. */
 .pillar-boxes {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(12px, 1.4vw, 20px);
 }
 .pillar-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 28px;
-  aspect-ratio: 1;
-  padding: clamp(22px, 2.4vw, 36px);
-  border-radius: 20px;
+  display: grid;
+  padding: 0;
+  font: inherit;
+  text-align: left;
   color: var(--bordeaux);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  perspective: 1400px;
   /* Build in: each box wipes up into place, one after another */
   clip-path: inset(100% 0 0 0 round 20px);
   translate: 0 24px;
@@ -24,19 +27,66 @@
     clip-path 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s),
     translate 1s var(--ease-out) calc(0.15s + var(--i) * 0.14s);
 }
-.pillar-box--1 {
+.pillar-boxes.is-in .pillar-box {
+  /* Room around the card for its hover tilt */
+  clip-path: inset(-24px round 20px);
+  translate: none;
+}
+.pillar-box:focus-visible {
+  outline: none;
+}
+.pillar-box:focus-visible .pillar-box__face {
+  outline: 2px solid var(--chartreuse);
+  outline-offset: 3px;
+}
+.pillar-box__card {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease-out);
+}
+.pillar-box.is-flipped .pillar-box__card {
+  transform: rotateY(180deg);
+}
+/* Hovering tips the card a little, as if about to turn */
+@media (hover: hover) {
+  .pillar-box:hover .pillar-box__card {
+    transform: rotateY(-8deg);
+  }
+  .pillar-box.is-flipped:hover .pillar-box__card {
+    transform: rotateY(172deg);
+  }
+}
+.pillar-box__face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+  padding: clamp(22px, 2.2vw, 32px);
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.pillar-box__face--back {
+  transform: rotateY(180deg);
+}
+.pillar-box--1 .pillar-box__face {
   background: var(--powder);
 }
-.pillar-box--2 {
+.pillar-box--2 .pillar-box__face {
   background: var(--chartreuse);
 }
 .pillar-box--3 {
   color: var(--cream);
+}
+.pillar-box--3 .pillar-box__face {
   background: var(--crimson);
 }
-.pillar-box--4 {
+.pillar-box--4 .pillar-box__face {
   background: var(--cream);
 }
+
 .pillar-box__num,
 .pillar-box__text {
   opacity: 0;
@@ -46,14 +96,20 @@
     translate 0.8s var(--ease-out) calc(0.6s + var(--i) * 0.14s);
 }
 .pillar-box__text {
+  margin-top: auto;
   transition-delay: calc(0.72s + var(--i) * 0.14s);
+}
+.pillar-boxes.is-in .pillar-box__num,
+.pillar-boxes.is-in .pillar-box__text {
+  opacity: 1;
+  translate: none;
 }
 .pillar-box__num {
   font-family: var(--font-serif);
   font-size: 1.15rem;
 }
 .pillar-box__title {
-  margin: 0;
+  display: block;
   font-family: var(--font-serif);
   font-size: clamp(1.35rem, 2vw, 2rem);
   font-weight: 700;
@@ -62,32 +118,59 @@
   text-wrap: balance;
 }
 .pillar-box__desc {
-  margin: 12px 0 0;
-  font-size: 0.95rem;
+  font-family: var(--font-serif);
+  font-size: clamp(0.92rem, 1vw, 1.02rem);
   line-height: 1.5;
 }
-.pillar-boxes.is-in .pillar-box {
-  clip-path: inset(0 0 0 0 round 20px);
-  translate: none;
+.pillar-box__desc--soon {
+  font-style: italic;
+  opacity: 0.7;
 }
-.pillar-boxes.is-in .pillar-box__num,
-.pillar-boxes.is-in .pillar-box__text {
+.pillar-box__hint {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-end;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.pillar-box__text + .pillar-box__hint {
+  margin-top: 0;
+}
+.pillar-box__hint svg {
+  width: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: rotate 0.5s var(--ease-out);
+}
+.pillar-box:hover .pillar-box__hint,
+.pillar-box:focus-visible .pillar-box__hint {
   opacity: 1;
-  translate: none;
+}
+.pillar-box:hover .pillar-box__hint svg {
+  rotate: 180deg;
 }
 
 @media (max-width: 960px) {
   .pillar-boxes {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 560px) {
   .pillar-boxes {
     grid-template-columns: 1fr;
   }
-  .pillar-box {
+  .pillar-box__face {
     aspect-ratio: auto;
-    min-height: 190px;
+    min-height: 200px;
   }
 }
 
@@ -98,6 +181,9 @@
     clip-path: none;
     translate: none;
     opacity: 1;
+    transition: none;
+  }
+  .pillar-box__card {
     transition: none;
   }
 }

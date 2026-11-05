@@ -5,19 +5,22 @@
 export const pillars = [
   {
     title: 'First-Hand Experience',
-    description: '[Full description from existing site]',
+    description:
+      'Built and led legislative advocacy work for a statewide gender equity nonprofit in one of the most conservative legislatures in the country.',
   },
   {
     title: 'An equity lens that is integrated, not an afterthought',
-    description: '[Full description from existing site]',
+    description: '[Description coming soon]',
   },
   {
     title: 'Intelligence-driven strategy',
-    description: '[Full description from existing site]',
+    description:
+      'Customized legislative tools that give clients a strategic edge and enhance efforts using lawmaker analysis, committee intelligence, and predictive insight.',
   },
   {
     title: 'Movement Awareness',
-    description: '[Full description from existing site]',
+    description:
+      "This work doesn't happen in a vacuum. Every engagement is informed by an understanding of where social movements are, where power is shifting, and what that means for the strategy in front of us. We build for the moment we're in and the one that's coming.",
   },
 ]
 
