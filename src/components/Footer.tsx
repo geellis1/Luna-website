@@ -6,7 +6,7 @@ import { litPath } from './moons/phase'
 import './footer.css'
 
 // Site footer: Night Bordeaux with tonight's moon phase, the page and service
-// links, a closing line and the small print. On the home page a cream band
+// links, a closing line, the small print and Back to top. On the home page a cream band
 // leads into it: "Every engagement begins with a conversation." with the
 // circular Let's Chat button. Builds in once when it scrolls into view.
 // Styles: footer.css.
@@ -72,6 +72,21 @@ export default function Footer() {
                 </Link>
               </li>
             </Column>
+            <button
+              type="button"
+              className="ft__back"
+              onClick={() =>
+                window.scrollTo({
+                  top: 0,
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                })
+              }
+            >
+              Back to top
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 20V5M6 11l6-6 6 6" />
+              </svg>
+            </button>
           </div>
         </div>
         <div className="ft__wrap">

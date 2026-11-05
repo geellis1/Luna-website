@@ -27,9 +27,9 @@
 }
 .hww__layout {
   display: grid;
-  grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
+  grid-template-columns: minmax(0, 27fr) minmax(0, 73fr);
   align-items: center;
-  column-gap: clamp(48px, 5vw, 96px);
+  column-gap: clamp(40px, 4vw, 80px);
   width: min(100%, 1720px);
   margin-inline: auto;
   padding-inline: var(--gutter);
@@ -64,8 +64,8 @@
 .caps {
   display: flex;
   gap: 16px;
-  /* As wide as two slim arches and one wide one would be */
-  width: min(100%, calc(2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h) + 32px));
+  /* 10% wider than two slim arches and one wide one would be */
+  width: min(100%, calc(1.1 * (2 * clamp(120px, 10vw, 170px) + 1.08 * var(--cap-h)) + 32px));
   height: var(--cap-h);
 }
 .caps__item {
