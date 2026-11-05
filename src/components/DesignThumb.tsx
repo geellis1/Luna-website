@@ -31,8 +31,35 @@ export default function DesignThumb({ section, id }: { section: string; id: stri
   }
   if (section === 'contact') return <ContactPreview id={id as SectionDesign<'contact'>} />
   if (section === 'services') return <ServicesPreview id={id as SectionDesign<'services'>} />
+  if (section === 'hero') return <HeroPreview id={id as SectionDesign<'hero'>} />
   if (section === 'bodyFont') return <FontPreview id={id as SectionDesign<'bodyFont'>} />
   return <WorkPreview id={id} />
+}
+
+// Headline bars crossing two rounded photos: A turns the crossing cream over a
+// dimmed photo, B keeps it dark over a washed-out one
+function HeroPreview({ id }: { id: SectionDesign<'hero'> }) {
+  const photo = id === 'a' ? C.crimson : '#C9B8BC'
+  const cross = id === 'a' ? C.cream : C.bordeaux
+  const bars = [18, 30, 42]
+  return (
+    <svg viewBox="0 0 120 64" className="sx-preview" aria-hidden="true">
+      <rect width="120" height="64" fill={C.cream} />
+      <rect x="78" y="6" width="22" height="28" rx="4" fill={photo} />
+      <rect x="14" y="26" width="26" height="20" rx="4" fill={photo} />
+      {bars.map((y) => (
+        <rect key={y} x="20" y={y} width="80" height="7" rx="1" fill={C.bordeaux} />
+      ))}
+      {id === 'a' && (
+        <>
+          <rect x="78" y="18" width="22" height="7" fill={cross} />
+          <rect x="78" y="30" width="22" height="4" fill={cross} />
+          <rect x="20" y="30" width="20" height="7" fill={cross} />
+          <rect x="20" y="42" width="20" height="4" fill={cross} />
+        </>
+      )}
+    </svg>
+  )
 }
 
 // A type specimen, set in the font itself

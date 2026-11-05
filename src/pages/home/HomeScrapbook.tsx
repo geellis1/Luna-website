@@ -1,5 +1,7 @@
+import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { photos, unsplash } from '../../photos'
+import { photoSrc, photos } from '../../photos'
+import { useSectionDesign } from '../../sectionDesigns'
 import BandSections from './BandSections'
 
 // Homepage: Scrapbook. A huge condensed serif headline on cream, with advocacy
@@ -13,31 +15,56 @@ const lines = ['Equity-centered', 'advocacy strategy', 'for audacious', 'change.
 const cutouts = (['capitol', 'rally', 'hands', 'meeting'] as const).map((key) => ({ key, ...photos[key] }))
 const note = ["Let's move from", 'mission to', 'movement.']
 
+const headline = lines.map((line, i) => (
+  <span className="scrap-line" key={line}>
+    <span style={{ animationDelay: `${0.2 + i * 0.22}s` }}>{line}</span>
+  </span>
+))
+
+// Option A: each photo sits over the headline and carries its own copy of it,
+// lined up with the real one, so letters crossing a photo show in cream. The
+// copy is placed from the photo's offset in the board, kept current on resize.
+function useAlignedCopies(on: boolean) {
+  const board = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const el = board.current
+    if (!on || !el) return
+    const place = () => {
+      el.style.setProperty('--board-w', `${el.offsetWidth}px`)
+      el.querySelectorAll<HTMLElement>('.scrap-card').forEach((card) => {
+        card.style.setProperty('--ox', `${card.offsetLeft}px`)
+        card.style.setProperty('--oy', `${card.offsetTop}px`)
+      })
+    }
+    place()
+    const ro = new ResizeObserver(place)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [on])
+  return board
+}
+
 export default function HomeScrapbook() {
+  const [design] = useSectionDesign('hero')
+  const board = useAlignedCopies(design === 'a')
   return (
     <>
-      <section className="scrap-hero">
+      <section id="hero" className={`scrap-hero scrap-hero--${design}`}>
         <div className="container scrap-hero__stage">
 
-          <div className="scrap-hero__board">
-            {/* Photos sit behind the letters */}
+          <div ref={board} className="scrap-hero__board">
             {cutouts.map((ph) => (
-              <img
-                key={ph.key}
-                className={`scrap-card scrap-card--${ph.key}`}
-                src={unsplash(ph.id)}
-                alt={ph.alt}
-                loading="eager"
-              />
+              <div key={ph.key} className={`scrap-card scrap-card--${ph.key}`}>
+                <img src={photoSrc(ph)} alt={ph.alt} loading="eager" />
+                {design === 'a' && (
+                  <div className="scrap-hero__title scrap-card__copy" aria-hidden="true">
+                    {headline}
+                  </div>
+                )}
+              </div>
             ))}
 
-            <h1 className="scrap-hero__title">
-              {lines.map((line, i) => (
-                <span className="scrap-line" key={line}>
-                  <span style={{ animationDelay: `${0.2 + i * 0.22}s` }}>{line}</span>
-                </span>
-              ))}
-            </h1>
+            <h1 className="scrap-hero__title">{headline}</h1>
 
             <p className="scrap-hero__note">
               {note.map((line, i) => (
