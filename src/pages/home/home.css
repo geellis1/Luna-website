@@ -197,8 +197,10 @@
 .scrap-hero__note {
   position: absolute;
   z-index: 3;
-  right: 1%;
-  bottom: -14%;
+  /* Just past the end of "change." (placed by HomeScrapbook) */
+  left: calc(var(--note-x, 75%) + 0.6em);
+  top: var(--note-y, 82%);
+  width: max-content;
   margin: 0;
   font-family: var(--font-hand);
   font-size: clamp(1.15rem, 2vw, 1.9rem);
@@ -305,8 +307,8 @@
   }
   .scrap-hero__note {
     position: relative;
-    right: auto;
-    bottom: auto;
+    left: auto;
+    top: auto;
     margin: 16px 0 0 auto;
     width: max-content;
   }
