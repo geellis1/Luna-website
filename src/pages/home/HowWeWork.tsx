@@ -35,9 +35,6 @@ export default function HowWeWork() {
                   </p>
                   <h3 className="caps__title">{item.label}</h3>
                   <p className="caps__text">{item.summary}</p>
-                  <Link to={`/services#${item.id}`} className="text-link caps__more">
-                    More about {item.label}
-                  </Link>
                 </div>
               </article>
             ))}
