@@ -24,6 +24,19 @@ type Group = {
 }
 
 export const sectionDesigns = {
+  // About page: how the four Why Luna cards come in
+  cardsIn: {
+    title: 'Why Luna Cards · Entrance',
+    param: 'cardsIn',
+    anchor: 'why-luna-cards',
+    path: '/about',
+    choices: [
+      { id: 'a', label: 'A — Wipe Up', note: 'Each card is revealed from the bottom up (as now)' },
+      { id: 'b', label: 'B — Deal In', note: 'Cards slide up with a slight tilt, like a hand being dealt' },
+      { id: 'c', label: 'C — Soft Fade', note: 'Cards fade in while growing very slightly' },
+      { id: 'd', label: 'D — Turn In', note: 'Each card turns in on its edge, like a page' },
+    ],
+  },
   // The statement right under the hero ("We help you do something about it")
   intro: {
     title: 'Intro Section',

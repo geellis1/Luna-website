@@ -10,7 +10,8 @@ import './pillars.css'
 // says so, and hovering tips the card slightly. Styles: pillars.css.
 const isPlaceholder = (text: string) => /^\[.*\]$/.test(text.trim())
 
-export default function Pillars() {
+// `entrance`: how they come in (Round 2: Why Luna Cards · Entrance)
+export default function Pillars({ entrance = 'a' }: { entrance?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [shown, setShown] = useState(false)
   const [flipped, setFlipped] = useState<number[]>([])
@@ -34,7 +35,7 @@ export default function Pillars() {
   const toggle = (i: number) => setFlipped((f) => (f.includes(i) ? f.filter((n) => n !== i) : [...f, i]))
 
   return (
-    <div ref={ref} className={`pillar-boxes${shown ? ' is-in' : ''}`}>
+    <div ref={ref} id="why-luna-cards" className={`pillar-boxes pillar-boxes--${entrance}${shown ? ' is-in' : ''}`}>
       {pillars.map((p, i) => {
         const open = flipped.includes(i)
         return (
