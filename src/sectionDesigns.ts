@@ -46,12 +46,6 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
-  cta: {
-    title: 'Let’s Work Together — CTA',
-    param: 'cta',
-    anchor: 'cta',
-    choices: ctaChoices,
-  },
   ctaAbout: {
     title: 'About · Let’s Work Together',
     param: 'ctaAbout',
@@ -113,13 +107,6 @@ export const sectionDesigns = {
     ],
   },
   // CTA Option C's section backgrounds (per page)
-  ctaC: {
-    title: 'Option C · Background',
-    param: 'ctaBg',
-    anchor: 'cta',
-    parent: { key: 'cta', choice: 'c' },
-    choices: ctaBgChoices,
-  },
   ctaAboutC: {
     title: 'Option C · Background',
     param: 'ctaAboutBg',

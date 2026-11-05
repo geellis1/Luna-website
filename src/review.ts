@@ -46,7 +46,6 @@ const names: Record<string, string> = {
 }
 // The hero and navigation are final and not offered here
 const sectionTitles: Partial<Record<SectionKey, string>> = {
-  cta: 'Let’s Work Together',
   ctaAbout: 'Let’s Work Together',
   ctaServices: 'Let’s Work Together',
   aboutHeadshot: 'Kelli’s Headshot',
@@ -56,7 +55,7 @@ const sectionTitles: Partial<Record<SectionKey, string>> = {
 
 // Let's Work Together on each page, and the group holding its Option C
 // backgrounds
-const ctaBackgrounds = { cta: 'ctaC', ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
+const ctaBackgrounds = { ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
 const isCta = (key: SectionKey): key is keyof typeof ctaBackgrounds => key in ctaBackgrounds
 
 // A section's designs
@@ -91,7 +90,7 @@ const section = (key: SectionKey): Section => ({
 })
 
 export const pages: Page[] = [
-  { id: 'home', title: 'Home', path: '/', sections: (['intro', 'cta'] as const).map(section) },
+  { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
   { id: 'about', title: 'About', path: '/about', sections: [section('aboutHeadshot'), section('ctaAbout')] },
   { id: 'services', title: 'Services', path: '/services', sections: [section('services'), section('ctaServices')] },
   { id: 'contact', title: 'Contact', path: '/contact', sections: [section('contact')] },

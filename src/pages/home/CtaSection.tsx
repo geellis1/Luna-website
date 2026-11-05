@@ -4,18 +4,18 @@ import { litPath } from '../../components/moons/phase'
 import { useSectionDesign } from '../../sectionDesigns'
 import './cta.css'
 
-// Homepage "Let's Work Together" invitation, in the Round 2 design picked in
-// the Explore Section Designs panel: A Rounded Invitation, B Editorial
-// Typography or C Split-Panel Graphic. All lead to the contact page. About
-// and Services show it too, each with its own pick (`section`).
+// "Let's Work Together" invitation on About and Services, in the Round 2
+// design picked in the Explore Section Designs panel for each page
+// (`section`): A Rounded Invitation, B Editorial Typography or C Split-Panel
+// Graphic. All lead to the contact page.
 // Styles: cta.css.
 
 const support = 'Every engagement begins with a conversation. Tell us about your work and your goals.'
 
-type CtaKey = 'cta' | 'ctaAbout' | 'ctaServices'
-const backgrounds = { cta: 'ctaC', ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
+type CtaKey = 'ctaAbout' | 'ctaServices'
+const backgrounds = { ctaAbout: 'ctaAboutC', ctaServices: 'ctaServicesC' } as const
 
-export default function CtaSection({ section = 'cta' }: { section?: CtaKey }) {
+export default function CtaSection({ section }: { section: CtaKey }) {
   const [design] = useSectionDesign(section)
   if (design === 'b') return <TypeInvitation />
   if (design === 'c') return <SplitInvitation bgKey={backgrounds[section]} />
