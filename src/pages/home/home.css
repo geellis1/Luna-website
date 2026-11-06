@@ -228,8 +228,11 @@
     padding-top: 56px;
     padding-bottom: 28px;
   }
+  /* Phones: a bigger, heavier statement; the words wrap one or two to a
+     line, and a hairline stroke thickens the serif */
   .scrap-hero__title {
-    font-size: clamp(2.6rem, 13vw, 5rem);
+    font-size: clamp(2.6rem, 20vw, 6rem);
+    -webkit-text-stroke: 0.012em currentColor;
   }
   /* Phones: just the headline, no photos */
   .scrap-card {
