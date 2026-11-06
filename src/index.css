@@ -535,7 +535,7 @@ main > section:first-child {
   margin: 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 26px;
+  font-size: 35px;
   color: var(--red);
   text-align: right;
 }
@@ -657,6 +657,10 @@ main > section:first-child {
   }
   .ed-menu__label {
     font-size: clamp(2.4rem, min(11vh, 15vw), 5rem);
+  }
+  /* Phones keep the smaller size so it stays on one line */
+  .ed-menu__tagline {
+    font-size: 26px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
