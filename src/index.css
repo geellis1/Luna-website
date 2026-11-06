@@ -972,7 +972,9 @@ fieldset.field {
 }
 .about-head__collage {
   display: block;
-  width: min(100%, 760px);
+  /* Scaled to the row's length (--row), with the moons a little larger than
+     the old generated ones */
+  width: calc(min(100%, 760px) * var(--row, 1) * 1.15);
   overflow: visible;
 }
 .collage-tile {
@@ -980,15 +982,6 @@ fieldset.field {
   animation:
     collage-in 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) var(--delay) both,
     collage-float 10s ease-in-out var(--float-delay) infinite;
-}
-.collage-tile__line {
-  stroke: var(--cream);
-  stroke-opacity: 0.95;
-  transition: stroke 0.8s;
-}
-.collage-tile.is-active .collage-tile__line {
-  stroke: var(--chartreuse);
-  stroke-opacity: 1;
 }
 @keyframes collage-in {
   from {
@@ -1023,7 +1016,7 @@ fieldset.field {
     margin-inline: calc(-1 * var(--gutter));
   }
   .about-head__collage {
-    width: 130vw;
+    width: 110vw;
     max-width: none;
     flex: none;
   }
