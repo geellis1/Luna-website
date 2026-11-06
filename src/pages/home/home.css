@@ -133,9 +133,7 @@
   z-index: 0;
   overflow: hidden;
   border-radius: clamp(10px, 1.3vw, 18px);
-  animation:
-    scrap-drop 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both,
-    scrap-drift 12s ease-in-out var(--drift) infinite;
+  animation: scrap-drop 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both;
 }
 .scrap-card img {
   display: block;
@@ -151,7 +149,6 @@
   width: 24%;
   aspect-ratio: 1;
   --in: 1.1s;
-  --drift: -3s;
 }
 .scrap-card--capitol img {
   object-position: 50% 85%;
@@ -163,7 +160,6 @@
   width: 30%;
   aspect-ratio: 4 / 3;
   --in: 1.4s;
-  --drift: -7s;
 }
 /* Center: in the gap between lines 3 and 4 */
 .scrap-card--hands {
@@ -172,17 +168,15 @@
   width: 21%;
   aspect-ratio: 1;
   --in: 1.7s;
-  --drift: -5s;
 }
-/* Right: pokes out past the end of lines 2 and 3, leaving room for the
-   handwritten note below it */
+/* Right: pokes out past the end of lines 3 and 4, well clear of the
+   Capitol photo above it */
 .scrap-card--meeting {
   right: -16%;
-  top: 36%;
+  top: 50%;
   width: 30%;
   aspect-ratio: 4 / 3;
   --in: 2s;
-  --drift: -9s;
 }
 
 /* Over the photos, a light cream wash keeps the dark letters readable */
@@ -217,15 +211,6 @@
     transform: none;
   }
 }
-@keyframes scrap-drift {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -8px;
-  }
-}
 @keyframes scrap-fade {
   from {
     opacity: 0;
@@ -257,8 +242,7 @@
     width: 26%;
   }
   /* Phones: the two right photos further apart, the left one a little
-     higher and the hands a little lower; and they stay still (they only
-     fade in, no floating) */
+     higher and the hands a little lower */
   .scrap-card--rally {
     top: 5%;
   }
@@ -267,9 +251,6 @@
   }
   .scrap-card--meeting {
     top: 48%;
-  }
-  .scrap-card {
-    animation: scrap-drop 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--in) both;
   }
   /* The divider sits clear of the hands photo, which hangs below the
      headline */
