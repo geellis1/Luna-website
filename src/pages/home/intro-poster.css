@@ -137,7 +137,7 @@
   line-height: 1.5;
 }
 
-/* ---------- Assembly: base → panel → notes → main type ---------- */
+/* ---------- Assembly, in reading order: base → main type → panel → sheet ---------- */
 .poster__canvas {
   opacity: 0;
   scale: 0.97;
@@ -154,11 +154,11 @@
     translate 0.35s var(--ease-out);
 }
 .poster__panel {
-  --delay: 0.3s;
+  --delay: 1.2s;
   transform: translateY(-110px) rotate(-5deg);
 }
 .poster__sheet {
-  --delay: 0.85s;
+  --delay: 1.9s;
   transform: translateY(80px);
 }
 .poster.is-in .poster__canvas {

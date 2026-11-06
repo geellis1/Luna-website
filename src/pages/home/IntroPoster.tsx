@@ -8,7 +8,8 @@ import './intro-poster.css'
 // "Your mission has policy implications." fills the base poster; "We help you
 // do something about it." runs down the tilted panel over its top-right
 // corner; the intro paragraph sits on paper over the bottom edge.
-// On first view: base poster → panel → sheet → main type. Brand colors only.
+// On first view, in reading order: base poster → main type → panel → sheet.
+// Brand colors only.
 // Styles: intro-poster.css.
 
 const lede =
@@ -54,7 +55,7 @@ export default function IntroPoster({ variant }: { variant: 'a1' | 'a2' }) {
           <h2 className="poster__main">
             {mainLines.map((line, i) => (
               <span key={line} className="poster__mask">
-                <span style={{ transitionDelay: `${1.25 + i * 0.12}s` }}>{line}</span>
+                <span style={{ transitionDelay: `${0.35 + i * 0.12}s` }}>{line}</span>
               </span>
             ))}
           </h2>
