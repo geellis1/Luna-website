@@ -183,39 +183,60 @@
   .poster__stage {
     aspect-ratio: auto;
   }
+  /* The pieces stack in reading order: the statement at the top of the red
+     poster, the blue note below it, set off to the right and hanging over
+     the poster's bottom edge, then the green sheet */
   .poster__frame {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    /* Shorter than before, so there's less empty red between the pieces */
-    aspect-ratio: 0.82;
   }
   .poster__canvas {
-    top: 6%;
+    top: 0;
+    bottom: 64px;
     left: 3%;
     width: 84%;
-    height: 92%;
+    height: auto;
   }
+  /* The lines as one left-aligned block, centered on the red poster so
+     the space either side of the longest line is equal */
   .poster__main {
+    position: relative;
     top: auto;
-    bottom: 14%;
-    left: 8%;
-    width: 78%;
-    font-size: 15cqi;
+    left: 3%;
+    display: grid;
+    justify-content: center;
+    width: 84%;
+    padding: 12cqi 0 10cqi;
+    font-size: 13cqi;
   }
-  /* The blue note reaches further over the red poster */
   .poster__panel {
-    left: 45%;
-    width: 51%;
-    height: 46%;
+    position: relative;
+    top: auto;
+    left: auto;
+    align-self: flex-end;
+    width: 62%;
+    height: auto;
+    margin-right: 2%;
+    padding: 4.5cqi 4cqi 5cqi;
+  }
+  .poster__headline {
+    font-size: 15.5cqi;
+  }
+  .poster__hline {
+    display: inline;
+  }
+  .poster__hline:not(:last-child)::after {
+    content: ' ';
   }
   .poster__sheet {
     position: relative;
     top: auto;
     left: 3%;
     width: 92%;
-    margin-top: -12%;
+    margin-top: 18px;
     padding: 18px 20px;
-    rotate: 2deg;
+    rotate: 3.5deg;
   }
   .poster__sheet p {
     font-size: 15px;
