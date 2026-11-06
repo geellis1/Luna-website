@@ -231,31 +231,9 @@
   .scrap-hero__title {
     font-size: clamp(2.6rem, 13vw, 5rem);
   }
-  .scrap-card--capitol {
-    width: 30%;
-  }
-  .scrap-card--rally,
-  .scrap-card--meeting {
-    width: 36%;
-  }
-  .scrap-card--hands {
-    width: 26%;
-  }
-  /* Phones: the two right photos further apart, the left one a little
-     higher and the hands a little lower */
-  .scrap-card--rally {
-    top: 5%;
-  }
-  .scrap-card--hands {
-    top: 66%;
-  }
-  .scrap-card--meeting {
-    top: 48%;
-  }
-  /* The divider sits clear of the hands photo, which hangs below the
-     headline */
-  .scrap-hero__foot {
-    margin-top: 56px;
+  /* Phones: just the headline, no photos */
+  .scrap-card {
+    display: none;
   }
 }
 
