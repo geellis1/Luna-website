@@ -76,11 +76,11 @@ function Arrow(): ReactNode {
 // big name, its category and a +; open, it grows to show the details in two
 // columns. All closed at first (unless a link points to one); one open at a
 // time; clicking the open one closes it.
-// Phones: opening a band scrolls to its top, just under the sticky nav. The
-// band that was open closes at the same time, so if it sits above this one,
-// the target is where this band will be once that one has folded away.
+// Opening a band scrolls to its top, just under the sticky nav. The band
+// that was open closes at the same time, so if it sits above this one, the
+// target is where this band will be once that one has folded away.
 function settleAtTop(band: HTMLElement | null, wasOpen: string) {
-  if (!band || !window.matchMedia('(max-width: 760px)').matches) return
+  if (!band) return
   const navH = 80 // the sticky nav's height once the page has scrolled
   let top = band.getBoundingClientRect().top + window.scrollY
   const prev = wasOpen ? document.getElementById(wasOpen) : null

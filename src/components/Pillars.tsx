@@ -61,7 +61,7 @@ export default function Pillars() {
                 ) : (
                   <span className="pillar-box__desc">{p.description}</span>
                 )}
-                <Hint label="Back" />
+                <Hint />
               </span>
             </span>
           </button>
@@ -71,11 +71,10 @@ export default function Pillars() {
   )
 }
 
-// A turning arrow (with an optional label) in the card's bottom-right corner
-function Hint({ label }: { label?: string }) {
+// A turning arrow in the card's bottom-right corner
+function Hint() {
   return (
-    <span className="pillar-box__hint" aria-hidden={!label || undefined}>
-      {label}
+    <span className="pillar-box__hint" aria-hidden="true">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4" />
       </svg>

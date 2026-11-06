@@ -6,16 +6,17 @@ export const pillars = [
   {
     title: 'First-Hand Experience',
     description:
-      'Built and led legislative advocacy work for a statewide gender equity nonprofit in one of the most conservative legislatures in the country.',
+      'This isn’t theoretical. We have built and led legislative and community advocacy for a statewide gender equity nonprofit inside one of the most conservative legislatures in the country. The wins were real, the losses were instructive, and the relationships endure.',
   },
   {
     title: 'An equity lens that is integrated, not an afterthought',
-    description: '[Description coming soon]',
+    description:
+      'Equity is more than a values statement; it’s a method. Every engagement is filtered through a framework that examines who benefits, who bears the burden, and what the strategy demands to get it right. That lens shapes our work from day one.',
   },
   {
     title: 'Intelligence-driven strategy',
     description:
-      'Customized legislative tools that give clients a strategic edge and enhance efforts using lawmaker analysis, committee intelligence, and predictive insight.',
+      'Every engagement is backed by customized legislative tools built for your specific context. We believe advocacy should be as sophisticated as the problems it’s up against.',
   },
   {
     title: 'Movement Awareness',
