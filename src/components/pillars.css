@@ -3,7 +3,8 @@
    stacked on phones. Box 04 is cream rather than Night Bordeaux so it shows
    on the header's Night Bordeaux background. Each card turns over on its
    vertical axis to show its description on the same color; both faces share
-   one grid cell, so a card is as tall as its longer side. */
+   one grid cell, so a card is as tall as its longer side. Cards are 4:5 at
+   least, and grow taller (all four together) when a description needs it. */
 .pillar-boxes {
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   display: grid;
@@ -20,6 +21,7 @@
   border: 0;
   cursor: pointer;
   perspective: 1400px;
+  container-type: inline-size;
   /* Come in: each card fades in while growing very slightly, one after
      another */
   opacity: 0;
@@ -61,8 +63,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-height: 0;
-  aspect-ratio: 4 / 5;
+  min-height: 125cqw; /* 4:5 */
   padding: clamp(22px, 2.2vw, 32px);
   border-radius: 20px;
   backface-visibility: hidden;
