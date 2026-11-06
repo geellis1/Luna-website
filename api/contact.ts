@@ -17,8 +17,7 @@ import { Resend } from 'resend'
 
 const SERVICE_OPTIONS = ['Training', 'Project-based Consulting', 'Sustained Engagement', 'Not sure yet']
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-// TEMPORARY for testing: switch back to 'kelli@lunacivicstrategies.com'
-const TO = 'ellis.gradi@gmail.com'
+const TO = 'kelli@lunacivicstrategies.com'
 const FROM = 'Luna Civic Strategies <website@lunacivicstrategies.com>'
 const SUBJECT = 'New Contact Form Submission — Luna Civic Strategies'
 
