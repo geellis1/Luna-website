@@ -535,7 +535,7 @@ main > section:first-child {
   margin: 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 26px;
+  font-size: 35px;
   color: var(--red);
   text-align: right;
 }
@@ -657,6 +657,10 @@ main > section:first-child {
   }
   .ed-menu__label {
     font-size: clamp(2.4rem, min(11vh, 15vw), 5rem);
+  }
+  /* Phones keep the smaller size so it stays on one line */
+  .ed-menu__tagline {
+    font-size: 26px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1041,19 +1045,20 @@ fieldset.field {
    lines up with the photo, which is positioned over the center line. The photo is
    already set on this cream, so it blends in. */
 .kelli {
-  --photo-w: min(39vw, 520px);
+  --photo-w: min(35.1vw, 468px);
   --photo-h: calc(var(--photo-w) * 1.25);
   --gutter: 14px;
+  padding-top: clamp(24px, 3vw, 44px);
   padding-bottom: 0;
   background: var(--cream);
   color: var(--bordeaux);
   overflow: hidden;
 }
 .kelli__title {
-  margin: 0 0 clamp(28px, 3.5vw, 48px);
+  margin: 0 0 clamp(25px, 3.15vw, 43px);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.8rem, 6.2vw, 5.75rem);
+  font-size: clamp(2.52rem, 5.58vw, 5.175rem);
   line-height: 0.9;
   letter-spacing: -0.01em;
   text-align: center;
@@ -1062,7 +1067,7 @@ fieldset.field {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1240px;
+  max-width: 1116px;
   min-height: var(--photo-h);
   margin: 0 auto;
 }
@@ -1168,7 +1173,7 @@ fieldset.field {
    her height, so she still stands on the bottom edge */
 @media (max-width: 1240px) {
   .kelli {
-    --photo-w: 53vw;
+    --photo-w: 47.7vw;
   }
   .kelli__col {
     line-height: 1.45;
