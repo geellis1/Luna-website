@@ -66,6 +66,7 @@ export default function Footer() {
         <div className="ft__wrap">
           <div className="ft__legal">
             <p>© {year} Luna Civic Strategies. All rights reserved.</p>
+            <Link to="/privacy">Privacy</Link>
           </div>
         </div>
       </div>

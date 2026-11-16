@@ -197,7 +197,11 @@
 .ft__cta:hover {
   color: var(--chartreuse);
 }
+/* Small print: copyright, then the Privacy link */
 .ft__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
   padding: 14px 0 18px;
   border-top: 1px solid var(--rule);
   font-size: 0.8rem;
@@ -205,6 +209,18 @@
 .ft__legal p {
   margin: 0;
   opacity: 0.7;
+}
+.ft__legal a {
+  opacity: 0.7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+.ft__legal a:hover {
+  color: var(--chartreuse);
+  opacity: 1;
 }
 /* Tablets and phones: moon, then links and button, stacked */
 @media (max-width: 900px) {

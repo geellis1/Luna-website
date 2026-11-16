@@ -4,7 +4,7 @@ import EditorialMenu from './EditorialMenu'
 
 // Pages whose first section is light (cream), so the see-through nav needs
 // dark text
-const lightTopPages = ['/', '/services', '/contact', '/review']
+const lightTopPages = ['/', '/services', '/contact', '/review', '/privacy']
 
 // Logo and crescent-moon menu button, fixed to the top of the window; the
 // button opens the menu as a drawer from the right (EditorialMenu.tsx). At
