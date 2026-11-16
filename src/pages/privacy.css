@@ -1,0 +1,61 @@
+/* ---------- Privacy Policy ----------
+   Cream page: the title and effective date set like the Services intro
+   (clearing the see-through nav), then the policy in one column at a
+   comfortable reading width. */
+.section.privacy {
+  padding: clamp(120px, 12vw, 160px) var(--gutter) var(--section-y);
+  color: var(--bordeaux);
+  background: var(--cream);
+}
+.privacy__head,
+.privacy__body {
+  max-width: 760px;
+  margin-inline: auto;
+}
+.privacy__head {
+  padding-bottom: clamp(20px, 2.5vw, 32px);
+  border-bottom: 1px solid rgba(62, 25, 33, 0.25);
+}
+.privacy__title {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+.privacy__date {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+.privacy__body {
+  padding-top: clamp(28px, 3.5vw, 44px);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+.privacy__body h2 {
+  margin: 1.9em 0 0.55em;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+}
+.privacy__body ul {
+  margin: 0 0 1em;
+  padding-left: 1.2em;
+}
+.privacy__body li {
+  margin-bottom: 0.7em;
+  padding-left: 0.2em;
+}
+.privacy__body li::marker {
+  color: var(--crimson);
+}
+.privacy__body a {
+  color: var(--crimson);
+  text-underline-offset: 3px;
+}
+.privacy__body a:hover {
+  color: var(--red);
+}
