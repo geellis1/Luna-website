@@ -718,6 +718,13 @@
   object-fit: cover;
   object-position: 50% 22%;
 }
+/* Full-length portraits: the whole photo, head to toe, on its cream */
+.sx-preview--full {
+  /* Taller than the other thumbnails so she isn't tiny */
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: #f5f0e8;
+}
 /* Phones: the drawer takes the screen, with a little air around it */
 @media (max-width: 520px) {
   .sx-drawer {

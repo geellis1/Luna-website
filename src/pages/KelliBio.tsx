@@ -7,13 +7,14 @@
 // she stands on the section's bottom edge. On phones it's photo, then text.
 // Styles: "Kelli" in index.css.
 
-import { useLayoutEffect, useRef } from 'react'
-import { kelliPhoto as photo } from './headshots'
+import { useLayoutEffect, useRef, type CSSProperties } from 'react'
+import { useSectionDesign } from '../sectionDesigns'
+import { kelliPhotos } from './headshots'
 
 // Below this width the bio sits under the photo in one column (index.css)
 const SIDE_BY_SIDE = '(min-width: 1100px)'
 
-function useFittedBio() {
+function useFittedBio(photoSrc: string) {
   const spread = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
     const el = spread.current
@@ -33,7 +34,9 @@ function useFittedBio() {
         return Math.max(...ends.map((e) => e.getBoundingClientRect().bottom - bottom))
       }
       let lo = 15
-      let hi = 26
+      // Capped so a tall portrait doesn't blow the type up; the bio may then
+      // end above her feet
+      let hi = 17
       for (let i = 0; i < 9; i++) {
         const mid = (lo + hi) / 2
         if (over(mid) <= 0) lo = mid
@@ -45,14 +48,22 @@ function useFittedBio() {
     document.fonts.ready.then(fit)
     window.addEventListener('resize', fit)
     return () => window.removeEventListener('resize', fit)
-  }, [])
+  }, [photoSrc])
   return spread
 }
 
 export default function KelliBio() {
-  const spread = useFittedBio()
+  // Which portrait: chosen in Explore Designs while reviewing; the live site
+  // shows the first option
+  const [pick] = useSectionDesign('kelliPhoto')
+  const photo = kelliPhotos[pick]
+  const spread = useFittedBio(photo.src)
   return (
-    <section className="section kelli" id="kelli">
+    <section
+      className={`section kelli${photo.height / photo.width > 1.4 ? ' kelli--tall' : ''}`}
+      id="kelli"
+      style={{ '--photo-ratio': photo.height / photo.width, '--photo-lift': 'raise' in photo ? photo.raise : 0 } as CSSProperties}
+    >
       <div className="container">
         <h2 className="kelli__title">Hi, I’m Kelli.</h2>
 
@@ -61,8 +72,8 @@ export default function KelliBio() {
             className="kelli__photo"
             src={photo.src}
             alt={photo.alt}
-            width="960"
-            height="1200"
+            width={photo.width}
+            height={photo.height}
           />
 
           <div className="kelli__col kelli__col--left">
@@ -114,7 +125,7 @@ export default function KelliBio() {
               for this work, grounded in first-hand experience of what advocacy in hostile
               environments actually requires.
             </p>
-            <p>
+            <p className="kelli__close">
               <strong>
                 I started Luna Civic Strategies because I believe to solve our biggest problems, we
                 must look upstream and imagine something different. I’d love to help you do that.

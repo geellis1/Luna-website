@@ -31,13 +31,16 @@ const names: Record<string, string> = {
 const sectionTitles: Partial<Record<SectionKey, string>> = {
 }
 
+// Sections whose designs are numbered in the panel (1., 2., …), in order
+const numbered: SectionKey[] = ['kelliPhoto']
+
 // A section's designs
 function designsOf(key: SectionKey): Design[] {
-  return sectionDesigns[key].choices.map((c) => ({
+  return sectionDesigns[key].choices.map((c, i) => ({
     key: `${key}:${c.id}`,
     section: key,
     id: c.id,
-    name: names[`${key}:${c.id}`] ?? c.label,
+    name: `${numbered.includes(key) ? `${i + 1}. ` : ''}${names[`${key}:${c.id}`] ?? c.label}`,
     picks: { [key]: c.id },
   }))
 }
@@ -50,6 +53,7 @@ const section = (key: SectionKey): Section => ({
 
 export const pages: Page[] = [
   { id: 'home', title: 'Home', path: '/', sections: [section('intro')] },
+  { id: 'about', title: 'About', path: '/about', sections: [section('kelliPhoto')] },
 ]
 
 export const pageForPath = (pathname: string) => pages.find((p) => p.path === pathname) ?? pages[0]
