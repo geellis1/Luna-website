@@ -1038,20 +1038,28 @@ fieldset.field {
    lines up with the photo, which is positioned over the center line. The photo is
    already set on this cream, so it blends in. */
 .kelli {
-  --photo-w: min(35.1vw, 468px);
-  --photo-h: calc(var(--photo-w) * 1.25);
+  --photo-w: min(33vw, 440px);
+  /* Height from the photo's shape (set by KelliBio.tsx; 4:5 by default) */
+  --photo-h: calc(var(--photo-w) * var(--photo-ratio, 1.25));
+  /* Some portraits sit a little higher than the first line of text (set by
+     KelliBio.tsx as a share of the photo's height) */
+  --photo-raise: calc(var(--photo-h) * var(--photo-lift, 0));
   --gutter: 14px;
-  padding-top: clamp(24px, 3vw, 44px);
+  padding-top: clamp(22px, 2.8vw, 41px);
   padding-bottom: 0;
   background: var(--cream);
   color: var(--bordeaux);
   overflow: hidden;
 }
+/* A full-length portrait gets a little more width (she's narrow in the frame) */
+.kelli--tall {
+  --photo-w: min(34.8vw, 470px);
+}
 .kelli__title {
-  margin: 0 0 clamp(25px, 3.15vw, 43px);
+  margin: 0 0 clamp(23px, 2.96vw, 40px);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.52rem, 5.58vw, 5.175rem);
+  font-size: clamp(2.52rem, 6vw, 5.175rem);
   line-height: 0.9;
   letter-spacing: -0.01em;
   text-align: center;
@@ -1060,15 +1068,15 @@ fieldset.field {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1116px;
-  min-height: var(--photo-h);
+  max-width: 1050px;
+  min-height: calc(var(--photo-h) - var(--photo-raise));
   margin: 0 auto;
 }
 .kelli__photo {
   /* She stands on the section's bottom edge (the bio is sized to fit within
      her height, so the photo's top lines up with the text wrap) */
   position: absolute;
-  top: 0;
+  top: calc(-1 * var(--photo-raise));
   left: 50%;
   width: var(--photo-w);
   height: var(--photo-h);
@@ -1116,6 +1124,11 @@ fieldset.field {
 .kelli__col strong {
   font-weight: 700;
 }
+/* The closing two sentences, set a little larger */
+.kelli__col .kelli__close {
+  font-size: 19px;
+  line-height: 1.4;
+}
 /* Invisible halves of her silhouette for the text to flow around. Each is
    exactly half the photo (reaching the center line through the column's
    gutter); its shape-outside is the headshot's traced outline, set inline
@@ -1123,6 +1136,7 @@ fieldset.field {
 .kelli__wrap {
   width: calc(var(--photo-w) / 2);
   height: var(--photo-h);
+  margin-top: calc(-1 * var(--photo-raise));
   shape-margin: 14px;
 }
 .kelli__wrap--left {
@@ -1166,7 +1180,10 @@ fieldset.field {
    her height, so she still stands on the bottom edge */
 @media (max-width: 1240px) {
   .kelli {
-    --photo-w: 47.7vw;
+    --photo-w: 44.8vw;
+  }
+  .kelli--tall {
+    --photo-w: 38.5vw;
   }
   .kelli__col {
     line-height: 1.45;
@@ -1183,7 +1200,7 @@ fieldset.field {
   .kelli__photo {
     position: static;
     display: block;
-    width: min(100%, 420px);
+    width: min(100%, 395px);
     height: auto;
     margin: 0 auto 32px;
     translate: none;

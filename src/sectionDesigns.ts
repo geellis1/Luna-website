@@ -34,6 +34,22 @@ export const sectionDesigns = {
       { id: 'a2', label: 'Poster Collage A2 — Night Bordeaux / Powder Blue', note: 'A powder-blue poster on Night Bordeaux' },
     ],
   },
+  // Kelli's portrait on the About page (src/pages/headshots.ts). The first
+  // is the one the live site shows.
+  kelliPhoto: {
+    title: 'Hi, I’m Kelli · Photo',
+    param: 'photo',
+    anchor: 'kelli',
+    path: '/about',
+    choices: [
+      { id: 'smile', label: 'Full length · Smiling', note: 'Head to toe, big smile, hand on her hip' },
+      { id: 'standing', label: 'Full length · Soft smile', note: 'Head to toe, softer smile, hand on her hip' },
+      { id: 'laugh', label: 'Full length · Laughing', note: 'Head to toe, laughing, arms crossed at her waist' },
+      { id: 'hands', label: 'Three-quarter · Hands clasped', note: 'Head to thighs, big smile, hands clasped in front' },
+      { id: 'walk', label: 'Three-quarter · Arms relaxed', note: 'Head to knees, laughing, arms at her sides' },
+      { id: 'floral', label: 'Waist up · Hand on hip', note: 'Cropped at the waist, a smaller photo' },
+    ],
+  },
 } as const satisfies Record<string, Group>
 
 export type SectionKey = keyof typeof sectionDesigns

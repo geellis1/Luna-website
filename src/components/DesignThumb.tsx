@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { SectionDesign } from '../sectionDesigns'
+import { kelliPhotos } from '../pages/headshots'
 
 // Small pictures of each Round 2 design, drawn in the brand colors, for the
 // Explore Designs panel, favorites and the shared review page.
@@ -18,6 +19,20 @@ const tones = [C.powder, C.chartreuse, C.crimson]
 // we work together, Option A's versions are a1 / a2.
 export default function DesignThumb({ section, id }: { section: string; id: string }) {
   if (section === 'intro') return <IntroPreview id={id as SectionDesign<'intro'>} />
+  if (section === 'kelliPhoto') {
+    const p = kelliPhotos[id as SectionDesign<'kelliPhoto'>]
+    // Full-length portraits show her whole figure; the waist-up one is cropped
+    // to her face like the other headshot thumbnails
+    const full = p.height / p.width > 1.4
+    return (
+      <img
+        className={`sx-preview sx-preview--photo${full ? ' sx-preview--full' : ''}`}
+        src={p.src}
+        alt=""
+        loading="lazy"
+      />
+    )
+  }
   return <WorkPreview id={id} />
 }
 
